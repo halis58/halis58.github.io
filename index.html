@@ -81,12 +81,14 @@
   background: #111111;
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
     .nav-inner {
       width: min(1380px, calc(100% - 56px));
       margin: 0 auto;
       height: 92px;
+      transition: height 0.35s ease;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -106,6 +108,7 @@
   font-size: 28px;
   letter-spacing: 0.12em;
   line-height: 1;
+  transition: font-size 0.35s ease, letter-spacing 0.35s ease;
 }
 
 .brand-arch {
@@ -113,10 +116,15 @@
   font-size: 28px;
   letter-spacing: 0.10em;
   line-height: 1;
+  transition: font-size 0.35s ease, letter-spacing 0.35s ease;
 }
 
     .nav.scrolled .brand {
   color: #ffffff;
+}
+
+    .nav.scrolled .nav-inner {
+  height: 64px;
 }
 
     .nav-links {
@@ -132,6 +140,7 @@
 
     .nav.scrolled .nav-links {
       color: rgba(255,255,255,0.8);
+      gap: 24px;
     }
 
     .nav-links a {
@@ -469,11 +478,21 @@
 .brand-kaya {
   font-size: 18px;
   letter-spacing: 0.10em;
+  transition: font-size 0.35s ease, letter-spacing 0.35s ease;
 }
 
 .brand-arch {
   font-size: 18px;
   letter-spacing: 0.08em;
+  transition: font-size 0.35s ease, letter-spacing 0.35s ease;
+}
+
+      .nav.scrolled .brand-kaya {
+  font-size: 22px;
+}
+
+.nav.scrolled .brand-arch {
+  font-size: 22px;
 }
 
       .hero-content {
