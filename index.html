@@ -464,6 +464,15 @@
   transform: scale(1);
   transition: transform 1.2s cubic-bezier(.2,.8,.2,1), opacity 0.8s ease;
 }
+    /* 🔥 BURAYA EKLE */
+.intro-logo.fly {
+  position: fixed;
+  z-index: 10000;
+  transition: top 1s cubic-bezier(.2,.8,.2,1),
+              left 1s cubic-bezier(.2,.8,.2,1),
+              transform 1s cubic-bezier(.2,.8,.2,1),
+              opacity 0.8s ease;
+}
 
 .intro-loader.hide .intro-logo {
   transform: scale(0.92);
@@ -668,7 +677,7 @@ body.site-ready .footer {
 
   <header class="nav" id="navbar">
     <div class="nav-inner">
-      <a href="#" class="brand">
+     <a href="#" class="brand" id="navBrand">
         <span class="brand-kaya">KAYA</span>
         <span class="brand-arch">ARCHITECTURES</span>
       </a>
