@@ -816,7 +816,7 @@ body.site-ready .footer {
 </footer>
 
 <div class="intro-loader" id="introLoader">
-  <div class="intro-logo">
+  <div class="intro-logo" id="introLogo">
     <span class="intro-kaya">KAYA</span>
     <span class="intro-arch">ARCHITECTURES</span>
   </div>
@@ -854,19 +854,41 @@ body.site-ready .footer {
 
   revealItems.forEach((item) => observer.observe(item));
 
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      if (introLoader) {
-        introLoader.classList.add("hide");
-      }
-    }, 1200);
+window.addEventListener("load", () => {
+  const introLogo = document.getElementById("introLogo");
+  const navBrand = document.getElementById("navBrand");
 
-    setTimeout(() => {
-      if (introLoader) {
-        introLoader.remove();
-      }
-    }, 2200);
-  });
+  if (!introLogo || !navBrand) return;
+
+  // başlangıç konumu
+  const startRect = introLogo.getBoundingClientRect();
+  const endRect = navBrand.getBoundingClientRect();
+
+  // fixed pozisyona al
+  introLogo.classList.add("fly");
+  introLogo.style.top = startRect.top + "px";
+  introLogo.style.left = startRect.left + "px";
+  introLogo.style.width = startRect.width + "px";
+
+  // repaint için küçük delay
+  setTimeout(() => {
+    // hedefe uçur
+    introLogo.style.top = endRect.top + "px";
+    introLogo.style.left = endRect.left + "px";
+    introLogo.style.transform = "scale(0.6)";
+  }, 100);
+
+  // sonra loader kapat
+  setTimeout(() => {
+    const loader = document.getElementById("introLoader");
+    if (loader) loader.classList.add("hide");
+  }, 1200);
+
+  setTimeout(() => {
+    const loader = document.getElementById("introLoader");
+    if (loader) loader.remove();
+  }, 2000);
+});
 </script>
   
 </body>
