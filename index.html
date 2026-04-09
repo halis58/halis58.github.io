@@ -70,8 +70,11 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  background: #111111; /* 🔥 EKLEDİK */
-  transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+
+  background: transparent; /* 🔥 şeffaf */
+  border-bottom: none;
+
+  transition: background 0.35s ease, backdrop-filter 0.35s ease;
 }
 
     .nav.scrolled {
@@ -93,7 +96,7 @@
   display: inline-flex;
   align-items: center;
   gap: 18px;
-  color: #ffffff;
+  color: #111111;
   transition: color 0.35s ease;
   white-space: nowrap;
 }
@@ -112,11 +115,15 @@
   line-height: 1;
 }
 
+    .nav.scrolled .brand {
+  color: #ffffff;
+}
+
     .nav-links {
       display: flex;
       align-items: center;
       gap: 34px;
-      color: rgba(255,255,255,0.8);
+      color: rgba(17,17,17,0.7);
       transition: color 0.35s ease;
       font-size: 12px;
       letter-spacing: 0.18em;
@@ -124,7 +131,7 @@
     }
 
     .nav.scrolled .nav-links {
-      color: var(--muted);
+      color: rgba(255,255,255,0.8);
     }
 
     .nav-links a {
@@ -133,11 +140,11 @@
 
     .nav-links a:hover {
       opacity: 1;
-      color: #ffffff;
+      color: #111111;
     }
 
     .nav.scrolled .nav-links a:hover {
-      color: var(--text);
+      color: #ffffff;
     }
 
     /* HERO */
