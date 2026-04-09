@@ -107,7 +107,7 @@
   gap: 18px;
   color: #111111;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease, color 0.35s ease;
   white-space: nowrap;
 }
 
@@ -841,7 +841,6 @@ body.site-ready .footer {
   const navbar = document.getElementById("navbar");
   const heroImage = document.getElementById("heroImage");
   const revealItems = document.querySelectorAll(".reveal");
-  const introLoader = document.getElementById("introLoader");
 
   window.addEventListener("scroll", () => {
     const y = window.scrollY;
@@ -869,51 +868,43 @@ body.site-ready .footer {
 
   revealItems.forEach((item) => observer.observe(item));
 
-window.addEventListener("load", () => {
-  const introLogo = document.getElementById("introLogo");
-  const navBrand = document.getElementById("navBrand");
-  const loader = document.getElementById("introLoader");
+  window.addEventListener("load", () => {
+    const introLogo = document.getElementById("introLogo");
+    const navBrand = document.getElementById("navBrand");
+    const loader = document.getElementById("introLoader");
 
-  if (!introLogo || !navBrand) return;
+    if (!introLogo || !navBrand || !loader) return;
 
-  const startRect = introLogo.getBoundingClientRect();
-  const endRect = navBrand.getBoundingClientRect();
+    const startRect = introLogo.getBoundingClientRect();
+    const endRect = navBrand.getBoundingClientRect();
 
-  introLogo.classList.add("fly");
-  introLogo.style.top = startRect.top + "px";
-  introLogo.style.left = startRect.left + "px";
-  introLogo.style.width = startRect.width + "px";
+    introLogo.classList.add("fly");
+    introLogo.style.top = startRect.top + "px";
+    introLogo.style.left = startRect.left + "px";
+    introLogo.style.width = startRect.width + "px";
 
-  setTimeout(() => {
-    introLogo.style.top = endRect.top + "px";
-    introLogo.style.left = endRect.left + "px";
+    setTimeout(() => {
+      introLogo.style.top = endRect.top + "px";
+      introLogo.style.left = endRect.left + "px";
 
-    const scaleX = endRect.width / startRect.width;
-    const scaleY = endRect.height / startRect.height;
+      const scaleX = endRect.width / startRect.width;
+      const scaleY = endRect.height / startRect.height;
 
-    introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
-  }, 100);
+      introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
+    }, 350);
 
-  // 🔥 navbar logosunu göster
-  setTimeout(() => {
-    navBrand.classList.add("show");
-  }, 700);
+    setTimeout(() => {
+      navBrand.classList.add("show");
+    }, 1400);
 
-  // 🔥 uçan logo yavaşça kaybolsun
-  setTimeout(() => {
-    introLogo.style.opacity = "0";
-  }, 1000);
+    setTimeout(() => {
+      loader.classList.add("hide");
+    }, 1700);
 
-  // 🔥 ekran yukarı kalksın
-  setTimeout(() => {
-    loader.classList.add("hide");
-  }, 900);
-
-  // 🔥 en son kaldır
-  setTimeout(() => {
-    loader.remove();
-  }, 2000);
-});
+    setTimeout(() => {
+      loader.remove();
+    }, 2900);
+  });
 </script>
   
 </body>
