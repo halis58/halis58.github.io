@@ -41,12 +41,12 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: "Inter", Arial, sans-serif;
-      background: red;
-      color: var(--text);
-      overflow-x: hidden;
-    }
+   body {
+  font-family: "Inter", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
 
     a {
       color: inherit;
@@ -74,10 +74,10 @@
     }
 
     .nav.scrolled {
-  background: rgba(242, 231, 221, 0.85);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(17, 17, 17, 0.06);
-    }
+  background: rgba(246, 246, 244, 0.9);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
+}
 
     .nav-inner {
       width: min(1380px, calc(100% - 56px));
@@ -145,8 +145,9 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  background: #f2e7dd;
+  background: var(--bg); 
 }
+
 
     .hero-media {
       position: absolute;
