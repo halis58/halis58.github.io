@@ -438,6 +438,90 @@
   background: var(--bg);
 }
 
+    .intro-loader {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.intro-loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  color: #ffffff;
+  transform: scale(1);
+  transition: transform 1.2s cubic-bezier(.2,.8,.2,1), opacity 0.8s ease;
+}
+
+.intro-loader.hide .intro-logo {
+  transform: scale(0.92);
+  opacity: 0;
+}
+
+.intro-kaya {
+  font-family: "Adam Bold", sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.intro-arch {
+  font-family: "Adam Light", sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.10em;
+  line-height: 1;
+}
+
+/* Site ilk açılırken içerik hafif gizli gelsin */
+body.is-loading .nav,
+body.is-loading .hero,
+body.is-loading .intro,
+body.is-loading .projects,
+body.is-loading .footer {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.nav,
+.hero,
+.intro,
+.projects,
+.footer {
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+body.site-ready .nav,
+body.site-ready .hero,
+body.site-ready .intro,
+body.site-ready .projects,
+body.site-ready .footer {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 760px) {
+  .intro-logo {
+    gap: 10px;
+  }
+
+  .intro-kaya,
+  .intro-arch {
+    font-size: 18px;
+  }
+}
+
 .footer-inner {
   display: flex;
   justify-content: space-between;
@@ -580,7 +664,7 @@
     }
   </style>
 </head>
-<body>
+<body class="is-loading">
 
   <header class="nav" id="navbar">
     <div class="nav-inner">
@@ -731,33 +815,58 @@
   </div>
 </footer>
 
+  
+
   <script>
-    const navbar = document.getElementById("navbar");
-    const heroImage = document.getElementById("heroImage");
-    const revealItems = document.querySelectorAll(".reveal");
+  const navbar = document.getElementById("navbar");
+  const heroImage = document.getElementById("heroImage");
+  const revealItems = document.querySelectorAll(".reveal");
+  const introLoader = document.getElementById("introLoader");
 
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
 
-      if (y > 40) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
+    if (y > 40) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+
+    heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
       }
-
-      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
     });
+  }, { threshold: 0.18 });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    }, { threshold: 0.18 });
+  revealItems.forEach((item) => observer.observe(item));
 
-    revealItems.forEach((item) => observer.observe(item));
-  </script>
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.body.classList.remove("is-loading");
+      document.body.classList.add("site-ready");
+    }, 250);
 
+    setTimeout(() => {
+      introLoader.classList.add("hide");
+    }, 1400);
+
+    setTimeout(() => {
+      introLoader.remove();
+    }, 2300);
+  });
+</script>
+  
+<div class="intro-loader" id="introLoader">
+  <div class="intro-logo" id="introLogo">
+    <span class="intro-kaya">KAYA</span>
+    <span class="intro-arch">ARCHITECTURES</span>
+  </div>
+</div>
+  
 </body>
 </html>
