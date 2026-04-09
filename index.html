@@ -23,8 +23,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
     :root {
-  --bg: #f7f3ee;
-  --bg-soft: #f1ece6;
+  --bg: #f3e2c6;
+  --bg-soft: #ead8ba;
   --text: #111111;
   --muted: rgba(17, 17, 17, 0.58);
   --line: rgba(17, 17, 17, 0.08);
@@ -360,19 +360,45 @@
 
     /* FOOTER */
     .footer {
-      padding: 28px 0 36px;
-      border-top: 1px solid var(--line);
-      background: var(--bg);
-    }
+  padding: 34px 0 42px;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
 
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  color: var(--muted);
+}
+
+.footer-brand {
+  font-family: "Adam Light", sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
 
     @keyframes fadeUp {
       from {
@@ -453,9 +479,17 @@
       }
 
       .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-brand {
+  font-size: 22px;
+}
+
+.footer-links {
+  gap: 14px;
+}
 
       .scroll-mark {
         display: none;
@@ -572,16 +606,47 @@
             <h3 class="project-name">Stone Frame House</h3>
           </div>
         </article>
+
+       <article class="project-card mid reveal">
+  <img
+    class="project-image"
+    src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop"
+    alt="Interior detail"
+  />
+  <div class="project-overlay"></div>
+  <div class="project-info">
+    <div class="project-type">Interior</div>
+    <h3 class="project-name">Quiet Lounge</h3>
+  </div>
+</article>
+
+<article class="project-card mid reveal">
+  <img
+    class="project-image"
+    src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop"
+    alt="Villa exterior"
+  />
+  <div class="project-overlay"></div>
+  <div class="project-info">
+    <div class="project-type">Villa</div>
+    <h3 class="project-name">Courtyard House</h3>
+  </div>
+</article> 
       </div>
     </div>
   </section>
 
   <footer class="footer" id="contact">
-    <div class="container footer-inner">
-      <div>KAYA ARCHITECTURES</div>
-      <div>info@kayaarchitectures.com</div>
+  <div class="container footer-inner">
+    <div class="footer-brand">KAYA ARCHITECTURES</div>
+
+    <div class="footer-links">
+      <a href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
+      <a href="https://www.behance.net/" target="_blank">Behance</a>
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <script>
     const navbar = document.getElementById("navbar");
