@@ -891,16 +891,19 @@ body.site-ready .footer {
       const scaleY = endRect.height / startRect.height;
 
       introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
-    }, 350);
+    }, 600);
 
+    // Bara vardıktan sonra gerçek navbar logosunu aç
     setTimeout(() => {
       navBrand.classList.add("show");
     }, 1400);
 
+    // Loader yukarı süpürülsün
     setTimeout(() => {
       loader.classList.add("hide");
     }, 1700);
 
+    // En son intro katmanını kaldır
     setTimeout(() => {
       loader.remove();
     }, 2900);
