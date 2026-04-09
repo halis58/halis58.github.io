@@ -20,22 +20,15 @@
       font-style: normal;
     }
 
-    @font-face {
-      font-family: "Adam Medium";
-      src: url("./Adam-Medium.ttf") format("truetype");
-      font-weight: 500;
-      font-style: normal;
-    }
-
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
     :root {
-      --bg: #f5f3ee;
-      --bg-soft: #ece8e1;
-      --text: #161616;
-      --muted: #6b6b6b;
-      --line: rgba(0, 0, 0, 0.08);
-      --card: #f0ece5;
+      --bg: #f8f4ed;
+      --bg-soft: #f3eee6;
+      --text: #111111;
+      --muted: rgba(17, 17, 17, 0.62);
+      --line: rgba(17, 17, 17, 0.08);
+      --white: #ffffff;
     }
 
     * {
@@ -66,7 +59,7 @@
     }
 
     .container {
-      width: min(1380px, calc(100% - 48px));
+      width: min(1380px, calc(100% - 56px));
       margin: 0 auto;
     }
 
@@ -76,211 +69,195 @@
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 50;
-      background: rgba(245, 243, 238, 0.78);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      z-index: 100;
+      transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(248, 244, 237, 0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(17, 17, 17, 0.06);
     }
 
     .nav-inner {
-      width: min(1380px, calc(100% - 48px));
+      width: min(1380px, calc(100% - 56px));
       margin: 0 auto;
-      height: 82px;
+      height: 92px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .brand {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-      gap: 5px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 14px;
+      color: var(--white);
+      transition: color 0.35s ease;
+      white-space: nowrap;
+    }
+
+    .nav.scrolled .brand {
+      color: var(--text);
     }
 
     .brand-kaya {
       font-family: "Adam Bold", sans-serif;
-      font-size: 26px;
-      letter-spacing: 0.22em;
+      font-size: 28px;
+      letter-spacing: 0.18em;
+      line-height: 1;
     }
 
     .brand-arch {
       font-family: "Adam Light", sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.5em;
-      margin-left: 2px;
+      font-size: 13px;
+      letter-spacing: 0.34em;
+      line-height: 1;
     }
 
     .nav-links {
       display: flex;
-      gap: 32px;
-      font-size: 13px;
-      letter-spacing: 0.12em;
+      align-items: center;
+      gap: 34px;
+      color: rgba(255,255,255,0.82);
+      transition: color 0.35s ease;
+      font-size: 12px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+    }
+
+    .nav.scrolled .nav-links {
       color: var(--muted);
     }
 
     .nav-links a {
-      position: relative;
-      transition: color 0.25s ease;
+      transition: opacity 0.25s ease, color 0.25s ease;
     }
 
     .nav-links a:hover {
+      opacity: 1;
+      color: var(--white);
+    }
+
+    .nav.scrolled .nav-links a:hover {
       color: var(--text);
     }
 
     /* HERO */
     .hero {
-      min-height: 100vh;
-      display: grid;
-      align-items: end;
-      padding: 140px 0 48px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 1.15fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 28px 0 8px;
-    }
-
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-family: "Adam Medium", "Inter", sans-serif;
-      font-size: clamp(42px, 7vw, 96px);
-      line-height: 0.95;
-      letter-spacing: 0.06em;
-      margin-bottom: 24px;
-      max-width: 680px;
-    }
-
-    .hero-text {
-      max-width: 470px;
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--muted);
-      margin-bottom: 34px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 22px;
-      border: 1px solid var(--text);
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: all 0.25s ease;
-    }
-
-    .btn:hover {
-      background: var(--text);
-      color: #fff;
-    }
-
-    .btn.secondary {
-      border-color: var(--line);
-      color: var(--muted);
-      background: transparent;
-    }
-
-    .btn.secondary:hover {
-      border-color: var(--text);
-      color: var(--text);
-      background: transparent;
-    }
-
-    .hero-image-wrap {
       position: relative;
-      min-height: 760px;
+      min-height: 100vh;
+      width: 100%;
       overflow: hidden;
-      border-radius: 24px;
-      background: var(--bg-soft);
+      background: #ddd;
     }
 
-    .hero-image {
+    .hero-media {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.02);
+      transform: scale(1.03);
+      will-change: transform;
     }
 
-    .hero-caption {
+    .hero-overlay {
       position: absolute;
-      left: 24px;
-      bottom: 22px;
-      background: rgba(255,255,255,0.58);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.5);
-      padding: 12px 14px;
-      border-radius: 16px;
-      font-size: 12px;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.10) 30%, rgba(0,0,0,0.18) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 0 42px 0;
+    }
+
+    .hero-panel {
+      width: 100%;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .hero-title-wrap {
+      max-width: 760px;
+      color: var(--white);
+      transform: translateY(34px);
+      opacity: 0;
+      animation: fadeUp 1.25s cubic-bezier(.2,.8,.2,1) forwards;
+      animation-delay: 0.15s;
+    }
+
+    .hero-title {
+      font-family: "Adam Light", sans-serif;
+      font-size: clamp(34px, 5.2vw, 72px);
+      line-height: 0.98;
       letter-spacing: 0.08em;
+      margin-bottom: 16px;
       text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .scroll-mark {
+      color: rgba(255,255,255,0.72);
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      padding-bottom: 6px;
+      animation: floatDown 2.2s ease-in-out infinite;
+      white-space: nowrap;
     }
 
     /* INTRO */
     .intro {
-      padding: 90px 0 30px;
+      padding: 110px 0 70px;
+      background: var(--bg);
     }
 
     .intro-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 30px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-
-    .section-label {
-      font-size: 12px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
+      align-items: start;
     }
 
     .intro-title {
-      font-family: "Adam Medium", "Inter", sans-serif;
-      font-size: clamp(28px, 4vw, 52px);
-      line-height: 1.05;
-      letter-spacing: 0.04em;
-      max-width: 600px;
+      font-family: "Adam Light", sans-serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      line-height: 1.02;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      max-width: 680px;
     }
 
     .intro-text {
-      font-size: 15px;
-      line-height: 1.9;
       color: var(--muted);
-      max-width: 600px;
-      padding-top: 10px;
+      font-size: 14px;
+      line-height: 1.9;
+      max-width: 420px;
+      padding-top: 8px;
     }
 
     /* PROJECTS */
     .projects {
-      padding: 70px 0 100px;
+      padding: 20px 0 110px;
+      background: var(--bg);
     }
 
     .projects-head {
@@ -292,17 +269,17 @@
     }
 
     .projects-title {
-      font-family: "Adam Medium", "Inter", sans-serif;
-      font-size: clamp(28px, 4vw, 48px);
-      letter-spacing: 0.05em;
-      line-height: 1.05;
+      font-family: "Adam Light", sans-serif;
+      font-size: clamp(26px, 3.2vw, 42px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .projects-note {
       color: var(--muted);
-      font-size: 14px;
-      max-width: 420px;
-      line-height: 1.7;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
     }
 
     .project-grid {
@@ -312,67 +289,84 @@
     }
 
     .project-card {
-      grid-column: span 6;
-      background: #fff;
-      border-radius: 22px;
+      position: relative;
       overflow: hidden;
-      border: 1px solid var(--line);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 24px;
+      background: var(--bg-soft);
+      min-height: 420px;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: transform 0.9s cubic-bezier(.2,.8,.2,1), opacity 0.9s ease;
+    }
+
+    .project-card.show {
+      transform: translateY(0);
+      opacity: 1;
     }
 
     .project-card.large {
       grid-column: span 7;
+      min-height: 620px;
     }
 
     .project-card.small {
       grid-column: span 5;
+      min-height: 620px;
     }
 
-    .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+    .project-card.mid {
+      grid-column: span 6;
+      min-height: 520px;
     }
 
     .project-image {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      aspect-ratio: 4 / 5;
+      height: 100%;
       object-fit: cover;
-      background: var(--bg-soft);
+      transition: transform 0.8s ease;
     }
 
-    .project-body {
-      padding: 18px 18px 20px;
+    .project-card:hover .project-image {
+      transform: scale(1.04);
     }
 
-    .project-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.08) 45%, rgba(0,0,0,0.02) 100%);
+    }
+
+    .project-info {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 20px;
+      z-index: 2;
+      color: var(--white);
+    }
+
+    .project-type {
       font-size: 11px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.20em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .project-name {
-      font-family: "Adam Medium", "Inter", sans-serif;
-      font-size: 22px;
-      letter-spacing: 0.04em;
+      opacity: 0.78;
       margin-bottom: 10px;
     }
 
-    .project-desc {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-      max-width: 95%;
+    .project-name {
+      font-family: "Adam Light", sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     /* FOOTER */
     .footer {
-      padding: 26px 0 34px;
+      padding: 28px 0 36px;
       border-top: 1px solid var(--line);
+      background: var(--bg);
     }
 
     .footer-inner {
@@ -384,49 +378,62 @@
       font-size: 13px;
     }
 
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(34px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatDown {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.72;
+      }
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
+
     @media (max-width: 1100px) {
-      .hero-grid,
       .intro-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-image-wrap {
-        min-height: 560px;
+      .project-card.large,
+      .project-card.small,
+      .project-card.mid {
+        grid-column: span 12;
+        min-height: 520px;
       }
 
-      .project-card,
-      .project-card.large,
-      .project-card.small {
-        grid-column: span 12;
+      .hero-panel {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
 
     @media (max-width: 760px) {
+      .container,
       .nav-inner {
-        height: 76px;
+        width: min(100% - 28px, 1380px);
+      }
+
+      .nav-inner {
+        height: 82px;
       }
 
       .nav-links {
         display: none;
       }
 
-      .container,
-      .nav-inner {
-        width: min(100% - 28px, 1380px);
-      }
-
-      .hero {
-        padding-top: 116px;
-      }
-
-      .hero-image-wrap {
-        min-height: 420px;
-        border-radius: 18px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
+      .brand {
+        gap: 10px;
       }
 
       .brand-kaya {
@@ -434,15 +441,34 @@
       }
 
       .brand-arch {
-        font-size: 10px;
-        letter-spacing: 0.38em;
+        font-size: 11px;
+        letter-spacing: 0.26em;
+      }
+
+      .hero-content {
+        padding-bottom: 28px;
+      }
+
+      .project-card.large,
+      .project-card.small,
+      .project-card.mid {
+        min-height: 420px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .scroll-mark {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
-  <header class="nav">
+  <header class="nav" id="navbar">
     <div class="nav-inner">
       <a href="#" class="brand">
         <span class="brand-kaya">KAYA</span>
@@ -450,146 +476,108 @@
       </a>
 
       <nav class="nav-links">
-        <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-left">
-          <div class="eyebrow">Villa & Interior Design</div>
-          <h1 class="hero-title">Refined spaces shaped with clarity, balance and quiet luxury.</h1>
-          <p class="hero-text">
-            KAYA ARCHITECTURES creates villa and interior projects with a calm architectural language,
-            premium detailing and timeless spatial composition.
-          </p>
+  <section class="hero">
+    <div class="hero-media">
+      <img
+        id="heroImage"
+        src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=2200&auto=format&fit=crop"
+        alt="Luxury architecture"
+      />
+    </div>
+    <div class="hero-overlay"></div>
 
-          <div class="hero-actions">
-            <a href="#projects" class="btn">View Projects</a>
-            <a href="#about" class="btn secondary">Discover Studio</a>
-          </div>
+    <div class="hero-content">
+      <div class="container hero-panel">
+        <div class="hero-title-wrap">
+          <h1 class="hero-title">Villa & Interior Architecture</h1>
+          <div class="hero-subtitle">Visual clarity / Quiet luxury / Timeless spaces</div>
         </div>
 
-        <div class="hero-image-wrap">
+        <div class="scroll-mark">Scroll</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="container intro-grid">
+      <h2 class="intro-title">
+        Spaces designed with less noise, more atmosphere.
+      </h2>
+
+      <p class="intro-text">
+        Selected villa and interior works with a calm, premium and image-led presentation.
+      </p>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="projects-head">
+        <h2 class="projects-title">Selected Projects</h2>
+        <div class="projects-note">Villa / Interior</div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card large reveal">
           <img
-            class="hero-image"
-            src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=1800&auto=format&fit=crop"
-            alt="Luxury villa exterior"
+            class="project-image"
+            src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop"
+            alt="Villa project"
           />
-          <div class="hero-caption">Contemporary Villa / Exterior</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="intro" id="about">
-      <div class="container intro-grid">
-        <div>
-          <div class="section-label">Studio</div>
-          <h2 class="intro-title">Minimal decisions, premium atmosphere, timeless architecture.</h2>
-        </div>
-
-        <div>
-          <p class="intro-text">
-            We design spaces that feel elevated without excess. Our approach combines material sensitivity,
-            restrained composition and architectural precision to create homes and interiors that remain elegant over time.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="projects" id="projects">
-      <div class="container">
-        <div class="projects-head">
-          <div>
-            <div class="section-label">Selected Projects</div>
-            <h2 class="projects-title">Villa & Interior Grid</h2>
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <div class="project-type">Villa</div>
+            <h3 class="project-name">Hillside Residence</h3>
           </div>
+        </article>
 
-          <p class="projects-note">
-            A curated selection of residential and interior works presented in a clean editorial grid.
-          </p>
-        </div>
+        <article class="project-card small reveal">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop"
+            alt="Interior project"
+          />
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <div class="project-type">Interior</div>
+            <h3 class="project-name">Soft Tone Living</h3>
+          </div>
+        </article>
 
-        <div class="project-grid">
-          <article class="project-card large">
-            <img
-              class="project-image"
-              src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400&auto=format&fit=crop"
-              alt="Villa project"
-            />
-            <div class="project-body">
-              <div class="project-meta">
-                <span>Villa</span>
-                <span>2026</span>
-              </div>
-              <h3 class="project-name">Hillside Residence</h3>
-              <p class="project-desc">
-                A bright villa concept defined by soft natural tones, clean volumes and a restrained luxury atmosphere.
-              </p>
-            </div>
-          </article>
+        <article class="project-card mid reveal">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop"
+            alt="Kitchen project"
+          />
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <div class="project-type">Interior</div>
+            <h3 class="project-name">Gallery Kitchen</h3>
+          </div>
+        </article>
 
-          <article class="project-card small">
-            <img
-              class="project-image"
-              src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop"
-              alt="Interior project"
-            />
-            <div class="project-body">
-              <div class="project-meta">
-                <span>Interior</span>
-                <span>2026</span>
-              </div>
-              <h3 class="project-name">Soft Tone Living</h3>
-              <p class="project-desc">
-                A calm interior language with subtle textures, warm daylight and precise proportions.
-              </p>
-            </div>
-          </article>
-
-          <article class="project-card small">
-            <img
-              class="project-image"
-              src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1400&auto=format&fit=crop"
-              alt="Kitchen interior"
-            />
-            <div class="project-body">
-              <div class="project-meta">
-                <span>Interior</span>
-                <span>2026</span>
-              </div>
-              <h3 class="project-name">Gallery Kitchen</h3>
-              <p class="project-desc">
-                A minimal kitchen composition balancing functionality, warmth and material clarity.
-              </p>
-            </div>
-          </article>
-
-          <article class="project-card large">
-            <img
-              class="project-image"
-              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1400&auto=format&fit=crop"
-              alt="Villa facade"
-            />
-            <div class="project-body">
-              <div class="project-meta">
-                <span>Villa</span>
-                <span>2026</span>
-              </div>
-              <h3 class="project-name">Stone Frame House</h3>
-              <p class="project-desc">
-                A villa facade study with refined massing, generous glazing and a sophisticated exterior rhythm.
-              </p>
-            </div>
-          </article>
-        </div>
+        <article class="project-card mid reveal">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop"
+            alt="Villa facade"
+          />
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <div class="project-type">Villa</div>
+            <h3 class="project-name">Stone Frame House</h3>
+          </div>
+        </article>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <footer class="footer" id="contact">
     <div class="container footer-inner">
@@ -597,6 +585,34 @@
       <div>info@kayaarchitectures.com</div>
     </div>
   </footer>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+    const heroImage = document.getElementById("heroImage");
+    const revealItems = document.querySelectorAll(".reveal");
+
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+
+      if (y > 40) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, { threshold: 0.18 });
+
+    revealItems.forEach((item) => observer.observe(item));
+  </script>
 
 </body>
 </html>
