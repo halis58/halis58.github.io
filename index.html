@@ -65,18 +65,19 @@
 
     /* NAV */
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: #111111; /* 🔥 EKLEDİK */
+  transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+}
 
     .nav.scrolled {
-  background: rgba(246, 246, 244, 0.9);
+  background: #111111;
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
     .nav-inner {
@@ -92,7 +93,7 @@
   display: inline-flex;
   align-items: center;
   gap: 18px;
-  color: var(--white);
+  color: #ffffff;
   transition: color 0.35s ease;
   white-space: nowrap;
 }
@@ -115,7 +116,7 @@
       display: flex;
       align-items: center;
       gap: 34px;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.8);
       transition: color 0.35s ease;
       font-size: 12px;
       letter-spacing: 0.18em;
@@ -132,7 +133,7 @@
 
     .nav-links a:hover {
       opacity: 1;
-      color: var(--white);
+      color: #ffffff;
     }
 
     .nav.scrolled .nav-links a:hover {
