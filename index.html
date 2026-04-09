@@ -471,7 +471,7 @@
 }
 
 .intro-kaya {
-  font-family: "Adam Bold", sans-serif;
+  font-family: "Adam Medium", sans-serif;
   font-size: 30px;
   letter-spacing: 0.12em;
   line-height: 1;
@@ -664,7 +664,7 @@ body.site-ready .footer {
     }
   </style>
 </head>
-<body class="is-loading">
+<body">
 
   <header class="nav" id="navbar">
     <div class="nav-inner">
@@ -815,10 +815,8 @@ body.site-ready .footer {
   </div>
 </footer>
 
-  
-
   <script>
-  const navbar = document.getElementById("navbar");
+   const navbar = document.getElementById("navbar");
   const heroImage = document.getElementById("heroImage");
   const revealItems = document.querySelectorAll(".reveal");
   const introLoader = document.getElementById("introLoader");
@@ -826,13 +824,17 @@ body.site-ready .footer {
   window.addEventListener("scroll", () => {
     const y = window.scrollY;
 
-    if (y > 40) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+    if (navbar) {
+      if (y > 40) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
     }
 
-    heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+    if (heroImage) {
+      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+    }
   });
 
   const observer = new IntersectionObserver((entries) => {
@@ -847,22 +849,21 @@ body.site-ready .footer {
 
   window.addEventListener("load", () => {
     setTimeout(() => {
-      document.body.classList.remove("is-loading");
-      document.body.classList.add("site-ready");
-    }, 250);
+      if (introLoader) {
+        introLoader.classList.add("hide");
+      }
+    }, 1200);
 
     setTimeout(() => {
-      introLoader.classList.add("hide");
-    }, 1400);
-
-    setTimeout(() => {
-      introLoader.remove();
-    }, 2300);
+      if (introLoader) {
+        introLoader.remove();
+      }
+    }, 2200);
   });
 </script>
   
 <div class="intro-loader" id="introLoader">
-  <div class="intro-logo" id="introLogo">
+  <div class="intro-logo">
     <span class="intro-kaya">KAYA</span>
     <span class="intro-arch">ARCHITECTURES</span>
   </div>
