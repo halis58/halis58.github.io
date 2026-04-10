@@ -408,28 +408,30 @@
     }
 
     .project-detail-inner {
-      width: min(1180px, calc(100% - 56px));
-      margin: 0 auto;
-    }
+  width: min(1180px, calc(100% - 56px));
+  margin: 0 auto;
+  position: relative;
+}
 
     .project-detail-close {
-      position: sticky;
-      top: 22px;
-      z-index: 20;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 12px 18px;
-      margin-bottom: 40px;
-      cursor: pointer;
-      font-family: "Inter", sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      display: inline-flex;
-    }
-
+  position: sticky;
+  top: 22px;
+  z-index: 200;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 18px;
+  margin-bottom: 40px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  display: inline-flex;
+  width: fit-content;
+  align-self: flex-start;
+}
     .project-detail-head {
       max-width: 900px;
       margin-bottom: 50px;
@@ -481,6 +483,17 @@
       height: 42vh;
     }
 
+    .project-detail-sticky {
+  position: sticky;
+  top: 22px;
+  z-index: 200;
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.project-detail-close {
+  pointer-events: auto;
+}
     /* reveal */
     .reveal {
       opacity: 0;
@@ -917,9 +930,11 @@
 
   <section class="project-detail" id="projectDetail">
     <div class="project-detail-inner">
-      <button class="project-detail-close" id="projectDetailClose">kapat</button>
+  <div class="project-detail-sticky">
+    <button class="project-detail-close" id="projectDetailClose">kapat</button>
+  </div>
 
-      <div class="project-detail-head">
+  <div class="project-detail-head">
         <p class="project-detail-type" id="detailType"></p>
         <h2 class="project-detail-title" id="detailTitle"></h2>
         <p class="project-detail-text" id="detailText"></p>
