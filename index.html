@@ -469,13 +469,6 @@
   transform: scale(1);
 }
 
-.intro-logo.fly {
-  position: fixed;
-  z-index: 10000;
-  transition: top 1s cubic-bezier(.2,.8,.2,1),
-              left 1s cubic-bezier(.2,.8,.2,1),
-              transform 1s cubic-bezier(.2,.8,.2,1),
-              opacity 0.8s ease;
 }
 
     .intro-logo-overlay {
@@ -511,12 +504,6 @@
   line-height: 1;
 }
 
-.intro-arch {
-  font-family: "Adam Light", sans-serif;
-  font-size: 30px;
-  letter-spacing: 0.10em;
-  line-height: 1;
-}
 
 /* Site ilk açılırken içerik hafif gizli gelsin */
 body.is-loading .nav,
@@ -851,9 +838,11 @@ body.site-ready .footer {
 
 <div class="intro-loader" id="introLoader"></div>
 
-<div class="intro-logo intro-logo-overlay" id="introLogo">
-  <span class="intro-kaya">KAYA</span>
-  <span class="intro-arch">ARCHITECTURES</span>
+<div class="intro-logo-overlay" id="introLogoOverlay">
+  <div class="intro-logo" id="introLogo">
+    <span class="intro-kaya">KAYA</span>
+    <span class="intro-arch">ARCHITECTURES</span>
+  </div>
 </div>
 
 <script>
@@ -889,30 +878,30 @@ body.site-ready .footer {
 
   window.addEventListener("load", () => {
     const introLogo = document.getElementById("introLogo");
+    const introLogoOverlay = document.getElementById("introLogoOverlay");
     const navBrand = document.getElementById("navBrand");
     const loader = document.getElementById("introLoader");
 
-    if (!introLogo || !navBrand || !loader) return;
+    if (!introLogo || !introLogoOverlay || !navBrand || !loader) return;
 
     const startRect = introLogo.getBoundingClientRect();
     const endRect = navBrand.getBoundingClientRect();
 
     introLogo.classList.add("fly");
-    introLogo.style.top = startRect.top + "px";
-    introLogo.style.left = startRect.left + "px";
-    introLogo.style.width = startRect.width + "px";
-    introLogo.style.height = startRect.height + "px";
-    introLogo.style.display = "inline-flex";
-    introLogo.style.alignItems = "center";
-    introLogo.style.justifyContent = "center";
+    introLogo.style.top = `${startRect.top}px`;
+    introLogo.style.left = `${startRect.left}px`;
+    introLogo.style.width = `${startRect.width}px`;
+    introLogo.style.height = `${startRect.height}px`;
+
+    // ortalayan wrapper artık gereksiz
+    introLogoOverlay.style.display = "block";
 
     setTimeout(() => {
-      introLogo.style.top = endRect.top + "px";
-      introLogo.style.left = endRect.left + "px";
-
       const scaleX = endRect.width / startRect.width;
       const scaleY = endRect.height / startRect.height;
 
+      introLogo.style.top = `${endRect.top}px`;
+      introLogo.style.left = `${endRect.left}px`;
       introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
     }, 600);
 
@@ -925,12 +914,8 @@ body.site-ready .footer {
     }, 1700);
 
     setTimeout(() => {
-      introLogo.style.opacity = "0";
-    }, 2050);
-
-    setTimeout(() => {
+      introLogoOverlay.remove();
       loader.remove();
-      introLogo.remove();
     }, 2500);
   });
 </script>
