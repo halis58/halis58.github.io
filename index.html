@@ -299,10 +299,23 @@
     }
 
     .project-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-    }
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.project-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.project-grid::-webkit-scrollbar-thumb {
+  background: rgba(17,17,17,0.15);
+  border-radius: 999px;
+}
 
     .project-card {
       position: relative;
@@ -321,20 +334,30 @@
       transform: translateY(0);
     }
 
-    .project-card.large {
-      grid-column: span 7;
-      min-height: 620px;
-    }
+    .project-card {
+  flex: 0 0 72vw;
+  max-width: 72vw;
+  min-height: 76vh;
+  scroll-snap-align: start;
+}
 
-    .project-card.small {
-      grid-column: span 5;
-      min-height: 620px;
-    }
+.project-card.large {
+  flex-basis: 78vw;
+  max-width: 78vw;
+  min-height: 82vh;
+}
 
-    .project-card.mid {
-      grid-column: span 6;
-      min-height: 520px;
-    }
+.project-card.small {
+  flex-basis: 56vw;
+  max-width: 56vw;
+  min-height: 70vh;
+}
+
+.project-card.mid {
+  flex-basis: 62vw;
+  max-width: 62vw;
+  min-height: 74vh;
+}
 
     .project-card:hover {
       transform: translateY(-4px) scale(1.015);
@@ -663,6 +686,19 @@
         min-height: 520px;
       }
 
+      .project-grid {
+  gap: 14px;
+}
+
+.project-card,
+.project-card.large,
+.project-card.small,
+.project-card.mid {
+  flex-basis: 86vw;
+  max-width: 86vw;
+  min-height: 56vh;
+}
+
       .hero-panel {
         flex-direction: column;
         align-items: flex-start;
@@ -804,7 +840,7 @@
     <div class="container">
       <div class="projects-head">
         <h2 class="projects-title">selected projects</h2>
-        <div class="projects-note">villa / interior</div>
+        <div class="projects-note">villa / interior / drag to explore</div>
       </div>
 
       <div class="project-grid">
@@ -1100,6 +1136,19 @@
     projectDetailClose.addEventListener("click", () => {
       projectDetail.classList.remove("open");
     });
+
+    
+  const projectGrid = document.querySelector(".project-grid");
+
+  if (projectGrid) {
+    projectGrid.addEventListener("wheel", (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        projectGrid.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
+
   </script>
 
 </body>
