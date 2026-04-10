@@ -491,14 +491,14 @@
 
 .intro-kaya {
   font-family: "Adam Medium", sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   letter-spacing: 0.12em;
   line-height: 1;
 }
 
 .intro-arch {
   font-family: "Adam Light", sans-serif;
-  font-size: 30px;
+  font-size: 28px;
   letter-spacing: 0.10em;
   line-height: 1;
 }
@@ -891,28 +891,26 @@ body.site-ready .footer {
     introLogo.style.left = `${startRect.left}px`;
     introLogo.style.width = `${startRect.width}px`;
     introLogo.style.height = `${startRect.height}px`;
+    introLogo.style.transform = "none";
 
     setTimeout(() => {
-  const scaleX = endRect.width / startRect.width;
-  const scaleY = endRect.height / startRect.height;
+      introLogo.style.top = `${endRect.top}px`;
+      introLogo.style.left = `${endRect.left}px`;
+      introLogo.style.transform = "none";
+    }, 600);
 
-  introLogo.style.top = `${endRect.top}px`;
-  introLogo.style.left = `${endRect.left - 2}px`;
-  introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
-}, 600);
+    setTimeout(() => {
+      loader.classList.add("hide");
+    }, 1700);
 
-setTimeout(() => {
-  navBrand.classList.add("show");
-}, 2100);
+    setTimeout(() => {
+      navBrand.classList.add("show");
+    }, 2450);
 
-setTimeout(() => {
-  loader.classList.add("hide");
-}, 1700);
-
-setTimeout(() => {
-  introLogoOverlay.remove();
-  loader.remove();
-}, 2500);
+    setTimeout(() => {
+      introLogoOverlay.remove();
+      loader.remove();
+    }, 2500);
   });
 </script>
   
