@@ -422,8 +422,13 @@
 }
 
 .project-detail-close {
+  position: sticky;
+  top: 22px;
+  z-index: 20;
   border: 1px solid var(--line);
-  background: transparent;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 12px 18px;
   margin-bottom: 40px;
   cursor: pointer;
@@ -431,6 +436,7 @@
   font-size: 13px;
   letter-spacing: 0.08em;
   color: var(--text);
+  display: inline-flex;
 }
 
 .project-detail-head {
@@ -1010,7 +1016,17 @@ body.viewer-open {
           </div>
         </article>
 
-        <article class="project-card small reveal">
+        <article
+  class="project-card small reveal"
+  data-title="soft tone living"
+  data-type="interior"
+  data-text="A quiet living environment shaped by daylight, pale textures and balanced proportions. The intention is warmth without visual noise."
+  data-images='[
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"
+  ]'
+>
           <img
             class="project-image"
             src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop"
@@ -1023,7 +1039,17 @@ body.viewer-open {
           </div>
         </article>
 
-        <article class="project-card mid reveal">
+        <article
+  class="project-card mid reveal"
+  data-title="gallery kitchen"
+  data-type="interior"
+  data-text="A minimal kitchen composition with clear lines, warm material transitions and a gallery-like atmosphere."
+  data-images='[
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"
+  ]'
+>
           <img
             class="project-image"
             src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop"
@@ -1036,7 +1062,17 @@ body.viewer-open {
           </div>
         </article>
 
-        <article class="project-card mid reveal">
+        <article
+  class="project-card mid reveal"
+  data-title="stone frame house"
+  data-type="villa"
+  data-text="This project explores massing, shadow and transparency through a calm exterior language and carefully framed openings."
+  data-images='[
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop"
+  ]'
+>
           <img
             class="project-image"
             src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop"
@@ -1049,7 +1085,17 @@ body.viewer-open {
           </div>
         </article>
 
-       <article class="project-card mid reveal">
+      <article
+  class="project-card mid reveal"
+  data-title="quiet lounge"
+  data-type="interior"
+  data-text="A soft and restrained interior sequence where material texture and tonal balance create a slower atmosphere."
+  data-images='[
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop"
+  ]'
+>
   <img
     class="project-image"
     src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop"
@@ -1062,7 +1108,17 @@ body.viewer-open {
   </div>
 </article>
 
-<article class="project-card mid reveal">
+<article
+  class="project-card mid reveal"
+  data-title="courtyard house"
+  data-type="villa"
+  data-text="A residence organized through open courtyard relationships, filtered light and a measured architectural expression."
+  data-images='[
+    "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop"
+  ]'
+>
   <img
     class="project-image"
     src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop"
@@ -1078,18 +1134,21 @@ body.viewer-open {
     </div>
   </section>
 
-  <footer class="footer" id="contact">
-  <div class="container footer-inner">
-    <div class="footer-brand">KAYA ARCHITECTURES</div>
+   <section class="project-detail" id="projectDetail">
+  <div class="project-detail-inner">
+    <button class="project-detail-close" id="projectDetailClose">close</button>
 
-    <div class="footer-links">
-      <a href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
-      <a href="https://www.behance.net/" target="_blank">Behance</a>
-      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    <div class="project-detail-head">
+      <p class="project-detail-type" id="detailType"></p>
+      <h2 class="project-detail-title" id="detailTitle"></h2>
+      <p class="project-detail-text" id="detailText"></p>
     </div>
-  </div>
 
-    <section class="project-detail" id="projectDetail">
+    <div class="project-detail-gallery" id="detailGallery"></div>
+  </div>
+</section>
+
+  <section class="project-detail" id="projectDetail">
   <div class="project-detail-inner">
     <button class="project-detail-close" id="projectDetailClose">kapat</button>
 
@@ -1102,6 +1161,17 @@ body.viewer-open {
     <div class="project-detail-gallery" id="detailGallery"></div>
   </div>
 </section>
+
+  <footer class="footer" id="contact">
+  <div class="container footer-inner">
+    <div class="footer-brand">KAYA ARCHITECTURES</div>
+
+    <div class="footer-links">
+      <a href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
+      <a href="https://www.behance.net/" target="_blank">Behance</a>
+      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+    </div>
+  </div>
 </footer>
 
 <div class="intro-loader" id="introLoader"></div>
@@ -1288,6 +1358,52 @@ body.viewer-open {
     if (e.key === "Escape") closeViewer();
     if (e.key === "ArrowRight") nextImage();
     if (e.key === "ArrowLeft") prevImage();
+  });
+
+  const projectCards = document.querySelectorAll(".project-card");
+  const projectDetail = document.getElementById("projectDetail");
+  const projectDetailClose = document.getElementById("projectDetailClose");
+  const detailType = document.getElementById("detailType");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailText = document.getElementById("detailText");
+  const detailGallery = document.getElementById("detailGallery");
+
+  function openProjectDetail(card) {
+    const title = card.dataset.title || "";
+    const type = card.dataset.type || "";
+    const text = card.dataset.text || "";
+    const images = JSON.parse(card.dataset.images || "[]");
+
+    detailType.textContent = type;
+    detailTitle.textContent = title;
+    detailText.textContent = text;
+    detailGallery.innerHTML = "";
+
+    images.forEach((src, index) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = title;
+
+      if (index === 0) img.className = "large";
+      else if (index === 1) img.className = "medium";
+      else img.className = "small";
+
+      detailGallery.appendChild(img);
+    });
+
+    projectDetail.classList.add("open");
+
+    setTimeout(() => {
+      projectDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", () => openProjectDetail(card));
+  });
+
+  projectDetailClose.addEventListener("click", () => {
+    projectDetail.classList.remove("open");
   });
 
   const projectCards = document.querySelectorAll(".project-card");
