@@ -478,6 +478,25 @@
               opacity 0.8s ease;
 }
 
+    .intro-logo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.intro-logo.fly {
+  position: fixed;
+  z-index: 10001;
+  transition: top 1s cubic-bezier(.2,.8,.2,1),
+              left 1s cubic-bezier(.2,.8,.2,1),
+              transform 1s cubic-bezier(.2,.8,.2,1),
+              opacity 0.4s ease;
+}
+
 .intro-kaya {
   font-family: "Adam Medium", sans-serif;
   font-size: 30px;
@@ -830,11 +849,11 @@ body.site-ready .footer {
   </div>
 </footer>
 
-<div class="intro-loader" id="introLoader">
-  <div class="intro-logo" id="introLogo">
-    <span class="intro-kaya">KAYA</span>
-    <span class="intro-arch">ARCHITECTURES</span>
-  </div>
+<div class="intro-loader" id="introLoader"></div>
+
+<div class="intro-logo intro-logo-overlay" id="introLogo">
+  <span class="intro-kaya">KAYA</span>
+  <span class="intro-arch">ARCHITECTURES</span>
 </div>
 
 <script>
@@ -882,6 +901,10 @@ body.site-ready .footer {
     introLogo.style.top = startRect.top + "px";
     introLogo.style.left = startRect.left + "px";
     introLogo.style.width = startRect.width + "px";
+    introLogo.style.height = startRect.height + "px";
+    introLogo.style.display = "inline-flex";
+    introLogo.style.alignItems = "center";
+    introLogo.style.justifyContent = "center";
 
     setTimeout(() => {
       introLogo.style.top = endRect.top + "px";
@@ -893,20 +916,22 @@ body.site-ready .footer {
       introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
     }, 600);
 
-    // Bara vardıktan sonra gerçek navbar logosunu aç
     setTimeout(() => {
       navBrand.classList.add("show");
     }, 1400);
 
-    // Loader yukarı süpürülsün
     setTimeout(() => {
       loader.classList.add("hide");
     }, 1700);
 
-    // En son intro katmanını kaldır
+    setTimeout(() => {
+      introLogo.style.opacity = "0";
+    }, 2050);
+
     setTimeout(() => {
       loader.remove();
-    }, 2900);
+      introLogo.remove();
+    }, 2500);
   });
 </script>
   
