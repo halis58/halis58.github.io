@@ -484,15 +484,36 @@
     }
 
     .project-detail-sticky {
-  position: sticky;
-  top: 22px;
-  z-index: 200;
-  margin-bottom: 40px;
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
   pointer-events: none;
 }
 
 .project-detail-close {
   pointer-events: auto;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text);
+  padding: 14px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-detail-close:hover {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.12);
 }
     /* reveal */
     .reveal {
@@ -931,7 +952,7 @@
   <section class="project-detail" id="projectDetail">
     <div class="project-detail-inner">
   <div class="project-detail-sticky">
-    <button class="project-detail-close" id="projectDetailClose">kapat</button>
+    <button class="project-detail-close" id="projectDetailClose">close</button>
   </div>
 
   <div class="project-detail-head">
