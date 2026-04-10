@@ -406,6 +406,96 @@
       text-transform: uppercase;
     }
 
+    .project-detail {
+  display: none;
+  background: var(--bg);
+  padding: 80px 0 140px;
+}
+
+.project-detail.open {
+  display: block;
+}
+
+.project-detail-inner {
+  width: min(1180px, calc(100% - 56px));
+  margin: 0 auto;
+}
+
+.project-detail-close {
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 12px 18px;
+  margin-bottom: 40px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.project-detail-head {
+  max-width: 900px;
+  margin-bottom: 50px;
+}
+
+.project-detail-type {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.project-detail-title {
+  font-family: "Adam Light", sans-serif;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 1;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.project-detail-text {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 760px;
+}
+
+.project-detail-gallery {
+  display: grid;
+  gap: 24px;
+}
+
+.project-detail-gallery img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.project-detail-gallery img.large {
+  height: 78vh;
+}
+
+.project-detail-gallery img.medium {
+  height: 58vh;
+}
+
+.project-detail-gallery img.small {
+  height: 42vh;
+}
+
+@media (max-width: 760px) {
+  .project-detail-inner {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .project-detail-gallery img.large,
+  .project-detail-gallery img.medium,
+  .project-detail-gallery img.small {
+    height: auto;
+  }
+}
+
     .project-card {
   opacity: 0;
   transform: translateY(50px);
@@ -868,8 +958,8 @@ body.viewer-open {
     <div class="hero-content">
       <div class="container hero-panel">
         <div class="hero-title-wrap">
-          <h1 class="hero-title">Villa & Interior Architecture</h1>
-          <div class="hero-subtitle">Visual clarity / Quiet luxury / Timeless spaces</div>
+          <h1 class="hero-title">Vılla & Interıor Archıtecture</h1>
+          <div class="hero-subtitle">Vısual clarıty / Quıet luxury / Tımeless spaces</div>
         </div>
 
         <div class="scroll-mark">Scroll</div>
@@ -880,7 +970,7 @@ body.viewer-open {
   <section class="intro">
     <div class="container intro-grid">
       <h2 class="intro-title">
-        Spaces designed with less noise, more atmosphere.
+        Spaces desıgned wıth less noıse, more atmosphere.
       </h2>
 
       <p class="intro-text">
@@ -899,12 +989,14 @@ body.viewer-open {
       <div class="project-grid">
         <article
   class="project-card large reveal"
-  data-gallery='[
+  data-title="hıllsıde resıdence"
+  data-type="villa"
+  data-text="Soft natural tones, quiet material transitions and a restrained architectural language shape this residence. The project is designed as a calm sequence of interior and exterior spaces."
+  data-images='[
     "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop"
   ]'
-  data-title="Hillside Residence"
 >
           <img
             class="project-image"
@@ -927,7 +1019,7 @@ body.viewer-open {
           <div class="project-overlay"></div>
           <div class="project-info">
             <div class="project-type">Interior</div>
-            <h3 class="project-name">Soft Tone Living</h3>
+            <h3 class="project-name">Soft Tone Lıvıng</h3>
           </div>
         </article>
 
@@ -935,12 +1027,12 @@ body.viewer-open {
           <img
             class="project-image"
             src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop"
-            alt="Kitchen project"
+            alt="Kıtchen project"
           />
           <div class="project-overlay"></div>
           <div class="project-info">
             <div class="project-type">Interior</div>
-            <h3 class="project-name">Gallery Kitchen</h3>
+            <h3 class="project-name">Gallery Kıtchen</h3>
           </div>
         </article>
 
@@ -966,7 +1058,7 @@ body.viewer-open {
   <div class="project-overlay"></div>
   <div class="project-info">
     <div class="project-type">Interior</div>
-    <h3 class="project-name">Quiet Lounge</h3>
+    <h3 class="project-name">Quıet Lounge</h3>
   </div>
 </article>
 
@@ -996,6 +1088,20 @@ body.viewer-open {
       <a href="https://www.instagram.com/" target="_blank">Instagram</a>
     </div>
   </div>
+
+    <section class="project-detail" id="projectDetail">
+  <div class="project-detail-inner">
+    <button class="project-detail-close" id="projectDetailClose">kapat</button>
+
+    <div class="project-detail-head">
+      <p class="project-detail-type" id="detailType"></p>
+      <h2 class="project-detail-title" id="detailTitle"></h2>
+      <p class="project-detail-text" id="detailText"></p>
+    </div>
+
+    <div class="project-detail-gallery" id="detailGallery"></div>
+  </div>
+</section>
 </footer>
 
 <div class="intro-loader" id="introLoader"></div>
@@ -1182,6 +1288,52 @@ body.viewer-open {
     if (e.key === "Escape") closeViewer();
     if (e.key === "ArrowRight") nextImage();
     if (e.key === "ArrowLeft") prevImage();
+  });
+
+  const projectCards = document.querySelectorAll(".project-card");
+  const projectDetail = document.getElementById("projectDetail");
+  const projectDetailClose = document.getElementById("projectDetailClose");
+  const detailType = document.getElementById("detailType");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailText = document.getElementById("detailText");
+  const detailGallery = document.getElementById("detailGallery");
+
+  function openProjectDetail(card) {
+    const title = card.dataset.title || "";
+    const type = card.dataset.type || "";
+    const text = card.dataset.text || "";
+    const images = JSON.parse(card.dataset.images || "[]");
+
+    detailType.textContent = type;
+    detailTitle.textContent = title;
+    detailText.textContent = text;
+    detailGallery.innerHTML = "";
+
+    images.forEach((src, index) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = title;
+
+      if (index === 0) img.className = "large";
+      else if (index === 1) img.className = "medium";
+      else img.className = "small";
+
+      detailGallery.appendChild(img);
+    });
+
+    projectDetail.classList.add("open");
+
+    setTimeout(() => {
+      projectDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", () => openProjectDetail(card));
+  });
+
+  projectDetailClose.addEventListener("click", () => {
+    projectDetail.classList.remove("open");
   });
 </script>
   
