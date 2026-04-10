@@ -469,8 +469,6 @@
   transform: scale(1);
 }
 
-}
-
     .intro-logo-overlay {
   position: fixed;
   inset: 0;
@@ -893,15 +891,12 @@ body.site-ready .footer {
     introLogo.style.width = `${startRect.width}px`;
     introLogo.style.height = `${startRect.height}px`;
 
-    // ortalayan wrapper artık gereksiz
-    introLogoOverlay.style.display = "block";
-
     setTimeout(() => {
       const scaleX = endRect.width / startRect.width;
       const scaleY = endRect.height / startRect.height;
 
       introLogo.style.top = `${endRect.top}px`;
-      introLogo.style.left = `${endRect.left}px`;
+      introLogo.style.left = `${endRect.left - 1}px`;
       introLogo.style.transform = `scale(${scaleX}, ${scaleY})`;
     }, 600);
 
