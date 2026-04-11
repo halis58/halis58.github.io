@@ -733,7 +733,7 @@
   align-items: center;
   justify-content: center;
   opacity: 1;
-  transition: opacity 1.6s cubic-bezier(.22,.61,.36,1);
+  transition: opacity 2.8s cubic-bezier(.22,.61,.36,1);
 }
 
 .site-intro.fade-out {
@@ -741,30 +741,28 @@
   pointer-events: none;
 }
 
-/* logo da fade olsun */
 .site-intro-logo {
   opacity: 1;
-  transition: opacity 1.2s ease;
+  transition: opacity 2.2s ease;
 }
 
 .site-intro-logo.fade-out {
   opacity: 0;
 }
 
-    .site-intro-kaya {
-      font-family: "Adam Medium", sans-serif;
-      font-size: 28px;
-      letter-spacing: 0.12em;
-      line-height: 1;
-    }
+.site-intro-kaya {
+  font-family: "Adam Medium", sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
 
-    .site-intro-arch {
-      font-family: "Adam Light", sans-serif;
-      font-size: 28px;
-      letter-spacing: 0.10em;
-      line-height: 1;
-    }
-
+.site-intro-arch {
+  font-family: "Adam Light", sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.11em;
+  line-height: 1;
+}
     .reveal {
       opacity: 0;
       transform: translateY(60px);
@@ -937,22 +935,22 @@
       }
 
       .site-intro-logo {
-        gap: 8px;
-      }
+  gap: 10px;
+}
 
-      .site-intro-kaya {
-        font-family: "Adam Medium", sans-serif;
-        font-size: 16px;
-        letter-spacing: 0.10em;
-        line-height: 1;
-      }
+.site-intro-kaya {
+  font-family: "Adam Medium", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.10em;
+  line-height: 1;
+}
 
-      .site-intro-arch {
-        font-family: "Adam Light", sans-serif;
-        font-size: 16px;
-        letter-spacing: 0.07em;
-        line-height: 1;
-      }
+.site-intro-arch {
+  font-family: "Adam Light", sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.07em;
+  line-height: 1;
+}
     }
   </style>
 </head>
@@ -1283,16 +1281,20 @@
 
   const logo = document.querySelector(".site-intro-logo");
 
-  // biraz bekleyip fade başlat
+  // siyah intro biraz daha uzun ekranda kalır
+  setTimeout(() => {
+    if (logo) logo.classList.add("fade-out");
+  }, 1800);
+
+  // arka plan daha geç açılmaya başlar
   setTimeout(() => {
     siteIntro.classList.add("fade-out");
-    if (logo) logo.classList.add("fade-out");
-  }, 600);
+  }, 2300);
 
   // tamamen kaldır
   setTimeout(() => {
     siteIntro.remove();
-  }, 2200);
+  }, 5400);
 });
 
     const projectCards = document.querySelectorAll(".project-card");
