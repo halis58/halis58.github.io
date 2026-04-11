@@ -6,103 +6,93 @@
 <title>KAYA ARCHITECTURES</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#f5f5f5;
-}
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-/* NAV */
-.nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  padding:24px;
-  display:flex;
-  justify-content:space-between;
-  z-index:10;
-}
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    overflow-x: hidden;
+  }
 
-.brand{
-  opacity:0;
-  transition:0.6s;
-}
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 20;
+  }
 
-.brand.show{
-  opacity:1;
-}
+  .brand {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    color: #111;
+    letter-spacing: 0.3em;
+    font-size: 18px;
+  }
 
-/* INTRO */
-.intro-loader{
-  position:fixed;
-  inset:0;
-  background:#000;
-  z-index:9999;
-  overflow:hidden;
-}
+  .brand.show {
+    opacity: 1;
+  }
 
-.intro-loader-fill{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:0%;
-  background:#111;
-  transition:height 2s ease;
-}
+  .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+  }
 
-.intro-loader-fill.rise{
-  height:100%;
-}
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
 
-.intro-logo-overlay{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10000;
-}
+  /* Intro katmanı */
+  .intro {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    will-change: clip-path;
+  }
 
-.intro-logo {
-  color: white;
-  font-size: 28px;
-  letter-spacing: 6px;
-  position: relative;
-  z-index: 2;
-}
+  .intro.opening {
+    animation: introLift 2.4s cubic-bezier(.22,.61,.36,1) forwards;
+  }
 
-/* logo mask */
-.intro-mask {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background: black;
-  z-index: 3;
-  transition: height 2s cubic-bezier(.22,.61,.36,1);
-}
+  .intro-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: clamp(20px, 2vw, 30px);
+    letter-spacing: 0.35em;
+    font-weight: 400;
+    pointer-events: none;
+  }
 
-.intro-mask.rise {
-  height: 100%;
-}
-
-.intro-logo.fade{
-  opacity:0;
-  transform:scale(0.96);
-}
-
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
+  @keyframes introLift {
+    0% {
+      clip-path: inset(0 0 0 0);
+    }
+    100% {
+      clip-path: inset(100% 0 0 0);
+    }
+  }
 </style>
 </head>
-
 <body>
 
 <header class="nav">
@@ -113,59 +103,24 @@ body{
   <h1>site açıldı</h1>
 </section>
 
-<!-- INTRO -->
-<div class="intro-loader" id="loader">
-  <div class="intro-loader-fill" id="fill"></div>
-</div>
-
-<div class="intro-logo-overlay" id="overlay">
-  <div class="intro-logo" id="logo">
-    KAYA ARCHITECTURES
-  </div>
-</div>
-
-  <div class="intro-logo-overlay" id="overlay">
-  <div class="intro-logo">
-    KAYA ARCHITECTURES
-    <div class="intro-mask" id="mask"></div>
-  </div>
+<div class="intro" id="intro">
+  <div class="intro-logo">KAYA ARCHITECTURES</div>
 </div>
 
 <script>
-window.addEventListener("load", () => {
+  window.addEventListener("load", () => {
+    const intro = document.getElementById("intro");
+    const navBrand = document.getElementById("navBrand");
 
-  const fill = document.getElementById("fill");
-  const logo = document.getElementById("logo");
-  const loader = document.getElementById("loader");
-  const overlay = document.getElementById("overlay");
-  const navBrand = document.getElementById("navBrand");
+    setTimeout(() => {
+      intro.classList.add("opening");
+    }, 250);
 
-  // siyah yükseliyor
-  const mask = document.getElementById("mask");
-
-setTimeout(()=>{
-  mask.classList.add("rise");
-},200);
-
-  // logo kayboluyor
-  setTimeout(()=>{
-    logo.classList.add("fade");
-  },1400);
-
-  // intro kapanıyor
-  setTimeout(()=>{
-    loader.style.opacity="0";
-    loader.style.transition="0.8s";
-  },2200);
-
-  // tamamen temizleniyor
-  setTimeout(()=>{
-    loader.remove();
-    overlay.remove();
-    navBrand.classList.add("show");
-  },3000);
-
-});
+    setTimeout(() => {
+      intro.remove();
+      navBrand.classList.add("show");
+    }, 2750);
+  });
 </script>
 
 </body>
