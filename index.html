@@ -462,72 +462,112 @@
 
     /* CTA */
     .cta {
-      padding: 0 0 130px;
-      background: var(--bg);
-    }
+  padding: 0 0 130px;
+  background: var(--bg);
+}
 
-    .cta-box {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 72px 0;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 30px;
-      align-items: end;
-    }
+.cta-shell {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 80px 0;
+}
 
-    .cta-title {
-      font-size: clamp(34px, 4.8vw, 68px);
-      line-height: 0.96;
-      letter-spacing: 0.03em;
-      text-transform: lowercase;
-    }
+.cta-box {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: end;
+}
 
-    .cta-right {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: flex-start;
-    }
+.cta-title {
+  font-size: clamp(34px, 4.8vw, 72px);
+  line-height: 0.94;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  max-width: 760px;
+}
 
-    .cta-text {
-      font-size: 14px;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 420px;
-    }
+.cta-right {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  align-items: flex-start;
+}
 
-    .cta-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-    }
+.cta-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 420px;
+}
 
-    .cta-links a {
-      font-size: 13px;
-      letter-spacing: 0.10em;
-      color: var(--text);
-      text-transform: lowercase;
-      position: relative;
-    }
+.cta-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(17,17,17,0.18);
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
 
-    .cta-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
+.cta-mail:hover {
+  border-color: rgba(17,17,17,0.65);
+  opacity: 0.85;
+}
 
-    .cta-links a:hover::after {
-      transform: scaleX(1);
-    }
+.cta-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 6px;
+}
 
+.cta-social {
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(17,17,17,0.10);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cta-social:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.96);
+  border-color: rgba(17,17,17,0.18);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.cta-social svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text);
+}
+
+@media (max-width: 1100px) {
+  .cta-box {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .cta-shell {
+    padding: 58px 0;
+  }
+
+  .cta-social {
+    width: 42px;
+    height: 42px;
+  }
+}
     /* detail */
     .project-detail {
       display: none;
@@ -1054,9 +1094,10 @@
     </div>
   </section>
 
-  <section class="cta" id="contact">
-    <div class="container">
-      <div class="cta-box reveal">
+ <section class="cta" id="contact">
+  <div class="container">
+    <div class="cta-shell reveal">
+      <div class="cta-box">
         <h2 class="cta-title">let’s discuss your project.</h2>
 
         <div class="cta-right">
@@ -1064,15 +1105,42 @@
             private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.
           </p>
 
-          <div class="cta-links">
-            <a href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">instagram</a>
-            <a href="https://www.behance.net/" target="_blank" rel="noopener noreferrer">behance</a>
+          <a class="cta-mail" href="mailto:info@kayaarchitectures.com">
+            info@kayaarchitectures.com
+          </a>
+
+          <div class="cta-socials">
+            <a class="cta-social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                <circle cx="12" cy="12" r="4.2"></circle>
+                <circle cx="17.4" cy="6.6" r="1"></circle>
+              </svg>
+            </a>
+
+            <a class="cta-social" href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" aria-label="behance">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                <path d="M4 8.5h5.5a3 3 0 0 1 0 6H4z"></path>
+                <path d="M4 14.5h6a3 3 0 0 1 0 6H4z" transform="translate(0 -2.5)"></path>
+                <path d="M14 12h6"></path>
+                <path d="M15 9.5h4"></path>
+                <path d="M14 15c0 1.7 1.3 3 3.2 3 1.4 0 2.4-.5 3-1.6"></path>
+                <path d="M20.2 13.8c0-1.8-1.2-3.3-3-3.3-1.9 0-3.2 1.5-3.2 3.5h6.2z"></path>
+              </svg>
+            </a>
+
+            <a class="cta-social" href="mailto:info@kayaarchitectures.com" aria-label="email">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="M4 7l8 6 8-6"></path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="project-detail" id="projectDetail">
     <div class="project-detail-inner">
