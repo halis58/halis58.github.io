@@ -628,15 +628,55 @@
       pointer-events: none;
     }
 
-    .intro-logo.fly {
-      position: fixed;
-      z-index: 10001;
-      transform-origin: top left;
-      transition: top 1s cubic-bezier(.2,.8,.2,1),
-                  left 1s cubic-bezier(.2,.8,.2,1),
-                  transform 1s cubic-bezier(.2,.8,.2,1),
-                  opacity 0.2s ease;
-    }
+    .intro-loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.intro-loader-fill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0%;
+  background: #111111;
+  transition: height 2.2s cubic-bezier(.22,.61,.36,1);
+}
+
+.intro-loader-fill.rise {
+  height: 100%;
+}
+
+.intro-logo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.intro-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  color: #ffffff;
+  opacity: 1;
+  transition: opacity 1.1s ease, transform 1.1s ease, filter 1.1s ease;
+}
+
+.intro-logo.fade-out {
+  opacity: 0;
+  transform: scale(0.985);
+  filter: blur(2px);
+}
 
     .intro-kaya {
       font-family: "Adam Medium", sans-serif;
@@ -1013,7 +1053,9 @@
     </div>
   </footer>
 
-  <div class="intro-loader" id="introLoader"></div>
+  <div class="intro-loader" id="introLoader">
+  <div class="intro-loader-fill" id="introLoaderFill"></div>
+</div>
 
   <div class="intro-logo-overlay" id="introLogoOverlay">
     <div class="intro-logo" id="introLogo">
@@ -1053,91 +1095,114 @@
 
     revealItems.forEach((item) => observer.observe(item));
 
-    window.addEventListener("load", () => {
-      const introLogo = document.getElementById("introLogo");
-      const introLogoOverlay = document.getElementById("introLogoOverlay");
-      const navBrand = document.getElementById("navBrand");
-      const loader = document.getElementById("introLoader");
+   <script>
+  const navbar = document.getElementById("navbar");
+  const heroImage = document.getElementById("heroImage");
+  const revealItems = document.querySelectorAll(".reveal");
 
-      if (!introLogo || !introLogoOverlay || !navBrand || !loader) return;
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
 
-      const startRect = introLogo.getBoundingClientRect();
-      const endRect = navBrand.getBoundingClientRect();
-
-      introLogo.classList.add("fly");
-      introLogo.style.top = `${startRect.top}px`;
-      introLogo.style.left = `${startRect.left}px`;
-      introLogo.style.width = `${startRect.width}px`;
-      introLogo.style.height = `${startRect.height}px`;
-      introLogo.style.transform = "none";
-
-      setTimeout(() => {
-        introLogo.style.top = `${endRect.top}px`;
-        introLogo.style.left = `${endRect.left}px`;
-        introLogo.style.transform = "none";
-      }, 600);
-
-      setTimeout(() => {
-        loader.classList.add("hide");
-      }, 1700);
-
-      setTimeout(() => {
-        navBrand.classList.add("show");
-      }, 2450);
-
-      setTimeout(() => {
-        introLogoOverlay.remove();
-        loader.remove();
-      }, 2500);
-    });
-
-    const projectCards = document.querySelectorAll(".project-card");
-    const projectDetail = document.getElementById("projectDetail");
-    const projectDetailClose = document.getElementById("projectDetailClose");
-    const detailType = document.getElementById("detailType");
-    const detailTitle = document.getElementById("detailTitle");
-    const detailText = document.getElementById("detailText");
-    const detailGallery = document.getElementById("detailGallery");
-
-    function openProjectDetail(card) {
-      const title = card.dataset.title || "";
-      const type = card.dataset.type || "";
-      const text = card.dataset.text || "";
-      const images = JSON.parse(card.dataset.images || "[]");
-
-      detailType.textContent = type;
-      detailTitle.textContent = title;
-      detailText.textContent = text;
-      detailGallery.innerHTML = "";
-
-      images.forEach((src, index) => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = title;
-
-        if (index === 0) img.className = "large";
-        else if (index === 1) img.className = "medium";
-        else img.className = "small";
-
-        detailGallery.appendChild(img);
-      });
-
-      projectDetail.classList.add("open");
-
-      setTimeout(() => {
-        projectDetail.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 80);
+    if (navbar) {
+      if (y > 40) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
     }
 
-    projectCards.forEach((card) => {
-      card.addEventListener("click", () => openProjectDetail(card));
+    if (heroImage) {
+      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+    }
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+    });
+  }, { threshold: 0.18 });
+
+  revealItems.forEach((item) => observer.observe(item));
+
+  window.addEventListener("load", () => {
+    const introLogo = document.getElementById("introLogo");
+    const introLogoOverlay = document.getElementById("introLogoOverlay");
+    const loader = document.getElementById("introLoader");
+    const loaderFill = document.getElementById("introLoaderFill");
+    const navBrand = document.getElementById("navBrand");
+
+    if (!introLogo || !introLogoOverlay || !loader || !loaderFill || !navBrand) return;
+
+    navBrand.classList.remove("show");
+
+    setTimeout(() => {
+      loaderFill.classList.add("rise");
+    }, 200);
+
+    setTimeout(() => {
+      introLogo.classList.add("fade-out");
+    }, 1500);
+
+    setTimeout(() => {
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 0.8s ease";
+    }, 2200);
+
+    setTimeout(() => {
+      introLogoOverlay.remove();
+      loader.remove();
+      navBrand.classList.add("show");
+    }, 3000);
+  });
+
+  const projectCards = document.querySelectorAll(".project-card");
+  const projectDetail = document.getElementById("projectDetail");
+  const projectDetailClose = document.getElementById("projectDetailClose");
+  const detailType = document.getElementById("detailType");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailText = document.getElementById("detailText");
+  const detailGallery = document.getElementById("detailGallery");
+
+  function openProjectDetail(card) {
+    const title = card.dataset.title || "";
+    const type = card.dataset.type || "";
+    const text = card.dataset.text || "";
+    const images = JSON.parse(card.dataset.images || "[]");
+
+    detailType.textContent = type;
+    detailTitle.textContent = title;
+    detailText.textContent = text;
+    detailGallery.innerHTML = "";
+
+    images.forEach((src, index) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = title;
+
+      if (index === 0) img.className = "large";
+      else if (index === 1) img.className = "medium";
+      else img.className = "small";
+
+      detailGallery.appendChild(img);
     });
 
-    projectDetailClose.addEventListener("click", () => {
-      projectDetail.classList.remove("open");
-    });
+    projectDetail.classList.add("open");
 
-    
+    setTimeout(() => {
+      projectDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  }
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", () => openProjectDetail(card));
+  });
+
+  projectDetailClose.addEventListener("click", () => {
+    projectDetail.classList.remove("open");
+  });
+
   const projectGrid = document.querySelector(".project-grid");
 
   if (projectGrid) {
@@ -1148,7 +1213,6 @@
       }
     }, { passive: false });
   }
-
   </script>
 
 </body>
