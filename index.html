@@ -99,15 +99,15 @@
       justify-content: space-between;
     }
 
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 18px;
-      color: #111111;
-      opacity: 0;
-      transition: opacity 0.5s ease, color 0.35s ease;
-      white-space: nowrap;
-    }
+    ..brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  color: #111111;
+  opacity: 1;
+  transition: color 0.35s ease;
+  white-space: nowrap;
+}
 
     .brand.show {
       opacity: 1;
@@ -575,7 +575,7 @@
     }
 
     .site-intro.opening {
-      animation: liftIntro 2.35s cubic-bezier(.22,.61,.36,1) forwards;
+      animation: liftIntro 3.2s cubic-bezier(.22,.61,.36,1) forwards;
     }
 
     .site-intro-logo {
@@ -1006,19 +1006,16 @@
     revealItems.forEach((item) => observer.observe(item));
 
     window.addEventListener("load", () => {
-      if (!siteIntro || !navBrand) return;
+  if (!siteIntro) return;
 
-      navBrand.classList.remove("show");
+  setTimeout(() => {
+    siteIntro.classList.add("opening");
+  }, 220);
 
-      setTimeout(() => {
-        siteIntro.classList.add("opening");
-      }, 220);
-
-      setTimeout(() => {
-        siteIntro.remove();
-        navBrand.classList.add("show");
-      }, 2700);
-    });
+  setTimeout(() => {
+    siteIntro.remove();
+  }, 3700);
+});
 
     const projectCards = document.querySelectorAll(".project-card");
     const projectDetail = document.getElementById("projectDetail");
