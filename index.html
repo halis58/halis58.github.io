@@ -725,31 +725,31 @@
     }
 
     .site-intro {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9999;
-      overflow: hidden;
-      height: 100vh;
-      will-change: height;
-    }
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 1.6s cubic-bezier(.22,.61,.36,1);
+}
 
-    .site-intro.opening {
-      animation: liftIntro 3.4s cubic-bezier(.22,.61,.36,1) forwards;
-    }
+.site-intro.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .site-intro-logo {
-      position: absolute;
-      left: 50%;
-      top: 50vh;
-      transform: translate(-50%, -50%);
-      display: inline-flex;
-      align-items: center;
-      gap: 18px;
-      color: #ffffff;
-      white-space: nowrap;
-      pointer-events: none;
-    }
+/* logo da fade olsun */
+.site-intro-logo {
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+.site-intro-logo.fade-out {
+  opacity: 0;
+}
 
     .site-intro-kaya {
       font-family: "Adam Medium", sans-serif;
@@ -1278,17 +1278,22 @@
 
     revealItems.forEach((item) => observer.observe(item));
 
-    window.addEventListener("load", () => {
-      if (!siteIntro) return;
+   window.addEventListener("load", () => {
+  if (!siteIntro) return;
 
-      setTimeout(() => {
-        siteIntro.classList.add("opening");
-      }, 220);
+  const logo = document.querySelector(".site-intro-logo");
 
-      setTimeout(() => {
-        siteIntro.remove();
-      }, 3700);
-    });
+  // biraz bekleyip fade başlat
+  setTimeout(() => {
+    siteIntro.classList.add("fade-out");
+    if (logo) logo.classList.add("fade-out");
+  }, 600);
+
+  // tamamen kaldır
+  setTimeout(() => {
+    siteIntro.remove();
+  }, 2200);
+});
 
     const projectCards = document.querySelectorAll(".project-card");
     const projectDetail = document.getElementById("projectDetail");
