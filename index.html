@@ -63,11 +63,28 @@ body{
   z-index:10000;
 }
 
-.intro-logo{
-  color:white;
-  font-size:28px;
-  letter-spacing:6px;
-  transition:1s;
+.intro-logo {
+  color: white;
+  font-size: 28px;
+  letter-spacing: 6px;
+  position: relative;
+  z-index: 2;
+}
+
+/* logo mask */
+.intro-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: black;
+  z-index: 3;
+  transition: height 2s cubic-bezier(.22,.61,.36,1);
+}
+
+.intro-mask.rise {
+  height: 100%;
 }
 
 .intro-logo.fade{
@@ -107,6 +124,13 @@ body{
   </div>
 </div>
 
+  <div class="intro-logo-overlay" id="overlay">
+  <div class="intro-logo">
+    KAYA ARCHITECTURES
+    <div class="intro-mask" id="mask"></div>
+  </div>
+</div>
+
 <script>
 window.addEventListener("load", () => {
 
@@ -117,9 +141,11 @@ window.addEventListener("load", () => {
   const navBrand = document.getElementById("navBrand");
 
   // siyah yükseliyor
-  setTimeout(()=>{
-    fill.classList.add("rise");
-  },200);
+  const mask = document.getElementById("mask");
+
+setTimeout(()=>{
+  mask.classList.add("rise");
+},200);
 
   // logo kayboluyor
   setTimeout(()=>{
