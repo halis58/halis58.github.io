@@ -1361,11 +1361,36 @@ body.modal-open {
   color: #ffffff;
 }
 
-.lang-flag {
-  font-size: 12px;
-  line-height: 1;
+.lang-flag-img {
+  width: 14px;
+  height: 14px;
+  object-fit: cover;
+  border-radius: 999px;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(17,17,17,0.08);
+}
+
+.lang-btn,
+.mobile-lang-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  opacity: 0.45;
+  transition: opacity 0.25s ease, color 0.25s ease;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 760px) {
+  .lang-flag-img {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .mobile-lang-switch {
@@ -1440,12 +1465,12 @@ body.modal-open {
 
    <div class="mobile-lang-switch">
   <button class="mobile-lang-btn" data-lang="tr" type="button">
-    <span class="lang-flag">🇹🇷</span>
+    <img class="lang-flag-img" src="https://flagcdn.com/w20/tr.png" alt="Türkçe">
     <span>TR</span>
   </button>
   <span>/</span>
   <button class="mobile-lang-btn" data-lang="en" type="button">
-    <span class="lang-flag">🇬🇧</span>
+    <img class="lang-flag-img" src="https://flagcdn.com/w20/gb.png" alt="English">
     <span>EN</span>
   </button>
 </div>
