@@ -636,8 +636,7 @@
   top: 90px;
   display: flex;
   justify-content: flex-end;
-  z-index: 30;
-  pointer-events: none;
+  z-index: 40;
   margin-bottom: 24px;
 }
 
@@ -1478,22 +1477,6 @@ body.modal-open {
     </div>
   </section>
 
-  <section class="project-detail" id="projectDetail">
-    <div class="project-detail-inner">
-      <div class="project-detail-sticky">
-        <button class="project-detail-close" id="projectDetailClose">close</button>
-      </div>
-
-      <div class="project-detail-head">
-        <p class="project-detail-type" id="detailType"></p>
-        <h2 class="project-detail-title" id="detailTitle"></h2>
-        <p class="project-detail-text" id="detailText"></p>
-      </div>
-
-      <div class="project-detail-gallery" id="detailGallery"></div>
-    </div>
-  </section>
-
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
@@ -1606,88 +1589,88 @@ body.modal-open {
   });
 
   const projectCards = document.querySelectorAll(".project-card");
-  const projectDetail = document.getElementById("projectDetail");
-  const projectDetailClose = document.getElementById("projectDetailClose");
-  const detailType = document.getElementById("detailType");
-  const detailTitle = document.getElementById("detailTitle");
-  const detailText = document.getElementById("detailText");
-  const detailGallery = document.getElementById("detailGallery");
+const projectDetail = document.getElementById("projectDetail");
+const detailType = document.getElementById("detailType");
+const detailTitle = document.getElementById("detailTitle");
+const detailText = document.getElementById("detailText");
+const detailGallery = document.getElementById("detailGallery");
 
-  let activeCard = null;
+let activeCard = null;
 
-  function openProjectDetail(card) {
-    const title = card.dataset.title || "";
-    const type = card.dataset.type || "";
-    const text = card.dataset.text || "";
-    const images = JSON.parse(card.dataset.images || "[]");
+function openProjectDetail(card) {
+  const title = card.dataset.title || "";
+  const type = card.dataset.type || "";
+  const text = card.dataset.text || "";
+  const images = JSON.parse(card.dataset.images || "[]");
 
-    detailType.textContent = type;
-    detailTitle.textContent = title;
-    detailText.textContent = text;
-    detailGallery.innerHTML = "";
+  detailType.textContent = type;
+  detailTitle.textContent = title;
+  detailText.textContent = text;
+  detailGallery.innerHTML = "";
 
-    images.forEach((src, index) => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = title;
+  images.forEach((src, index) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = title;
 
-      if (index === 0) img.className = "large";
-      else if (index === 1) img.className = "medium";
-      else img.className = "small";
+    if (index === 0) img.className = "large";
+    else if (index === 1) img.className = "medium";
+    else img.className = "small";
 
-      detailGallery.appendChild(img);
-    });
-
-    if (activeCard === card && projectDetail.classList.contains("open")) {
-      closeProjectDetail();
-      return;
-    }
-
-    activeCard = card;
-    card.insertAdjacentElement("afterend", projectDetail);
-
-    requestAnimationFrame(() => {
-      projectDetail.classList.add("open");
-    });
-
-    setTimeout(() => {
-      const firstImage = detailGallery.querySelector("img");
-      const target = firstImage || projectDetail;
-      const top = target.getBoundingClientRect().top + window.scrollY - 90;
-
-      window.scrollTo({
-        top,
-        behavior: "smooth"
-      });
-    }, 140);
-  }
-
-  function closeProjectDetail() {
-    if (!projectDetail.classList.contains("open")) return;
-
-    const cardTop = activeCard
-      ? activeCard.getBoundingClientRect().top + window.scrollY - 20
-      : window.scrollY;
-
-    projectDetail.classList.remove("open");
-
-    setTimeout(() => {
-      window.scrollTo({
-        top: cardTop,
-        behavior: "smooth"
-      });
-    }, 80);
-
-    activeCard = null;
-  }
-
-  projectCards.forEach((card) => {
-    card.addEventListener("click", () => openProjectDetail(card));
+    detailGallery.appendChild(img);
   });
 
-  if (projectDetailClose) {
-    projectDetailClose.addEventListener("click", closeProjectDetail);
+  if (activeCard === card && projectDetail.classList.contains("open")) {
+    closeProjectDetail();
+    return;
   }
+
+  activeCard = card;
+  card.insertAdjacentElement("afterend", projectDetail);
+
+  requestAnimationFrame(() => {
+    projectDetail.classList.add("open");
+  });
+
+  setTimeout(() => {
+    const firstImage = detailGallery.querySelector("img");
+    const target = firstImage || projectDetail;
+    const top = target.getBoundingClientRect().top + window.scrollY - 90;
+
+    window.scrollTo({
+      top,
+      behavior: "smooth"
+    });
+  }, 140);
+}
+
+function closeProjectDetail() {
+  if (!projectDetail || !projectDetail.classList.contains("open")) return;
+
+  const cardTop = activeCard
+    ? activeCard.getBoundingClientRect().top + window.scrollY - 20
+    : window.scrollY;
+
+  projectDetail.classList.remove("open");
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: cardTop,
+      behavior: "smooth"
+    });
+  }, 80);
+}
+
+projectCards.forEach((card) => {
+  card.addEventListener("click", () => openProjectDetail(card));
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#projectDetailClose")) {
+    e.preventDefault();
+    closeProjectDetail();
+  }
+});
 
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
