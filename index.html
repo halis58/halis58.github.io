@@ -1084,6 +1084,205 @@
     letter-spacing: 0.07em;
   }
 }
+
+    .inquiry-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 17, 17, 0.18);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    backdrop-filter 0.35s ease,
+    -webkit-backdrop-filter 0.35s ease;
+}
+
+.inquiry-modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.inquiry-modal {
+  width: min(720px, 100%);
+  border-radius: 30px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+  transform: translateY(20px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(.22,.61,.36,1),
+    opacity 0.3s ease;
+}
+
+.inquiry-modal-backdrop.open .inquiry-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.inquiry-modal-inner {
+  padding: 34px 34px 30px;
+}
+
+.inquiry-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: lowercase;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.inquiry-close:hover {
+  transform: scale(1.04);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.inquiry-kicker {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.inquiry-title {
+  font-size: clamp(34px, 4vw, 62px);
+  line-height: 0.96;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  max-width: 580px;
+  margin-bottom: 18px;
+}
+
+.inquiry-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 500px;
+  margin-bottom: 34px;
+}
+
+.inquiry-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.inquiry-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(17,17,17,0.18);
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.inquiry-mail:hover {
+  border-color: rgba(17,17,17,0.6);
+  opacity: 0.85;
+}
+
+.inquiry-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.inquiry-social-link {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--text);
+  position: relative;
+}
+
+.inquiry-social-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+
+.inquiry-social-link:hover::after {
+  transform: scaleX(1);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .inquiry-modal-backdrop {
+    padding: 14px;
+  }
+
+  .inquiry-modal {
+    border-radius: 24px;
+  }
+
+  .inquiry-modal-inner {
+    padding: 22px 20px 22px;
+  }
+
+  .inquiry-close {
+    top: 14px;
+    right: 14px;
+    padding: 11px 14px;
+    font-size: 11px;
+  }
+
+  .inquiry-title {
+    font-size: 34px;
+    max-width: 100%;
+    padding-right: 70px;
+  }
+
+  .inquiry-text {
+    margin-bottom: 26px;
+  }
+
+  .inquiry-socials {
+    gap: 14px;
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -1097,7 +1296,7 @@
 
     <nav class="nav-links">
       <a href="#projects">projects</a>
-      <a href="#contact">contact</a>
+      <a href="#" id="openInquiry">contact</a>
     </nav>
 
     <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
@@ -1110,7 +1309,7 @@
 <div class="mobile-menu-panel" id="mobileMenu">
   <div class="mobile-menu-inner">
     <a href="#projects" class="mobile-menu-link">projects</a>
-    <a href="#contact" class="mobile-menu-link">contact</a>
+   <a href="#" class="mobile-menu-link" id="openInquiryMobile">contact</a>
   </div>
 </div>
 
@@ -1280,46 +1479,6 @@
     </div>
   </section>
 
-  <section class="cta" id="contact">
-    <div class="container">
-      <div class="cta-shell reveal">
-        <div class="cta-box">
-          <h2 class="cta-title">let’s discuss your project.</h2>
-          <div class="cta-right">
-            <p class="cta-text">private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.</p>
-            <a class="cta-mail" href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
-            <div class="cta-socials">
-              <a class="cta-social" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="instagram">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                  <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                  <circle cx="12" cy="12" r="4.2"></circle>
-                  <circle cx="17.4" cy="6.6" r="1"></circle>
-                </svg>
-              </a>
-              <a class="cta-social" href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" aria-label="behance">
-  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-    <path d="M4 8.5h5.5a3 3 0 0 1 0 6H4z"></path>
-    <path d="M4 12h6a3 3 0 0 1 0 6H4z"></path>
-    <path d="M14 12h6"></path>
-    <path d="M15 9.5h4"></path>
-    <path d="M14 15c0 1.7 1.3 3 3.2 3 1.4 0 2.4-.5 3-1.6"></path>
-    <path d="M20.2 13.8c0-1.8-1.2-3.3-3-3.3-1.9 0-3.2 1.5-3.2 3.5h6.2z"></path>
-  </svg>
-</a>
-
-            <a class="cta-social" href="mailto:info@kayaarchitectures.com" aria-label="email">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <path d="M4 7l8 6 8-6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
   <section class="project-detail" id="projectDetail">
     <div class="project-detail-inner">
       <div class="project-detail-sticky">
@@ -1363,6 +1522,37 @@
         <div>designed for calm, timeless spaces</div>
       </div>
     </div>
+
+<div class="inquiry-modal-backdrop" id="inquiryBackdrop">
+  <div class="inquiry-modal" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
+    <button class="inquiry-close" id="closeInquiry" aria-label="close inquiry" type="button">close</button>
+
+    <div class="inquiry-modal-inner">
+      <p class="inquiry-kicker">inquiry</p>
+      <h2 class="inquiry-title" id="inquiryTitle">let’s discuss your project.</h2>
+
+      <p class="inquiry-text">
+        private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.
+      </p>
+
+      <div class="inquiry-actions">
+        <a class="inquiry-mail" href="mailto:info@kayaarchitectures.com">
+          info@kayaarchitectures.com
+        </a>
+
+        <div class="inquiry-socials">
+          <a class="inquiry-social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+            instagram
+          </a>
+          <a class="inquiry-social-link" href="https://www.behance.net/" target="_blank" rel="noopener noreferrer">
+            behance
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
   </footer>
 
   <div class="site-intro" id="siteIntro">
@@ -1526,6 +1716,61 @@
       }
     });
   }
+
+const inquiryBackdrop = document.getElementById("inquiryBackdrop");
+const inquiryModal = document.getElementById("inquiryModal");
+const openInquiry = document.getElementById("openInquiry");
+const openInquiryMobile = document.getElementById("openInquiryMobile");
+const closeInquiry = document.getElementById("closeInquiry");
+
+function openInquiryModal(e) {
+  if (e) e.preventDefault();
+  if (!inquiryBackdrop) return;
+
+  inquiryBackdrop.classList.add("open");
+  document.body.classList.add("modal-open");
+
+  if (mobileMenu) {
+    mobileMenu.classList.remove("open");
+    if (mobileMenuToggle) {
+      mobileMenuToggle.classList.remove("active");
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+}
+
+function closeInquiryModal() {
+  if (!inquiryBackdrop) return;
+  inquiryBackdrop.classList.remove("open");
+  document.body.classList.remove("modal-open");
+}
+
+if (openInquiry) {
+  openInquiry.addEventListener("click", openInquiryModal);
+}
+
+if (openInquiryMobile) {
+  openInquiryMobile.addEventListener("click", openInquiryModal);
+}
+
+if (closeInquiry) {
+  closeInquiry.addEventListener("click", closeInquiryModal);
+}
+
+if (inquiryBackdrop) {
+  inquiryBackdrop.addEventListener("click", (e) => {
+    if (e.target === inquiryBackdrop) {
+      closeInquiryModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeInquiryModal();
+  }
+});
+    
 </script>
 
 </body>
