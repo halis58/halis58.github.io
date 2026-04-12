@@ -1270,6 +1270,7 @@ body.modal-open {
     font-size: 34px;
     max-width: 100%;
     padding-right: 70px;
+    margin-top: 4px;
   }
 
   .inquiry-text {
@@ -1279,6 +1280,41 @@ body.modal-open {
   .inquiry-socials {
     gap: 14px;
   }
+}
+
+.inquiry-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.inquiry-brand-kaya {
+  font-family: "Adam Medium", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+}
+
+.inquiry-brand-arch {
+  font-family: "Adam Light", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+/* telefon */
+.inquiry-phone {
+  font-size: 14px;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(17,17,17,0.18);
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.inquiry-phone:hover {
+  border-color: rgba(17,17,17,0.6);
+  opacity: 0.85;
 }
     
   </style>
@@ -1510,6 +1546,10 @@ body.modal-open {
     <button class="inquiry-close" id="closeInquiry" aria-label="close inquiry" type="button">close</button>
 
     <div class="inquiry-modal-inner">
+      <div class="inquiry-brand">
+  <span class="inquiry-brand-kaya">KAYA</span>
+  <span class="inquiry-brand-arch">ARCHITECTURES</span>
+</div>
       <p class="inquiry-kicker">inquiry</p>
       <h2 class="inquiry-title" id="inquiryTitle">let’s discuss your project.</h2>
 
@@ -1521,6 +1561,10 @@ body.modal-open {
         <a class="inquiry-mail" href="mailto:info@kayaarchitectures.com">
           info@kayaarchitectures.com
         </a>
+
+        <a class="inquiry-phone" href="tel:+905551234567">
+  +90 555 123 45 67
+</a>
 
         <div class="inquiry-socials">
           <a class="inquiry-social-link" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
