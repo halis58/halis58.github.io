@@ -1751,22 +1751,23 @@ body.modal-open {
 
   revealItems.forEach((item) => observer.observe(item));
 
-  window.addEventListener("load", () => {
-    if (!siteIntro) return;
-    const logo = document.querySelector(".site-intro-logo");
+ document.addEventListener("DOMContentLoaded", () => {
+  if (!siteIntro) return;
 
-    setTimeout(() => {
-      if (logo) logo.classList.add("fade-out");
-    }, 1400);
+  const logo = document.querySelector(".site-intro-logo");
 
-    setTimeout(() => {
-      siteIntro.classList.add("fade-out");
-    }, 1700);
+  setTimeout(() => {
+    if (logo) logo.classList.add("fade-out");
+  }, 900);
 
-    setTimeout(() => {
-      siteIntro.remove();
-    }, 3200);
-  });
+  setTimeout(() => {
+    siteIntro.classList.add("fade-out");
+  }, 1200);
+
+  setTimeout(() => {
+    siteIntro.remove();
+  }, 2300);
+});
 
   const projectCards = document.querySelectorAll(".project-card");
 const projectDetail = document.getElementById("projectDetail");
