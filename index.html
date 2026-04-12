@@ -632,32 +632,23 @@
     }
 
     .project-detail-sticky {
-  position: sticky;
-  top: 18px;
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 24px;
-  z-index: 20;
-  pointer-events: none;
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  z-index: 999;
 }
 
 .project-detail-close {
-  pointer-events: auto;
   border: 1px solid rgba(17, 17, 17, 0.08);
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255,255,255,0.78);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  color: var(--text);
   padding: 14px 18px;
   border-radius: 999px;
-  cursor: pointer;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.08em;
-  line-height: 1;
+  cursor: pointer;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-  text-transform: lowercase;
 }
 
     .project-detail-close:hover {
@@ -954,6 +945,13 @@
   .nav-inner,
   .project-detail-inner {
     width: min(100% - 28px, 1380px);
+  }
+
+      .project-detail-sticky {
+    position: fixed;
+    top: 80px;
+    right: 14px;
+    z-index: 999;
   }
 
   .nav-inner {
