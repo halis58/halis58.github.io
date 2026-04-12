@@ -537,14 +537,19 @@
     }
 
     .project-detail {
-      display: none;
-      background: var(--bg);
-      padding: 80px 0 140px;
-    }
+  display: none;
+  background: var(--bg);
+  padding: 26px 0 90px;
+  grid-column: 1 / -1;
+}
 
-    .project-detail.open {
-      display: block;
-    }
+.project-detail.open {
+  display: block;
+}
+
+.project-detail-anchor {
+  width: 100%;
+}
 
     .project-detail-inner {
       width: min(1180px, calc(100% - 56px));
@@ -1302,53 +1307,85 @@
   }, 2500);
 });
 
-    const projectCards = document.querySelectorAll(".project-card");
-    const projectDetail = document.getElementById("projectDetail");
-    const projectDetailClose = document.getElementById("projectDetailClose");
-    const detailType = document.getElementById("detailType");
-    const detailTitle = document.getElementById("detailTitle");
-    const detailText = document.getElementById("detailText");
-    const detailGallery = document.getElementById("detailGallery");
+   const projectCards = document.querySelectorAll(".project-card");
+const projectGrid = document.getElementById("projectGrid");
+const projectDetail = document.getElementById("projectDetail");
+const projectDetailClose = document.getElementById("projectDetailClose");
+const detailType = document.getElementById("detailType");
+const detailTitle = document.getElementById("detailTitle");
+const detailText = document.getElementById("detailText");
+const detailGallery = document.getElementById("detailGallery");
 
-    function openProjectDetail(card) {
-      const title = card.dataset.title || "";
-      const type = card.dataset.type || "";
-      const text = card.dataset.text || "";
-      const images = JSON.parse(card.dataset.images || "[]");
+let activeCard = null;
 
-      detailType.textContent = type;
-      detailTitle.textContent = title;
-      detailText.textContent = text;
-      detailGallery.innerHTML = "";
+function openProjectDetail(card) {
+  const title = card.dataset.title || "";
+  const type = card.dataset.type || "";
+  const text = card.dataset.text || "";
+  const images = JSON.parse(card.dataset.images || "[]");
 
-      images.forEach((src, index) => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = title;
+  detailType.textContent = type;
+  detailTitle.textContent = title;
+  detailText.textContent = text;
+  detailGallery.innerHTML = "";
 
-        if (index === 0) img.className = "large";
-        else if (index === 1) img.className = "medium";
-        else img.className = "small";
+  images.forEach((src, index) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = title;
 
-        detailGallery.appendChild(img);
-      });
+    if (index === 0) img.className = "large";
+    else if (index === 1) img.className = "medium";
+    else img.className = "small";
 
-      projectDetail.classList.add("open");
+    detailGallery.appendChild(img);
+  });
 
-      setTimeout(() => {
-        projectDetail.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 80);
-    }
+  if (activeCard === card && projectDetail.classList.contains("open")) {
+    closeProjectDetail();
+    return;
+  }
 
-    projectCards.forEach((card) => {
-      card.addEventListener("click", () => openProjectDetail(card));
+  activeCard = card;
+
+  card.insertAdjacentElement("afterend", projectDetail);
+  projectDetail.classList.add("open");
+
+  setTimeout(() => {
+    const top = card.getBoundingClientRect().top + window.scrollY - 20;
+    window.scrollTo({
+      top,
+      behavior: "smooth"
     });
+  }, 60);
+}
 
-    if (projectDetailClose) {
-      projectDetailClose.addEventListener("click", () => {
-        projectDetail.classList.remove("open");
-      });
-    }
+function closeProjectDetail() {
+  if (!projectDetail.classList.contains("open")) return;
+
+  const cardTop = activeCard
+    ? activeCard.getBoundingClientRect().top + window.scrollY - 20
+    : window.scrollY;
+
+  projectDetail.classList.remove("open");
+
+  setTimeout(() => {
+    window.scrollTo({
+      top: cardTop,
+      behavior: "smooth"
+    });
+  }, 40);
+
+  activeCard = null;
+}
+
+projectCards.forEach((card) => {
+  card.addEventListener("click", () => openProjectDetail(card));
+});
+
+if (projectDetailClose) {
+  projectDetailClose.addEventListener("click", closeProjectDetail);
+}
 
     const mobileMenuToggle = document.getElementById("mobileMenuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
