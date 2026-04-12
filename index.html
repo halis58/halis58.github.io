@@ -1318,6 +1318,49 @@ body.modal-open {
   border-color: rgba(17,17,17,0.6);
   opacity: 0.85;
 }
+
+    .lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 18px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(17,17,17,0.72);
+}
+
+.lang-switch span {
+  opacity: 0.45;
+}
+
+.lang-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  opacity: 0.45;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.lang-btn.active {
+  opacity: 1;
+  color: var(--text);
+}
+
+.lang-btn:hover {
+  opacity: 1;
+}
+
+.nav.scrolled .lang-switch {
+  color: rgba(255,255,255,0.8);
+}
+
+.nav.scrolled .lang-btn.active {
+  color: #ffffff;
+}
     
   </style>
 </head>
@@ -1331,9 +1374,15 @@ body.modal-open {
     </a>
 
     <nav class="nav-links">
-      <a href="#projects">projects</a>
-      <a href="#" id="openInquiry">contact</a>
-    </nav>
+  <a href="#projects" data-i18n="nav_projects">projects</a>
+  <a href="#" id="openInquiry" data-i18n="nav_contact">contact</a>
+
+  <div class="lang-switch" id="langSwitch">
+    <button class="lang-btn" data-lang="tr" type="button">TR</button>
+    <span>/</span>
+    <button class="lang-btn" data-lang="en" type="button">EN</button>
+  </div>
+</nav>
 
     <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
       <span></span>
@@ -1358,8 +1407,8 @@ body.modal-open {
     <div class="hero-content">
       <div class="container hero-panel">
         <div class="hero-title-wrap">
-          <h1 class="hero-title">villa & interior architecture</h1>
-          <div class="hero-subtitle">visual clarity / quiet luxury / timeless spaces</div>
+          <h1 class="hero-title" data-i18n="hero_title">villa & interior architecture</h1>
+<div class="hero-subtitle" data-i18n="hero_subtitle">visual clarity / quiet luxury / timeless spaces</div>
         </div>
         <div class="scroll-mark">scroll</div>
       </div>
@@ -1368,16 +1417,16 @@ body.modal-open {
 
   <section class="intro">
     <div class="container intro-grid">
-      <h2 class="intro-title">spaces designed with less noise, more atmosphere.</h2>
-      <p class="intro-text">selected villa and interior works with a calm, premium and image-led presentation.</p>
+      <h2 class="intro-title" data-i18n="intro_title">spaces designed with less noise, more atmosphere.</h2>
+<p class="intro-text" data-i18n="intro_text">selected villa and interior works with a calm, premium and image-led presentation.</p>
     </div>
   </section>
 
   <section class="projects" id="projects">
   <div class="container">
     <div class="projects-head reveal">
-      <h2 class="projects-title">selected projects</h2>
-      <div class="projects-note">villa / interior / curated selection</div>
+     <h2 class="projects-title" data-i18n="projects_title">selected projects</h2>
+<div class="projects-note" data-i18n="projects_note">villa / interior / curated selection</div>
     </div>
 
     <div class="project-grid" id="projectGrid">
@@ -1486,7 +1535,7 @@ body.modal-open {
       <section class="project-detail" id="projectDetail">
         <div class="project-detail-inner">
           <div class="project-detail-sticky">
-            <button class="project-detail-close" id="projectDetailClose">close</button>
+            <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
           </div>
 
           <div class="project-detail-head">
@@ -1524,13 +1573,13 @@ body.modal-open {
 </div>
 
         <div class="footer-meta">
-          <div class="footer-label">studio</div>
-          <div class="footer-item">Kayseri / Turkey</div>
-          <div class="footer-item">available for selected commissions</div>
+          <div class="footer-label" data-i18n="footer_studio">studio</div>
+<div class="footer-item" data-i18n="footer_city">Kayseri / Turkey</div>
+<div class="footer-item" data-i18n="footer_available">available for selected commissions</div>
         </div>
 
         <div class="footer-links-col">
-          <div class="footer-label">contact</div>
+          <div class="footer-label" data-i18n="footer_contact">contact</div>
           <a class="footer-item" href="mailto:info@kayaarchitectures.com">info@kayaarchitectures.com</a>
           <a class="footer-item" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">instagram</a>
           <a class="footer-item" href="https://www.behance.net/" target="_blank" rel="noopener noreferrer">behance</a>
@@ -1538,8 +1587,8 @@ body.modal-open {
       </div>
 
       <div class="footer-bottom">
-        <div>© 2026 kaya architectures</div>
-        <div>designed for calm, timeless spaces</div>
+        <div data-i18n="footer_copy">© 2026 kaya architectures</div>
+<div data-i18n="footer_tagline">designed for calm, timeless spaces</div>
       </div>
     </div>
 
@@ -1552,12 +1601,12 @@ body.modal-open {
   <span class="inquiry-brand-kaya">KAYA</span>
   <span class="inquiry-brand-arch">ARCHITECTURES</span>
 </div>
-      <p class="inquiry-kicker">inquiry</p>
-      <h2 class="inquiry-title" id="inquiryTitle">let’s discuss your project.</h2>
-
-      <p class="inquiry-text">
-        private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.
-      </p>
+      <p class="inquiry-kicker" data-i18n="inquiry_kicker">inquiry</p>
+<h2 class="inquiry-title" id="inquiryTitle" data-i18n="inquiry_title">let’s discuss your project.</h2>
+<p class="inquiry-text" data-i18n="inquiry_text">
+  private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.
+</p>
+<button class="inquiry-close" id="closeInquiry" aria-label="close inquiry" type="button" data-i18n="inquiry_close">close</button>
 
       <div class="inquiry-actions">
         <a class="inquiry-mail" href="mailto:info@kayaarchitectures.com">
@@ -1797,6 +1846,101 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeInquiryModal();
   }
+});
+
+    const translations = {
+  tr: {
+    nav_projects: "projeler",
+    nav_contact: "iletişim",
+
+    hero_title: "villa ve iç mekan mimarisi",
+    hero_subtitle: "görsel netlik / sakin lüks / zamansız mekanlar",
+
+    intro_title: "daha az gürültü, daha fazla atmosfer ile tasarlanmış mekanlar.",
+    intro_text: "sakin, premium ve görsel odaklı bir sunum diliyle seçilmiş villa ve iç mekan projeleri.",
+
+    projects_title: "seçili projeler",
+    projects_note: "villa / iç mekan / seçili koleksiyon",
+
+    inquiry_kicker: "iletişim",
+    inquiry_title: "projenizi konuşalım.",
+    inquiry_text: "özel konutlar, iç mekanlar ve seçili özel sipariş projeler; sakin ve rafine bir tasarım diliyle şekillendirilir.",
+    inquiry_close: "kapat",
+
+    footer_studio: "stüdyo",
+    footer_contact: "iletişim",
+    footer_city: "Kayseri / Türkiye",
+    footer_available: "seçili projeler için müsait",
+    footer_copy: "© 2026 kaya architectures",
+    footer_tagline: "sakin ve zamansız mekanlar için tasarlandı",
+
+    detail_close: "kapat"
+  },
+
+  en: {
+    nav_projects: "projects",
+    nav_contact: "contact",
+
+    hero_title: "villa & interior architecture",
+    hero_subtitle: "visual clarity / quiet luxury / timeless spaces",
+
+    intro_title: "spaces designed with less noise, more atmosphere.",
+    intro_text: "selected villa and interior works with a calm, premium and image-led presentation.",
+
+    projects_title: "selected projects",
+    projects_note: "villa / interior / curated selection",
+
+    inquiry_kicker: "inquiry",
+    inquiry_title: "let’s discuss your project.",
+    inquiry_text: "private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.",
+    inquiry_close: "close",
+
+    footer_studio: "studio",
+    footer_contact: "contact",
+    footer_city: "Kayseri / Turkey",
+    footer_available: "available for selected commissions",
+    footer_copy: "© 2026 kaya architectures",
+    footer_tagline: "designed for calm, timeless spaces",
+
+    detail_close: "close"
+  }
+};
+
+function detectInitialLanguage() {
+  const saved = localStorage.getItem("siteLanguage");
+  if (saved && translations[saved]) return saved;
+
+  const browserLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+  if (browserLang.startsWith("tr")) return "tr";
+
+  return "en";
+}
+
+function applyLanguage(lang) {
+  if (!translations[lang]) return;
+
+  document.documentElement.lang = lang;
+  localStorage.setItem("siteLanguage", lang);
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.lang === lang);
+  });
+}
+
+const initialLang = detectInitialLanguage();
+applyLanguage(initialLang);
+
+document.querySelectorAll(".lang-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    applyLanguage(btn.dataset.lang);
+  });
 });
     
 </script>
