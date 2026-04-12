@@ -1361,6 +1361,44 @@ body.modal-open {
 .nav.scrolled .lang-btn.active {
   color: #ffffff;
 }
+
+    .mobile-lang-switch {
+  display: none;
+}
+
+.mobile-lang-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  opacity: 0.45;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.mobile-lang-btn.active {
+  opacity: 1;
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .mobile-lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 14px 16px 6px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,0.72);
+  }
+
+  .mobile-lang-switch span {
+    opacity: 0.4;
+  }
+}
     
   </style>
 </head>
@@ -1373,7 +1411,7 @@ body.modal-open {
       <span class="brand-arch">ARCHITECTURES</span>
     </a>
 
-    <nav class="nav-links">
+   <nav class="nav-links">
   <a href="#projects" data-i18n="nav_projects">projects</a>
   <a href="#" id="openInquiry" data-i18n="nav_contact">contact</a>
 
@@ -1393,8 +1431,14 @@ body.modal-open {
 
 <div class="mobile-menu-panel" id="mobileMenu">
   <div class="mobile-menu-inner">
-    <a href="#projects" class="mobile-menu-link">projects</a>
-   <a href="#" class="mobile-menu-link" id="openInquiryMobile">contact</a>
+    <a href="#projects" class="mobile-menu-link" data-i18n="nav_projects">projects</a>
+    <a href="#" class="mobile-menu-link" id="openInquiryMobile" data-i18n="nav_contact">contact</a>
+
+    <div class="mobile-lang-switch">
+      <button class="mobile-lang-btn" data-lang="tr" type="button">TR</button>
+      <span>/</span>
+      <button class="mobile-lang-btn" data-lang="en" type="button">EN</button>
+    </div>
   </div>
 </div>
 
@@ -1910,9 +1954,8 @@ function detectInitialLanguage() {
   const saved = localStorage.getItem("siteLanguage");
   if (saved && translations[saved]) return saved;
 
-  const browserLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+  const browserLang = (navigator.language || "").toLowerCase();
   if (browserLang.startsWith("tr")) return "tr";
-
   return "en";
 }
 
@@ -1929,7 +1972,7 @@ function applyLanguage(lang) {
     }
   });
 
-  document.querySelectorAll(".lang-btn").forEach((btn) => {
+  document.querySelectorAll(".lang-btn, .mobile-lang-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.lang === lang);
   });
 }
@@ -1937,7 +1980,7 @@ function applyLanguage(lang) {
 const initialLang = detectInitialLanguage();
 applyLanguage(initialLang);
 
-document.querySelectorAll(".lang-btn").forEach((btn) => {
+document.querySelectorAll(".lang-btn, .mobile-lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     applyLanguage(btn.dataset.lang);
   });
