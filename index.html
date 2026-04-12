@@ -1362,13 +1362,12 @@ body.modal-open {
 }
 
 .lang-flag-img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
   object-fit: cover;
-  border-radius: 999px;
-  display: inline-block;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(17,17,17,0.08);
+  display: block;
+  box-shadow: 0 0 0 1px rgba(17,17,17,0.1);
 }
 
 .lang-btn,
@@ -1438,14 +1437,16 @@ body.modal-open {
   <a href="#projects" data-i18n="nav_projects">projects</a>
   <a href="#" id="openInquiry" data-i18n="nav_contact">contact</a>
 
-<div class="lang-switch" id="langSwitch">
-  <button class="lang-btn" data-lang="tr" type="button">
-    <span class="lang-flag">🇹🇷</span>
+<div class="lang-switch">
+  <button class="lang-btn" data-lang="tr">
+    <img class="lang-flag-img" src="tr.svg" alt="TR">
     <span>TR</span>
   </button>
+
   <span>/</span>
-  <button class="lang-btn" data-lang="en" type="button">
-    <span class="lang-flag">🇬🇧</span>
+
+  <button class="lang-btn" data-lang="en">
+    <img class="lang-flag-img" src="gb.svg" alt="EN">
     <span>EN</span>
   </button>
 </div>
