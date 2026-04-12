@@ -131,16 +131,20 @@
       height: 64px;
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 34px;
-      color: rgba(17,17,17,0.7);
-      transition: color 0.35s ease;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: lowercase;
-    }
+   .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  color: rgba(17,17,17,0.7);
+  transition: color 0.35s ease;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+.mobile-menu-toggle {
+  display: none;
+}
 
     .nav.scrolled .nav-links {
       color: rgba(255,255,255,0.8);
@@ -567,7 +571,7 @@
   position: relative;
   border: 1px solid rgba(17, 17, 17, 0.08);
   border-radius: 28px;
-  background: rgba(255,255,255,0.58);
+  background: rgba(255,255,255,0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding: 34px;
@@ -946,163 +950,169 @@
     }
 
     @media (max-width: 760px) {
-      .container,
-      .nav-inner,
-      project-detail-inner {
+  .container,
+  .nav-inner,
+  .project-detail-inner {
     width: min(100% - 28px, 1380px);
-    padding: 22px;
-    border-radius: 22px;
+  }
+
+  .nav-inner {
+    height: 68px;
+    padding: 0 18px;
+  }
+
+  .nav.scrolled .nav-inner {
+    height: 56px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-kaya {
+    font-family: "Adam Medium", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  .brand-arch {
+    font-family: "Adam Light", sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .nav.scrolled .brand-kaya {
+    font-size: 13px;
+    letter-spacing: 0.09em;
+  }
+
+  .nav.scrolled .brand-arch {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-content {
+    padding-bottom: 28px;
+  }
+
+  .feature-image,
+  .feature-image img {
+    min-height: 70vh;
+    height: 70vh;
+  }
+
+  .feature-caption {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
   }
 
   .project-detail {
     transform: translateY(18px);
   }
+
+  .project-detail-inner {
+    padding: 22px;
+    border-radius: 22px;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    background: rgba(255,255,255,0.82);
+  }
+
+  .project-detail-gallery img.large,
+  .project-detail-gallery img.medium,
+  .project-detail-gallery img.small {
+    height: auto;
+  }
+
+  .footer-top {
+    gap: 18px;
+  }
+
+  .footer-brand {
+    gap: 8px;
+  }
+
+  .footer-brand-kaya {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-brand-arch {
+    font-size: 18px;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta-shell {
+    padding: 58px 0;
+  }
+
+  .cta-social {
+    width: 42px;
+    height: 42px;
+  }
+
+  .scroll-mark {
+    display: none;
+  }
+
+  .site-intro-logo {
+    gap: 10px;
+  }
+
+  .site-intro-kaya {
+    font-size: 20px;
+    letter-spacing: 0.10em;
+  }
+
+  .site-intro-arch {
+    font-size: 20px;
+    letter-spacing: 0.07em;
+  }
 }
-
-      .nav-inner {
-        height: 68px;
-        padding: 0 18px;
-      }
-
-      .nav.scrolled .nav-inner {
-        height: 56px;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .mobile-menu-toggle {
-        display: inline-flex;
-      }
-
-      .brand {
-        gap: 8px;
-      }
-
-     .brand-kaya {
-  font-family: "Adam Medium", sans-serif;
-  font-size: 18px;
-  letter-spacing: 0.12em;
-}
-
-.brand-arch {
-  font-family: "Adam Light", sans-serif;
-  font-size: 18px;
-  letter-spacing: 0.08em;
-}
-
-      .nav.scrolled .brand-kaya {
-        font-size: 13px;
-        letter-spacing: 0.09em;
-      }
-
-      .nav.scrolled .brand-arch {
-        font-size: 13px;
-        letter-spacing: 0.06em;
-      }
-
-      .hero-content {
-        padding-bottom: 28px;
-      }
-
-      .feature-image,
-      .feature-image img {
-        min-height: 70vh;
-        height: 70vh;
-      }
-
-      .feature-caption {
-        left: 24px;
-        right: 24px;
-        bottom: 24px;
-      }
-
-      .project-detail-gallery img.large,
-      .project-detail-gallery img.medium,
-      .project-detail-gallery img.small {
-        height: auto;
-      }
-
-      .footer-top {
-        gap: 18px;
-      }
-
-      .footer-brand {
-        gap: 8px;
-      }
-
-      .footer-brand-kaya {
-        font-size: 18px;
-        letter-spacing: 0.08em;
-      }
-
-      .footer-brand-arch {
-        font-size: 18px;
-        letter-spacing: 0.06em;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .cta-shell {
-        padding: 58px 0;
-      }
-
-      .cta-social {
-        width: 42px;
-        height: 42px;
-      }
-
-      .scroll-mark {
-        display: none;
-      }
-
-      .site-intro-logo {
-        gap: 10px;
-      }
-
-      .site-intro-kaya {
-        font-size: 20px;
-        letter-spacing: 0.10em;
-      }
-
-      .site-intro-arch {
-        font-size: 20px;
-        letter-spacing: 0.07em;
-      }
-    }
   </style>
 </head>
 <body>
 
   <header class="nav" id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="brand" id="navBrand">
-        <span class="brand-kaya">KAYA</span>
-        <span class="brand-arch">ARCHITECTURES</span>
-      </a>
+  <div class="nav-inner">
+    <a href="#" class="brand" id="navBrand">
+      <span class="brand-kaya">KAYA</span>
+      <span class="brand-arch">ARCHITECTURES</span>
+    </a>
 
-      <nav class="nav-links">
-        <a href="#projects">projects</a>
-        <a href="#contact">contact</a>
-      </nav>
+    <nav class="nav-links">
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
 
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <div class="mobile-menu-panel" id="mobileMenu">
-    <div class="mobile-menu-inner">
-      <a href="#projects" class="mobile-menu-link">projects</a>
-      <a href="#contact" class="mobile-menu-link">contact</a>
-    </div>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
+      <span></span>
+      <span></span>
+    </button>
   </div>
+</header>
+
+<div class="mobile-menu-panel" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <a href="#projects" class="mobile-menu-link">projects</a>
+    <a href="#contact" class="mobile-menu-link">contact</a>
+  </div>
+</div>
 
   <section class="hero">
     <div class="hero-media">
@@ -1129,69 +1139,133 @@
   </section>
 
   <section class="projects" id="projects">
-    <div class="container">
-      <div class="projects-head reveal">
-        <h2 class="projects-title">selected projects</h2>
-        <div class="projects-note">villa / interior / curated selection</div>
-      </div>
-
-      <div class="project-grid">
-        <article class="project-card tall reveal" data-title="hillside residence" data-type="villa" data-text="Soft natural tones, quiet material transitions and a restrained architectural language shape this residence. The project is designed as a calm sequence of interior and exterior spaces." data-images='["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop" alt="villa project" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">villa</div>
-            <h3 class="project-name">hillside residence</h3>
-          </div>
-        </article>
-
-        <article class="project-card wide reveal" data-title="stone frame house" data-type="villa" data-text="This project explores massing, shadow and transparency through a calm exterior language and carefully framed openings." data-images='["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop" alt="villa facade" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">villa</div>
-            <h3 class="project-name">stone frame house</h3>
-          </div>
-        </article>
-
-        <article class="project-card medium reveal" data-title="soft tone living" data-type="interior" data-text="A quiet living environment shaped by daylight, pale textures and balanced proportions. The intention is warmth without visual noise." data-images='["https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop" alt="interior project" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">interior</div>
-            <h3 class="project-name">soft tone living</h3>
-          </div>
-        </article>
-
-        <article class="project-card medium reveal" data-title="gallery kitchen" data-type="interior" data-text="A minimal kitchen composition with clear lines, warm material transitions and a gallery-like atmosphere." data-images='["https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop" alt="kitchen project" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">interior</div>
-            <h3 class="project-name">gallery kitchen</h3>
-          </div>
-        </article>
-
-        <article class="project-card small reveal" data-title="quiet lounge" data-type="interior" data-text="A soft and restrained interior sequence where material texture and tonal balance create a slower atmosphere." data-images='["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop" alt="interior detail" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">interior</div>
-            <h3 class="project-name">quiet lounge</h3>
-          </div>
-        </article>
-
-        <article class="project-card small reveal" data-title="courtyard house" data-type="villa" data-text="A residence organized through open courtyard relationships, filtered light and a measured architectural expression." data-images='["https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop"]'>
-          <img class="project-image" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop" alt="villa exterior" />
-          <div class="project-overlay"></div>
-          <div class="project-info">
-            <div class="project-type">villa</div>
-            <h3 class="project-name">courtyard house</h3>
-          </div>
-        </article>
-      </div>
+  <div class="container">
+    <div class="projects-head reveal">
+      <h2 class="projects-title">selected projects</h2>
+      <div class="projects-note">villa / interior / curated selection</div>
     </div>
-  </section>
+
+    <div class="project-grid" id="projectGrid">
+      <article class="project-card tall reveal"
+        data-title="hillside residence"
+        data-type="villa"
+        data-text="Soft natural tones, quiet material transitions and a restrained architectural language shape this residence. The project is designed as a calm sequence of interior and exterior spaces."
+        data-images='[
+          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop" alt="villa project" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">villa</div>
+          <h3 class="project-name">hillside residence</h3>
+        </div>
+      </article>
+
+      <article class="project-card wide reveal"
+        data-title="stone frame house"
+        data-type="villa"
+        data-text="This project explores massing, shadow and transparency through a calm exterior language and carefully framed openings."
+        data-images='[
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop" alt="villa facade" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">villa</div>
+          <h3 class="project-name">stone frame house</h3>
+        </div>
+      </article>
+
+      <article class="project-card medium reveal"
+        data-title="soft tone living"
+        data-type="interior"
+        data-text="A quiet living environment shaped by daylight, pale textures and balanced proportions. The intention is warmth without visual noise."
+        data-images='[
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1600&auto=format&fit=crop" alt="interior project" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">interior</div>
+          <h3 class="project-name">soft tone living</h3>
+        </div>
+      </article>
+
+      <article class="project-card medium reveal"
+        data-title="gallery kitchen"
+        data-type="interior"
+        data-text="A minimal kitchen composition with clear lines, warm material transitions and a gallery-like atmosphere."
+        data-images='[
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop" alt="kitchen project" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">interior</div>
+          <h3 class="project-name">gallery kitchen</h3>
+        </div>
+      </article>
+
+      <article class="project-card small reveal"
+        data-title="quiet lounge"
+        data-type="interior"
+        data-text="A soft and restrained interior sequence where material texture and tonal balance create a slower atmosphere."
+        data-images='[
+          "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop" alt="interior detail" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">interior</div>
+          <h3 class="project-name">quiet lounge</h3>
+        </div>
+      </article>
+
+      <article class="project-card small reveal"
+        data-title="courtyard house"
+        data-type="villa"
+        data-text="A residence organized through open courtyard relationships, filtered light and a measured architectural expression."
+        data-images='[
+          "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop"
+        ]'>
+        <img class="project-image" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1600&auto=format&fit=crop" alt="villa exterior" />
+        <div class="project-overlay"></div>
+        <div class="project-info">
+          <div class="project-type">villa</div>
+          <h3 class="project-name">courtyard house</h3>
+        </div>
+      </article>
+
+      <section class="project-detail" id="projectDetail">
+        <div class="project-detail-inner">
+          <div class="project-detail-sticky">
+            <button class="project-detail-close" id="projectDetailClose">close</button>
+          </div>
+
+          <div class="project-detail-head">
+            <p class="project-detail-type" id="detailType"></p>
+            <h2 class="project-detail-title" id="detailTitle"></h2>
+            <p class="project-detail-text" id="detailText"></p>
+          </div>
+
+          <div class="project-detail-gallery" id="detailGallery"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
 
   <section class="feature-image-section">
     <div class="container">
@@ -1223,15 +1297,15 @@
                 </svg>
               </a>
               <a class="cta-social" href="https://www.behance.net/" target="_blank" rel="noopener noreferrer" aria-label="behance">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                  <path d="M4 8.5h5.5a3 3 0 0 1 0 6H4z"></path>
-                  <path d="M4 14.5h6a3 3 0 0 1 0 6H4z" transform="translate(0 -2.5)"></path>
-                  <path d="M14 12h6"></path>
-                  <path d="M15 9.5h4"></path>
-                  <path d="M14 15c0 1.7 1.3 3 3.2 3 1.4 0 2.4-.5 3-1.6"></path>
-                  <path d="M20.2 13.8c0-1.8-1.2-3.3-3-3.3-1.9 0-3.2 1.5-3.2 3.5<path d="M20.2 13.8c0-1.8-1.2-3.3-3-3.3-1.9 0-3.2 1.5-3.2 3.5h6.2z"></path>
-              </svg>
-            </a>
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+    <path d="M4 8.5h5.5a3 3 0 0 1 0 6H4z"></path>
+    <path d="M4 12h6a3 3 0 0 1 0 6H4z"></path>
+    <path d="M14 12h6"></path>
+    <path d="M15 9.5h4"></path>
+    <path d="M14 15c0 1.7 1.3 3 3.2 3 1.4 0 2.4-.5 3-1.6"></path>
+    <path d="M20.2 13.8c0-1.8-1.2-3.3-3-3.3-1.9 0-3.2 1.5-3.2 3.5h6.2z"></path>
+  </svg>
+</a>
 
             <a class="cta-social" href="mailto:info@kayaarchitectures.com" aria-label="email">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
@@ -1299,168 +1373,160 @@
   </div>
 
   <script>
-    const navbar = document.getElementById("navbar");
-    const heroImage = document.getElementById("heroImage");
-    const revealItems = document.querySelectorAll(".reveal");
-    const siteIntro = document.getElementById("siteIntro");
+  const navbar = document.getElementById("navbar");
+  const heroImage = document.getElementById("heroImage");
+  const revealItems = document.querySelectorAll(".reveal");
+  const siteIntro = document.getElementById("siteIntro");
 
-    window.addEventListener("scroll", () => {
-      const y = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
 
-      if (navbar) {
-        if (y > 40) {
-          navbar.classList.add("scrolled");
-        } else {
-          navbar.classList.remove("scrolled");
-        }
-      }
+    if (navbar) {
+      if (y > 40) navbar.classList.add("scrolled");
+      else navbar.classList.remove("scrolled");
+    }
 
-      if (heroImage) {
-        heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
-      }
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    }, { threshold: 0.16 });
-
-    revealItems.forEach((item) => observer.observe(item));
-
-   window.addEventListener("load", () => {
-  if (!siteIntro) return;
-
-  const logo = document.querySelector(".site-intro-logo");
-
-  // logo biraz daha erken solsun
-  setTimeout(() => {
-    if (logo) logo.classList.add("fade-out");
-  }, 900);
-
-  // siyah katman hemen sonra açılsın
-  setTimeout(() => {
-    siteIntro.classList.add("fade-out");
-  }, 1100);
-
-  // tamamen kaldır
-  setTimeout(() => {
-    siteIntro.remove();
-  }, 2500);
-});
-
-   const projectCards = document.querySelectorAll(".project-card");
-const projectGrid = document.getElementById("projectGrid");
-const projectDetail = document.getElementById("projectDetail");
-const projectDetailClose = document.getElementById("projectDetailClose");
-const detailType = document.getElementById("detailType");
-const detailTitle = document.getElementById("detailTitle");
-const detailText = document.getElementById("detailText");
-const detailGallery = document.getElementById("detailGallery");
-
-let activeCard = null;
-
-function openProjectDetail(card) {
-  const title = card.dataset.title || "";
-  const type = card.dataset.type || "";
-  const text = card.dataset.text || "";
-  const images = JSON.parse(card.dataset.images || "[]");
-
-  detailType.textContent = type;
-  detailTitle.textContent = title;
-  detailText.textContent = text;
-  detailGallery.innerHTML = "";
-
-  images.forEach((src, index) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = title;
-
-    if (index === 0) img.className = "large";
-    else if (index === 1) img.className = "medium";
-    else img.className = "small";
-
-    detailGallery.appendChild(img);
-  });
-
-  if (activeCard === card && projectDetail.classList.contains("open")) {
-    closeProjectDetail();
-    return;
-  }
-
-  activeCard = card;
-
-  card.insertAdjacentElement("afterend", projectDetail);
-
-  requestAnimationFrame(() => {
-    projectDetail.classList.add("open");
-  });
-
-  setTimeout(() => {
-    const top = card.getBoundingClientRect().top + window.scrollY - 20;
-    window.scrollTo({
-      top,
-      behavior: "smooth"
-    });
-  }, 80);
-}
-
-function closeProjectDetail() {
-  if (!projectDetail.classList.contains("open")) return;
-
-  const cardTop = activeCard
-    ? activeCard.getBoundingClientRect().top + window.scrollY - 20
-    : window.scrollY;
-
-  projectDetail.classList.remove("open");
-
-  setTimeout(() => {
-    window.scrollTo({
-      top: cardTop,
-      behavior: "smooth"
-    });
-  }, 40);
-
-  activeCard = null;
-}
-
-projectCards.forEach((card) => {
-  card.addEventListener("click", () => openProjectDetail(card));
-});
-
-if (projectDetailClose) {
-  projectDetailClose.addEventListener("click", closeProjectDetail);
-}
-
-    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
-const mobileMenu = document.getElementById("mobileMenu");
-
-if (mobileMenuToggle && mobileMenu) {
-  mobileMenuToggle.addEventListener("click", () => {
-    const isOpen = mobileMenu.classList.toggle("open");
-    mobileMenuToggle.classList.toggle("active", isOpen);
-    mobileMenuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
-
-  document.querySelectorAll(".mobile-menu-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu.classList.remove("open");
-      mobileMenuToggle.classList.remove("active");
-      mobileMenuToggle.setAttribute("aria-expanded", "false");
-    });
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-      mobileMenu.classList.remove("open");
-      mobileMenuToggle.classList.remove("active");
-      mobileMenuToggle.setAttribute("aria-expanded", "false");
+    if (heroImage) {
+      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
     }
   });
-}
-  </script>
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("show");
+    });
+  }, { threshold: 0.16 });
+
+  revealItems.forEach((item) => observer.observe(item));
+
+  window.addEventListener("load", () => {
+    if (!siteIntro) return;
+    const logo = document.querySelector(".site-intro-logo");
+
+    setTimeout(() => {
+      if (logo) logo.classList.add("fade-out");
+    }, 900);
+
+    setTimeout(() => {
+      siteIntro.classList.add("fade-out");
+    }, 1100);
+
+    setTimeout(() => {
+      siteIntro.remove();
+    }, 2500);
+  });
+
+  const projectCards = document.querySelectorAll(".project-card");
+  const projectDetail = document.getElementById("projectDetail");
+  const projectDetailClose = document.getElementById("projectDetailClose");
+  const detailType = document.getElementById("detailType");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailText = document.getElementById("detailText");
+  const detailGallery = document.getElementById("detailGallery");
+
+  let activeCard = null;
+
+  function openProjectDetail(card) {
+    const title = card.dataset.title || "";
+    const type = card.dataset.type || "";
+    const text = card.dataset.text || "";
+    const images = JSON.parse(card.dataset.images || "[]");
+
+    detailType.textContent = type;
+    detailTitle.textContent = title;
+    detailText.textContent = text;
+    detailGallery.innerHTML = "";
+
+    images.forEach((src, index) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = title;
+
+      if (index === 0) img.className = "large";
+      else if (index === 1) img.className = "medium";
+      else img.className = "small";
+
+      detailGallery.appendChild(img);
+    });
+
+    if (activeCard === card && projectDetail.classList.contains("open")) {
+      closeProjectDetail();
+      return;
+    }
+
+    activeCard = card;
+    card.insertAdjacentElement("afterend", projectDetail);
+
+    requestAnimationFrame(() => {
+      projectDetail.classList.add("open");
+    });
+
+    setTimeout(() => {
+      const firstImage = detailGallery.querySelector("img");
+      const target = firstImage || projectDetail;
+      const top = target.getBoundingClientRect().top + window.scrollY - 90;
+
+      window.scrollTo({
+        top,
+        behavior: "smooth"
+      });
+    }, 140);
+  }
+
+  function closeProjectDetail() {
+    if (!projectDetail.classList.contains("open")) return;
+
+    const cardTop = activeCard
+      ? activeCard.getBoundingClientRect().top + window.scrollY - 20
+      : window.scrollY;
+
+    projectDetail.classList.remove("open");
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: cardTop,
+        behavior: "smooth"
+      });
+    }, 80);
+
+    activeCard = null;
+  }
+
+  projectCards.forEach((card) => {
+    card.addEventListener("click", () => openProjectDetail(card));
+  });
+
+  if (projectDetailClose) {
+    projectDetailClose.addEventListener("click", closeProjectDetail);
+  }
+
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      mobileMenuToggle.classList.toggle("active", isOpen);
+      mobileMenuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    document.querySelectorAll(".mobile-menu-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        mobileMenuToggle.classList.remove("active");
+        mobileMenuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        mobileMenu.classList.remove("open");
+        mobileMenuToggle.classList.remove("active");
+        mobileMenuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
