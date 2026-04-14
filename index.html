@@ -1441,6 +1441,27 @@ body.modal-open {
   height: 100%;
   object-fit: cover;
 }
+
+    @media (max-width: 760px) {
+  .project-info {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.55),
+      rgba(0,0,0,0.1)
+    );
+    padding: 16px;
+    border-radius: 0;
+  }
+}
+
+    .project-card.show .project-info {
+    opacity: 1;
+    transform: translateY(0);
+      transition-delay: 0.2s;
+  }
+}
     
   </style>
 </head>
