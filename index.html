@@ -847,6 +847,16 @@
       background: #ffffff;
     }
 
+    .mobile-menu-toggle.active {
+  background: rgba(120, 120, 120, 0.25); /* daha koyu gri */
+  border-color: rgba(120, 120, 120, 0.4);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.mobile-menu-toggle.active span {
+  background: #ffffff; /* çizgiler beyaz */
+}
+
     .mobile-menu-toggle.active span:first-child {
       transform: translateY(3.5px) rotate(45deg);
     }
@@ -876,10 +886,10 @@
       min-width: 180px;
       padding: 10px;
       border-radius: 22px;
-      background: rgba(255,255,255,0.78);
-      backdrop-filter: blur(18px);
+      background: rgba(30, 30, 30, 0.75);
+      backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(17,17,17,0.08);
+     border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 20px 40px rgba(0,0,0,0.10);
     }
 
@@ -890,14 +900,18 @@
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: lowercase;
-      color: var(--text);
+      color: rgba(255,255,255,0.85);
       transition: background 0.22s ease, transform 0.22s ease;
     }
 
     .mobile-menu-link:hover {
-      background: rgba(17,17,17,0.04);
+      background: rgba(255,255,255,0.08);
       transform: translateX(2px);
     }
+
+    .mobile-lang-switch {
+  color: rgba(255,255,255,0.8);
+}
 
     @keyframes fadeUp {
       from {
