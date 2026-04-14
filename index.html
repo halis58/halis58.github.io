@@ -104,7 +104,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: #111111;
+      color:  #ffffff;
       white-space: nowrap;
       transition: color 0.35s ease;
     }
@@ -808,10 +808,10 @@
       display: none;
       width: 44px;
       height: 44px;
-      border: 1px solid rgba(17,17,17,0.08);
+      border: 1px solid rgba(200, 200, 200, 0.25);
       border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: blur(12px);
+      background: rgba(200, 200, 200, 0.15);
+      backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(12px);
       align-items: center;
       justify-content: center;
@@ -826,7 +826,7 @@
       display: block;
       width: 14px;
       height: 1.5px;
-      background: #111111;
+      background: rgba(255,255,255,0.7);
       border-radius: 999px;
       transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
     }
@@ -839,8 +839,8 @@
     }
 
     .nav.scrolled .mobile-menu-toggle {
-      background: rgba(255,255,255,0.16);
-      border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
     }
 
     .nav.scrolled .mobile-menu-toggle span {
@@ -1643,8 +1643,8 @@ body.modal-open {
         <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=2200&auto=format&fit=crop" alt="feature architecture image" />
         <div class="feature-overlay"></div>
         <div class="feature-caption">
-          <h2 class="feature-title">quiet compositions shaped by light, shadow and material balance.</h2>
-          <p class="feature-text">selected residential and interior work presented through an editorial and image-led atmosphere.</p>
+         <h2 class="feature-title" data-i18n="feature_title"></h2>
+         <p class="feature-text" data-i18n="feature_text"></p>
         </div>
       </div>
     </div>
@@ -1943,6 +1943,9 @@ const translations = {
     hero_title: "villa ve iç mekan mimarisi",
     hero_subtitle: "görsel netlik / sakin lüks / zamansız mekanlar",
 
+    feature_title: "ışık, gölge ve malzeme dengesiyle şekillenen sade kompozisyonlar.",
+feature_text: "seçili konut ve iç mekan projeleri, editoryal ve görsel odaklı bir atmosferle sunulmaktadır.",
+
     intro_title: "daha az gürültü, daha fazla atmosfer ile tasarlanmış mekanlar.",
     intro_text: "sakin, premium ve görsel odaklı bir sunum diliyle seçilmiş villa ve iç mekan projeleri.",
 
@@ -1970,6 +1973,9 @@ const translations = {
 
     hero_title: "villa & interior architecture",
     hero_subtitle: "visual clarity / quiet luxury / timeless spaces",
+
+    feature_title: "quiet compositions shaped by light, shadow and material balance.",
+feature_text: "selected residential and interior work presented through an editorial and image-led atmosphere.",
 
     intro_title: "spaces designed with less noise, more atmosphere.",
     intro_text: "selected villa and interior works with a calm, premium and image-led presentation.",
