@@ -1444,22 +1444,25 @@ body.modal-open {
 
     @media (max-width: 760px) {
   .project-info {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    background: linear-gradient(
-      to top,
-      rgba(0,0,0,0.55),
-      rgba(0,0,0,0.1)
-    );
-    padding: 16px;
-    border-radius: 0;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    padding: 0;
+    background: transparent;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
   }
-}
 
-    .project-card.show .project-info {
+  .project-card.show .project-info {
     opacity: 1;
     transform: translateY(0);
-      transition-delay: 0.2s;
+    transition-delay: 0.18s;
+  }
+
+  .project-card:hover .project-info {
+    opacity: 0;
+    transform: translateY(18px);
   }
 }
     
