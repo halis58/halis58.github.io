@@ -192,10 +192,8 @@
 }
 
 .hero-reveal-image {
-  opacity: 1;
-  pointer-events: none;
-  -webkit-mask-image: none;
-  mask-image: none;
+  opacity:0;
+  pointer-events:none;
 }
 
     .hero-liquid-canvas {
@@ -2152,105 +2150,122 @@ initLanguage();
     const heroSection = document.querySelector(".hero");
 const heroCanvas = document.getElementById("heroLiquidCanvas");
 
-if (heroSection && heroCanvas && heroImageReveal) {
-  const ctx = heroCanvas.getContext("2d");
+if(heroSection && heroCanvas){
 
-  let heroWidth = 0;
-  let heroHeight = 0;
+const ctx=heroCanvas.getContext("2d");
 
-  let targetX = -9999;
-  let targetY = -9999;
-  let mouseInside = false;
+const revealImg=new Image();
+revealImg.src="./hero2k-alt.webp";
 
-  const trail = [];
-  const TRAIL_COUNT = 14;
+let w,h;
 
-  for (let i = 0; i < TRAIL_COUNT; i++) {
-    trail.push({
-      x: -9999,
-      y: -9999,
-      size: Math.max(36, 120 - i * 7),
-      alpha: Math.max(0.08, 0.34 - i * 0.02)
-    });
-  }
+function resize(){
 
-  function resizeHeroCanvas() {
-    const rect = heroSection.getBoundingClientRect();
-    heroWidth = Math.max(1, Math.floor(rect.width));
-    heroHeight = Math.max(1, Math.floor(rect.height));
+w=heroCanvas.width=heroSection.offsetWidth;
+h=heroCanvas.height=heroSection.offsetHeight;
 
-    heroCanvas.width = heroWidth;
-    heroCanvas.height = heroHeight;
-  }
+}
 
-  resizeHeroCanvas();
-  window.addEventListener("resize", resizeHeroCanvas);
+resize();
 
-  heroSection.addEventListener("mousemove", (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    targetX = e.clientX - rect.left;
-    targetY = e.clientY - rect.top;
-    mouseInside = true;
-  });
+window.addEventListener("resize",resize);
 
-  heroSection.addEventListener("mouseleave", () => {
-    mouseInside = false;
-  });
+let nodes=[];
 
-  function drawBlob(x, y, size, alpha) {
-    const gradient = ctx.createRadialGradient(
-      x, y, 0,
-      x, y, size
-    );
+for(let i=0;i<12;i++){
 
-    gradient.addColorStop(0, `rgba(255,255,255,${alpha})`);
-    gradient.addColorStop(0.35, `rgba(255,255,255,${alpha * 0.9})`);
-    gradient.addColorStop(0.7, `rgba(255,255,255,${alpha * 0.35})`);
-    gradient.addColorStop(1, `rgba(255,255,255,0)`);
+nodes.push({
+x:w/2,
+y:h/2
+});
 
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(x, y, size, 0, Math.PI * 2);
-    ctx.fill();
-  }
+}
 
-  function animateLiquidTrail() {
-    ctx.clearRect(0, 0, heroWidth, heroHeight);
+let mouseX=w/2;
+let mouseY=h/2;
 
-    if (!mouseInside) {
-      targetX += (-9999 - targetX) * 0.035;
-      targetY += (-9999 - targetY) * 0.035;
-    }
+heroSection.addEventListener("mousemove",(e)=>{
 
-    trail[0].x += (targetX - trail[0].x) * 0.18;
-    trail[0].y += (targetY - trail[0].y) * 0.18;
+const r=heroSection.getBoundingClientRect();
 
-    for (let i = 1; i < trail.length; i++) {
-      trail[i].x += (trail[i - 1].x - trail[i].x) * 0.18;
-      trail[i].y += (trail[i - 1].y - trail[i].y) * 0.18;
-    }
+mouseX=e.clientX-r.left;
+mouseY=e.clientY-r.top;
 
-    ctx.filter = "blur(18px)";
-    ctx.globalCompositeOperation = "source-over";
+});
 
-    for (let i = 0; i < trail.length; i++) {
-      drawBlob(trail[i].x, trail[i].y, trail[i].size, trail[i].alpha);
-    }
 
-    ctx.filter = "none";
+function autopilot(){
 
-    const dataURL = heroCanvas.toDataURL("image/png");
-    heroImageReveal.style.webkitMaskImage = `url(${dataURL})`;
-    heroImageReveal.style.maskImage = `url(${dataURL})`;
-    heroImageReveal.style.webkitMaskSize = "100% 100%";
-    heroImageReveal.style.maskSize = "100% 100%";
-    heroImageReveal.style.webkitMaskRepeat = "no-repeat";
-    heroImageReveal.style.maskRepeat = "no-repeat";
+if(Math.random()<0.005){
 
-    requestAnimationFrame(animateLiquidTrail);
-  }
+mouseX=Math.random()*w;
+mouseY=Math.random()*h;
 
-  animateLiquidTrail();
+}
+
+}
+
+
+function draw(){
+
+ctx.clearRect(0,0,w,h);
+
+autopilot();
+
+nodes[0].x+=(mouseX-nodes[0].x)*0.22;
+nodes[0].y+=(mouseY-nodes[0].y)*0.22;
+
+for(let i=1;i<nodes.length;i++){
+
+nodes[i].x+=(nodes[i-1].x-nodes[i].x)*0.28;
+nodes[i].y+=(nodes[i-1].y-nodes[i].y)*0.28;
+
+}
+
+ctx.save();
+
+ctx.beginPath();
+
+ctx.moveTo(nodes[0].x,nodes[0].y);
+
+for(let i=1;i<nodes.length-2;i++){
+
+let xc=(nodes[i].x+nodes[i+1].x)/2;
+let yc=(nodes[i].y+nodes[i+1].y)/2;
+
+ctx.quadraticCurveTo(
+nodes[i].x,
+nodes[i].y,
+xc,
+yc
+);
+
+}
+
+ctx.lineWidth=90;
+ctx.lineCap="round";
+ctx.lineJoin="round";
+
+ctx.stroke();
+
+ctx.clip();
+
+ctx.drawImage(
+revealImg,
+0,
+0,
+w,
+h
+);
+
+ctx.restore();
+
+requestAnimationFrame(draw);
+
+}
+
+revealImg.onload=draw;
+
 }
     
 </script>
