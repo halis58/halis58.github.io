@@ -191,17 +191,12 @@
   will-change: transform;
 }
 
-.hero-reveal-image{
-opacity:1;
-pointer-events:none;
-
-mask-image:
-radial-gradient(circle at 50% 50%, black 40%, transparent 65%);
-
--webkit-mask-image:
-radial-gradient(circle at 50% 50%, black 40%, transparent 65%);
-
-transition: none;
+.hero-reveal-image {
+  opacity: 1;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at -9999px -9999px, black 0%, transparent 0%);
+  mask-image: radial-gradient(circle at -9999px -9999px, black 0%, transparent 0%);
+  transition: none;
 }
 
     .hero-media img {
@@ -2141,38 +2136,79 @@ initLanguage();
     const heroSection = document.querySelector(".hero");
 
 if (heroSection && heroImageReveal) {
-  heroSection.addEventListener("mousemove",(e)=>{
+  let mouseX = -9999;
+  let mouseY = -9999;
+  let currentX = -9999;
+  let currentY = -9999;
+  let isInsideHero = false;
 
-const rect=heroSection.getBoundingClientRect();
+  const trail = [
+    { x: -9999, y: -9999, size: 140 },
+    { x: -9999, y: -9999, size: 110 },
+    { x: -9999, y: -9999, size: 85 },
+    { x: -9999, y: -9999, size: 65 }
+  ];
 
-const x=e.clientX-rect.left;
-const y=e.clientY-rect.top;
-
-heroImageReveal.style.webkitMaskImage=`
-radial-gradient(circle at ${x}px ${y}px,
-black 0%,
-black 18%,
-transparent 40%),
-
-radial-gradient(circle at ${x+90}px ${y-50}px,
-black 0%,
-black 12%,
-transparent 32%),
-
-radial-gradient(circle at ${x-70}px ${y+60}px,
-black 0%,
-black 10%,
-transparent 28%)
-`;
-
-heroImageReveal.style.maskImage=
-heroImageReveal.style.webkitMaskImage;
-
-});
+  heroSection.addEventListener("mousemove", (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    isInsideHero = true;
+  });
 
   heroSection.addEventListener("mouseleave", () => {
-    heroImageReveal.style.clipPath = `circle(0px at 50% 50%)`;
+    isInsideHero = false;
   });
+
+  function updateLiquidMask() {
+    currentX += (mouseX - currentX) * 0.18;
+    currentY += (mouseY - currentY) * 0.18;
+
+    if (!isInsideHero) {
+      for (let i = 0; i < trail.length; i++) {
+        trail[i].x += (-9999 - trail[i].x) * 0.08;
+        trail[i].y += (-9999 - trail[i].y) * 0.08;
+      }
+    } else {
+      trail[0].x += (currentX - trail[0].x) * 0.22;
+      trail[0].y += (currentY - trail[0].y) * 0.22;
+
+      for (let i = 1; i < trail.length; i++) {
+        trail[i].x += (trail[i - 1].x - trail[i].x) * 0.18;
+        trail[i].y += (trail[i - 1].y - trail[i].y) * 0.18;
+      }
+    }
+
+    const mask = `
+      radial-gradient(circle ${trail[0].size}px at ${trail[0].x}px ${trail[0].y}px,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.95) 35%,
+        rgba(0,0,0,0.5) 58%,
+        rgba(0,0,0,0) 78%),
+
+      radial-gradient(circle ${trail[1].size}px at ${trail[1].x}px ${trail[1].y}px,
+        rgba(0,0,0,0.95) 0%,
+        rgba(0,0,0,0.55) 45%,
+        rgba(0,0,0,0) 78%),
+
+      radial-gradient(circle ${trail[2].size}px at ${trail[2].x}px ${trail[2].y}px,
+        rgba(0,0,0,0.7) 0%,
+        rgba(0,0,0,0.32) 48%,
+        rgba(0,0,0,0) 78%),
+
+      radial-gradient(circle ${trail[3].size}px at ${trail[3].x}px ${trail[3].y}px,
+        rgba(0,0,0,0.45) 0%,
+        rgba(0,0,0,0.18) 50%,
+        rgba(0,0,0,0) 80%)
+    `;
+
+    heroImageReveal.style.webkitMaskImage = mask;
+    heroImageReveal.style.maskImage = mask;
+
+    requestAnimationFrame(updateLiquidMask);
+  }
+
+  updateLiquidMask();
 }
     
 </script>
