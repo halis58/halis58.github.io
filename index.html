@@ -191,11 +191,17 @@
   will-change: transform;
 }
 
-.hero-reveal-image {
-  opacity: 1;
-  pointer-events: none;
-  clip-path: circle(0px at 50% 50%);
-  transition: clip-path 0.18s ease-out;
+.hero-reveal-image{
+opacity:1;
+pointer-events:none;
+
+mask-image:
+radial-gradient(circle at 50% 50%, black 40%, transparent 65%);
+
+-webkit-mask-image:
+radial-gradient(circle at 50% 50%, black 40%, transparent 65%);
+
+transition: none;
 }
 
     .hero-media img {
@@ -2135,13 +2141,34 @@ initLanguage();
     const heroSection = document.querySelector(".hero");
 
 if (heroSection && heroImageReveal) {
-  heroSection.addEventListener("mousemove", (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+  heroSection.addEventListener("mousemove",(e)=>{
 
-    heroImageReveal.style.clipPath = `circle(180px at ${x}px ${y}px)`;
-  });
+const rect=heroSection.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+heroImageReveal.style.webkitMaskImage=`
+radial-gradient(circle at ${x}px ${y}px,
+black 0%,
+black 18%,
+transparent 40%),
+
+radial-gradient(circle at ${x+90}px ${y-50}px,
+black 0%,
+black 12%,
+transparent 32%),
+
+radial-gradient(circle at ${x-70}px ${y+60}px,
+black 0%,
+black 10%,
+transparent 28%)
+`;
+
+heroImageReveal.style.maskImage=
+heroImageReveal.style.webkitMaskImage;
+
+});
 
   heroSection.addEventListener("mouseleave", () => {
     heroImageReveal.style.clipPath = `circle(0px at 50% 50%)`;
