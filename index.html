@@ -2190,56 +2190,43 @@ if (heroSection && heroCanvas) {
 
   resetNodes();
 
-  let mouseX = w * 0.5;
-  let mouseY = h * 0.5;
+ let flowX = w * 0.5;
+let flowY = h * 0.5;
 
-  let targetX = mouseX;
-  let targetY = mouseY;
+let targetX = Math.random() * w;
+let targetY = Math.random() * h;
 
-  let isMouseInside = false;
-
-  heroSection.addEventListener("mousemove", (e) => {
-    const r = heroSection.getBoundingClientRect();
-    mouseX = e.clientX - r.left;
-    mouseY = e.clientY - r.top;
-    targetX = mouseX;
-    targetY = mouseY;
-    isMouseInside = true;
-  });
-
-  heroSection.addEventListener("mouseenter", () => {
-    isMouseInside = true;
-  });
-
-  heroSection.addEventListener("mouseleave", () => {
-    isMouseInside = false;
-  });
+let autopilotTimer = 0;
+let nextTargetDelay = 90 + Math.random() * 70;
 
   function autopilot() {
-    if (!isMouseInside && Math.random() < 0.01) {
-      targetX = Math.random() * w;
-      targetY = Math.random() * h;
-    }
+  autopilotTimer++;
+
+  if (autopilotTimer >= nextTargetDelay) {
+    autopilotTimer = 0;
+    nextTargetDelay = 80 + Math.random() * 90;
+
+    targetX = Math.random() * w;
+    targetY = Math.random() * h;
   }
+}
 
   function updateMotion() {
-    autopilot();
+  autopilot();
 
-    if (!isMouseInside) {
-      mouseX += (targetX - mouseX) * 0.03;
-      mouseY += (targetY - mouseY) * 0.03;
-    }
+  flowX += (targetX - flowX) * 0.022;
+  flowY += (targetY - flowY) * 0.022;
 
-    nodes[0].x += (mouseX - nodes[0].x) * 0.18;
-    nodes[0].y += (mouseY - nodes[0].y) * 0.18;
+  nodes[0].x += (flowX - nodes[0].x) * 0.18;
+  nodes[0].y += (flowY - nodes[0].y) * 0.18;
 
-    for (let i = 1; i < nodes.length; i++) {
-      const irregularity = 0.16 + (i / nodes.length) * 0.08;
+  for (let i = 1; i < nodes.length; i++) {
+    const irregularity = 0.16 + (i / nodes.length) * 0.08;
 
-      nodes[i].x += (nodes[i - 1].x + nodes[i].jitterX - nodes[i].x) * irregularity;
-      nodes[i].y += (nodes[i - 1].y + nodes[i].jitterY - nodes[i].y) * irregularity;
-    }
+    nodes[i].x += (nodes[i - 1].x + nodes[i].jitterX - nodes[i].x) * irregularity;
+    nodes[i].y += (nodes[i - 1].y + nodes[i].jitterY - nodes[i].y) * irregularity;
   }
+}
 
   function drawOrganicMask(context) {
     context.clearRect(0, 0, w, h);
