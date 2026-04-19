@@ -2174,132 +2174,133 @@ if (heroSection && heroCanvas) {
   window.addEventListener("resize", resize);
 
   const nodes = [];
-  const NODE_COUNT = 18;
+  const NODE_COUNT = 16;
+
+  let flowX = 0;
+  let flowY = 0;
+  let targetX = 0;
+  let targetY = 0;
+
+  let autopilotFrame = 0;
+  let nextTargetFrame = 70;
+
+  function randomRange(min, max) {
+    return Math.random() * (max - min) + min;
+  }
 
   function resetNodes(x = w * 0.5, y = h * 0.5) {
     nodes.length = 0;
+
     for (let i = 0; i < NODE_COUNT; i++) {
       nodes.push({
         x,
         y,
-        jitterX: (Math.random() - 0.5) * 26,
-        jitterY: (Math.random() - 0.5) * 26
+        offsetX: randomRange(-22, 22),
+        offsetY: randomRange(-22, 22)
       });
     }
   }
 
-  resetNodes();
-
- let flowX = w * 0.5;
-let flowY = h * 0.5;
-
-let targetX = Math.random() * w;
-let targetY = Math.random() * h;
-
-let autopilotTimer = 0;
-let nextTargetDelay = 90 + Math.random() * 70;
-
-  function autopilot() {
-  autopilotTimer++;
-
-  if (autopilotTimer >= nextTargetDelay) {
-    autopilotTimer = 0;
-    nextTargetDelay = 80 + Math.random() * 90;
-
-    targetX = Math.random() * w;
-    targetY = Math.random() * h;
+  function setNextTarget() {
+    targetX = randomRange(w * 0.15, w * 0.85);
+    targetY = randomRange(h * 0.18, h * 0.82);
+    nextTargetFrame = Math.floor(randomRange(55, 110));
+    autopilotFrame = 0;
   }
-}
 
-  function updateMotion() {
-  autopilot();
-
-  flowX += (targetX - flowX) * 0.022;
-  flowY += (targetY - flowY) * 0.022;
-
-  nodes[0].x += (flowX - nodes[0].x) * 0.18;
-  nodes[0].y += (flowY - nodes[0].y) * 0.18;
-
-  for (let i = 1; i < nodes.length; i++) {
-    const irregularity = 0.16 + (i / nodes.length) * 0.08;
-
-    nodes[i].x += (nodes[i - 1].x + nodes[i].jitterX - nodes[i].x) * irregularity;
-    nodes[i].y += (nodes[i - 1].y + nodes[i].jitterY - nodes[i].y) * irregularity;
+  function initFlow() {
+    flowX = w * 0.5;
+    flowY = h * 0.5;
+    targetX = flowX;
+    targetY = flowY;
+    resetNodes(flowX, flowY);
+    setNextTarget();
   }
-}
+
+  function updateAutopilot() {
+    autopilotFrame++;
+
+    if (autopilotFrame >= nextTargetFrame) {
+      setNextTarget();
+    }
+
+    flowX += (targetX - flowX) * 0.012;
+    flowY += (targetY - flowY) * 0.012;
+  }
+
+  function updateNodes() {
+    nodes[0].x += (flowX - nodes[0].x) * 0.14;
+    nodes[0].y += (flowY - nodes[0].y) * 0.14;
+
+    for (let i = 1; i < nodes.length; i++) {
+      const followStrength = 0.12 + (i / nodes.length) * 0.05;
+
+      nodes[i].x += (nodes[i - 1].x + nodes[i].offsetX - nodes[i].x) * followStrength;
+      nodes[i].y += (nodes[i - 1].y + nodes[i].offsetY - nodes[i].y) * followStrength;
+    }
+  }
 
   function drawOrganicMask(context) {
     context.clearRect(0, 0, w, h);
     context.strokeStyle = "#fff";
+    context.fillStyle = "#fff";
     context.lineCap = "round";
     context.lineJoin = "round";
 
     for (let layer = 0; layer < 3; layer++) {
+      const layerSpread = layer * 10;
+      const layerWidth = 150 + layer * 26;
+
       context.beginPath();
-
-      const startOffsetX = (Math.random() - 0.5) * (8 + layer * 6);
-      const startOffsetY = (Math.random() - 0.5) * (8 + layer * 6);
-
       context.moveTo(
-        nodes[0].x + startOffsetX,
-        nodes[0].y + startOffsetY
+        nodes[0].x + layerSpread * 0.2,
+        nodes[0].y - layerSpread * 0.15
       );
 
       for (let i = 1; i < nodes.length - 2; i++) {
-        const randomnessX = (Math.random() - 0.5) * (10 + layer * 8);
-        const randomnessY = (Math.random() - 0.5) * (10 + layer * 8);
+        const x1 = nodes[i].x + layerSpread * 0.12;
+        const y1 = nodes[i].y - layerSpread * 0.08;
 
-        const x1 = nodes[i].x + randomnessX;
-        const y1 = nodes[i].y + randomnessY;
-
-        const xc =
-          (nodes[i].x + nodes[i + 1].x) / 2 +
-          (Math.random() - 0.5) * (8 + layer * 6);
-
-        const yc =
-          (nodes[i].y + nodes[i + 1].y) / 2 +
-          (Math.random() - 0.5) * (8 + layer * 6);
+        const xc = (nodes[i].x + nodes[i + 1].x) * 0.5 + layerSpread * 0.1;
+        const yc = (nodes[i].y + nodes[i + 1].y) * 0.5 - layerSpread * 0.06;
 
         context.quadraticCurveTo(x1, y1, xc, yc);
       }
 
-      context.lineWidth = 180 + layer * 38;
-      context.globalAlpha = layer === 0 ? 1 : 0.82;
+      context.lineWidth = layerWidth;
+      context.globalAlpha = layer === 0 ? 1 : 0.78;
       context.stroke();
     }
 
     context.globalAlpha = 1;
 
-    const headX = nodes[0].x;
-    const headY = nodes[0].y;
+    const head = nodes[0];
+    const neck = nodes[1];
+    const tail = nodes[nodes.length - 1];
+    const preTail = nodes[nodes.length - 2];
+
+    const headAngle = Math.atan2(head.y - neck.y, head.x - neck.x);
+    const tailAngle = Math.atan2(tail.y - preTail.y, tail.x - preTail.x);
 
     context.beginPath();
     context.ellipse(
-      headX,
-      headY,
-      95,
-      72,
-      Math.atan2(
-        nodes[0].y - nodes[1].y,
-        nodes[0].x - nodes[1].x
-      ),
+      head.x,
+      head.y,
+      82,
+      62,
+      headAngle,
       0,
       Math.PI * 2
     );
-    context.fillStyle = "#fff";
     context.fill();
 
-    const tail = nodes[nodes.length - 1];
     context.beginPath();
     context.ellipse(
       tail.x,
       tail.y,
-      78,
-      58,
-      Math.atan2(
-        tail.y - nodes[nodes.length - 2].y,
-        tail.x - nodes[nodes.length - 2].x
-      ),
+      64,
+      48,
+      tailAngle,
       0,
       Math.PI * 2
     );
@@ -2317,7 +2318,8 @@ let nextTargetDelay = 90 + Math.random() * 70;
   }
 
   function draw() {
-    updateMotion();
+    updateAutopilot();
+    updateNodes();
     drawOrganicMask(maskCtx);
 
     ctx.clearRect(0, 0, w, h);
@@ -2331,9 +2333,14 @@ let nextTargetDelay = 90 + Math.random() * 70;
   }
 
   revealImg.onload = () => {
-    resetNodes();
+    initFlow();
     draw();
   };
+
+  if (revealImg.complete) {
+    initFlow();
+    draw();
+  }
 }
     
 </script>
