@@ -176,9 +176,27 @@
     }
 
     .hero-media {
-      position: absolute;
-      inset: 0;
-    }
+  position: absolute;
+  inset: 0;
+}
+
+.hero-base-image,
+.hero-reveal-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+  will-change: transform;
+}
+
+.hero-reveal-image {
+  opacity: 1;
+  pointer-events: none;
+  clip-path: circle(0px at 50% 50%);
+  transition: clip-path 0.18s ease-out;
+}
 
     .hero-media img {
       width: 100%;
@@ -1543,11 +1561,12 @@ body.modal-open {
   </div>
 </div>
 
-  <section class="hero">
-    <div class="hero-media">
-     <img id="heroImage" src="./hero2k.webp" alt="hero image" />
-    </div>
-    <div class="hero-overlay"></div>
+ <section class="hero">
+  <div class="hero-media">
+    <img id="heroImageBase" class="hero-base-image" src="./hero2k.webp" alt="hero image" />
+    <img id="heroImageReveal" class="hero-reveal-image" src="./hero2k-alt.webp" alt="hero reveal image" />
+  </div>
+  <div class="hero-overlay"></div>
 
     <div class="hero-content">
       <div class="container hero-panel">
@@ -1785,7 +1804,8 @@ body.modal-open {
 
   <script>
   const navbar = document.getElementById("navbar");
-  const heroImage = document.getElementById("heroImage");
+  const heroImageBase = document.getElementById("heroImageBase");
+const heroImageReveal = document.getElementById("heroImageReveal");
   const revealItems = document.querySelectorAll(".reveal");
   const siteIntro = document.getElementById("siteIntro");
 
@@ -1797,9 +1817,13 @@ body.modal-open {
       else navbar.classList.remove("scrolled");
     }
 
-    if (heroImage) {
-      heroImage.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
-    }
+    if (heroImageBase) {
+  heroImageBase.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+}
+
+if (heroImageReveal) {
+  heroImageReveal.style.transform = `scale(1.03) translateY(${y * 0.12}px)`;
+}
   });
 
   const observer = new IntersectionObserver((entries) => {
@@ -2107,6 +2131,22 @@ async function initLanguage() {
 }
 
 initLanguage();
+
+    const heroSection = document.querySelector(".hero");
+
+if (heroSection && heroImageReveal) {
+  heroSection.addEventListener("mousemove", (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    heroImageReveal.style.clipPath = `circle(180px at ${x}px ${y}px)`;
+  });
+
+  heroSection.addEventListener("mouseleave", () => {
+    heroImageReveal.style.clipPath = `circle(0px at 50% 50%)`;
+  });
+}
     
 </script>
 
