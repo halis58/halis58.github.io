@@ -2150,122 +2150,131 @@ initLanguage();
     const heroSection = document.querySelector(".hero");
 const heroCanvas = document.getElementById("heroLiquidCanvas");
 
-if(heroSection && heroCanvas){
+if (heroSection && heroCanvas) {
+  const ctx = heroCanvas.getContext("2d");
 
-const ctx=heroCanvas.getContext("2d");
+  const maskCanvas = document.createElement("canvas");
+  const maskCtx = maskCanvas.getContext("2d");
 
-const revealImg=new Image();
-revealImg.src="./hero2k-alt.webp";
+  const revealImg = new Image();
+  revealImg.src = "./hero2k-alt.webp";
 
-let w,h;
+  let w = 0;
+  let h = 0;
 
-function resize(){
+  function resize() {
+    w = heroCanvas.width = heroSection.offsetWidth;
+    h = heroCanvas.height = heroSection.offsetHeight;
 
-w=heroCanvas.width=heroSection.offsetWidth;
-h=heroCanvas.height=heroSection.offsetHeight;
+    maskCanvas.width = w;
+    maskCanvas.height = h;
+  }
 
-}
+  resize();
+  window.addEventListener("resize", resize);
 
-resize();
+  const nodes = [];
+  const NODE_COUNT = 14;
 
-window.addEventListener("resize",resize);
+  function resetNodes(x = w * 0.5, y = h * 0.5) {
+    nodes.length = 0;
+    for (let i = 0; i < NODE_COUNT; i++) {
+      nodes.push({ x, y });
+    }
+  }
 
-let nodes=[];
+  resetNodes();
 
-for(let i=0;i<12;i++){
+  let mouseX = w * 0.5;
+  let mouseY = h * 0.5;
+  let targetX = mouseX;
+  let targetY = mouseY;
+  let isMouseInside = false;
 
-nodes.push({
-x:w/2,
-y:h/2
-});
+  heroSection.addEventListener("mousemove", (e) => {
+    const r = heroSection.getBoundingClientRect();
+    mouseX = e.clientX - r.left;
+    mouseY = e.clientY - r.top;
+    targetX = mouseX;
+    targetY = mouseY;
+    isMouseInside = true;
+  });
 
-}
+  heroSection.addEventListener("mouseenter", () => {
+    isMouseInside = true;
+  });
 
-let mouseX=w/2;
-let mouseY=h/2;
+  heroSection.addEventListener("mouseleave", () => {
+    isMouseInside = false;
+  });
 
-heroSection.addEventListener("mousemove",(e)=>{
+  function autopilot() {
+    if (!isMouseInside && Math.random() < 0.0012) {
+      targetX = Math.random() * w;
+      targetY = Math.random() * h;
+    }
+  }
 
-const r=heroSection.getBoundingClientRect();
+  function updateMotion() {
+    autopilot();
 
-mouseX=e.clientX-r.left;
-mouseY=e.clientY-r.top;
+    if (!isMouseInside) {
+      mouseX += (targetX - mouseX) * 0.018;
+      mouseY += (targetY - mouseY) * 0.018;
+    }
 
-});
+    nodes[0].x += (mouseX - nodes[0].x) * 0.16;
+    nodes[0].y += (mouseY - nodes[0].y) * 0.16;
 
+    for (let i = 1; i < nodes.length; i++) {
+      nodes[i].x += (nodes[i - 1].x - nodes[i].x) * 0.22;
+      nodes[i].y += (nodes[i - 1].y - nodes[i].y) * 0.22;
+    }
+  }
 
-function autopilot(){
+  function drawMaskPath(context) {
+    context.beginPath();
+    context.moveTo(nodes[0].x, nodes[0].y);
 
-if(Math.random()<0.005){
+    for (let i = 1; i < nodes.length - 2; i++) {
+      const xc = (nodes[i].x + nodes[i + 1].x) / 2;
+      const yc = (nodes[i].y + nodes[i + 1].y) / 2;
 
-mouseX=Math.random()*w;
-mouseY=Math.random()*h;
+      context.quadraticCurveTo(
+        nodes[i].x,
+        nodes[i].y,
+        xc,
+        yc
+      );
+    }
 
-}
+    context.lineWidth = 180;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.strokeStyle = "#fff";
+    context.stroke();
+  }
 
-}
+  function draw() {
+    updateMotion();
 
+    maskCtx.clearRect(0, 0, w, h);
+    drawMaskPath(maskCtx);
 
-function draw(){
+    ctx.clearRect(0, 0, w, h);
 
-ctx.clearRect(0,0,w,h);
+    ctx.drawImage(revealImg, 0, 0, w, h);
+    ctx.globalCompositeOperation = "destination-in";
+    ctx.drawImage(maskCanvas, 0, 0);
+    ctx.globalCompositeOperation = "source-over";
 
-autopilot();
+    requestAnimationFrame(draw);
+  }
 
-nodes[0].x+=(mouseX-nodes[0].x)*0.22;
-nodes[0].y+=(mouseY-nodes[0].y)*0.22;
-
-for(let i=1;i<nodes.length;i++){
-
-nodes[i].x+=(nodes[i-1].x-nodes[i].x)*0.28;
-nodes[i].y+=(nodes[i-1].y-nodes[i].y)*0.28;
-
-}
-
-ctx.save();
-
-ctx.beginPath();
-
-ctx.moveTo(nodes[0].x,nodes[0].y);
-
-for(let i=1;i<nodes.length-2;i++){
-
-let xc=(nodes[i].x+nodes[i+1].x)/2;
-let yc=(nodes[i].y+nodes[i+1].y)/2;
-
-ctx.quadraticCurveTo(
-nodes[i].x,
-nodes[i].y,
-xc,
-yc
-);
-
-}
-
-ctx.lineWidth=90;
-ctx.lineCap="round";
-ctx.lineJoin="round";
-
-ctx.stroke();
-
-ctx.clip();
-
-ctx.drawImage(
-revealImg,
-0,
-0,
-w,
-h
-);
-
-ctx.restore();
-
-requestAnimationFrame(draw);
-
-}
-
-revealImg.onload=draw;
-
+  revealImg.onload = () => {
+    resetNodes();
+    draw();
+  };
 }
     
 </script>
