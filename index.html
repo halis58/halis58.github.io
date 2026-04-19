@@ -2169,7 +2169,7 @@ if (heroSection && heroCanvas) {
   let frame = 0;
   let nextTargetAt = 80;
 
-  const POINT_COUNT = 20;
+  const POINT_COUNT = 28;
   const points = [];
 
   function rand(min, max) {
@@ -2206,7 +2206,7 @@ if (heroSection && heroCanvas) {
   function setNextTarget() {
     targetX = rand(w * 0.22, w * 0.78);
     targetY = rand(h * 0.22, h * 0.72);
-    nextTargetAt = frame + Math.floor(rand(55, 95));
+    nextTargetAt = frame + Math.floor(rand(140, 220));
   }
 
   function updateMotion() {
@@ -2216,8 +2216,8 @@ if (heroSection && heroCanvas) {
       setNextTarget();
     }
 
-    centerX += (targetX - centerX) * 0.012;
-    centerY += (targetY - centerY) * 0.012;
+   centerX += (targetX - centerX) * 0.0045;
+centerY += (targetY - centerY) * 0.0045;
   }
 
   function buildBlobPath(context) {
@@ -2273,11 +2273,18 @@ if (heroSection && heroCanvas) {
   }
 
   function drawReveal() {
-    ctx.drawImage(revealImg, 0, 0, w, h);
-    ctx.globalCompositeOperation = "destination-in";
-    ctx.drawImage(maskCanvas, 0, 0);
-    ctx.globalCompositeOperation = "source-over";
-  }
+  const y = window.scrollY || window.pageYOffset || 0;
+  const scale = 1.03;
+  const drawW = w * scale;
+  const drawH = h * scale;
+  const offsetX = (w - drawW) * 0.5;
+  const offsetY = (h - drawH) * 0.5 + y * 0.12;
+
+  ctx.drawImage(revealImg, offsetX, offsetY, drawW, drawH);
+  ctx.globalCompositeOperation = "destination-in";
+  ctx.drawImage(maskCanvas, 0, 0);
+  ctx.globalCompositeOperation = "source-over";
+}
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
