@@ -2147,7 +2147,7 @@ async function initLanguage() {
 
 initLanguage();
 
-    const heroSection = document.querySelector(".hero");
+   const heroSection = document.querySelector(".hero");
 const heroCanvas = document.getElementById("heroLiquidCanvas");
 
 if (heroSection && heroCanvas) {
@@ -2174,12 +2174,17 @@ if (heroSection && heroCanvas) {
   window.addEventListener("resize", resize);
 
   const nodes = [];
-  const NODE_COUNT = 14;
+  const NODE_COUNT = 18;
 
   function resetNodes(x = w * 0.5, y = h * 0.5) {
     nodes.length = 0;
     for (let i = 0; i < NODE_COUNT; i++) {
-      nodes.push({ x, y });
+      nodes.push({
+        x,
+        y,
+        jitterX: (Math.random() - 0.5) * 26,
+        jitterY: (Math.random() - 0.5) * 26
+      });
     }
   }
 
@@ -2187,8 +2192,10 @@ if (heroSection && heroCanvas) {
 
   let mouseX = w * 0.5;
   let mouseY = h * 0.5;
+
   let targetX = mouseX;
   let targetY = mouseY;
+
   let isMouseInside = false;
 
   heroSection.addEventListener("mousemove", (e) => {
@@ -2209,7 +2216,7 @@ if (heroSection && heroCanvas) {
   });
 
   function autopilot() {
-    if (!isMouseInside && Math.random() < 0.0012) {
+    if (!isMouseInside && Math.random() < 0.01) {
       targetX = Math.random() * w;
       targetY = Math.random() * h;
     }
@@ -2219,51 +2226,116 @@ if (heroSection && heroCanvas) {
     autopilot();
 
     if (!isMouseInside) {
-      mouseX += (targetX - mouseX) * 0.018;
-      mouseY += (targetY - mouseY) * 0.018;
+      mouseX += (targetX - mouseX) * 0.03;
+      mouseY += (targetY - mouseY) * 0.03;
     }
 
-    nodes[0].x += (mouseX - nodes[0].x) * 0.16;
-    nodes[0].y += (mouseY - nodes[0].y) * 0.16;
+    nodes[0].x += (mouseX - nodes[0].x) * 0.18;
+    nodes[0].y += (mouseY - nodes[0].y) * 0.18;
 
     for (let i = 1; i < nodes.length; i++) {
-      nodes[i].x += (nodes[i - 1].x - nodes[i].x) * 0.22;
-      nodes[i].y += (nodes[i - 1].y - nodes[i].y) * 0.22;
+      const irregularity = 0.16 + (i / nodes.length) * 0.08;
+
+      nodes[i].x += (nodes[i - 1].x + nodes[i].jitterX - nodes[i].x) * irregularity;
+      nodes[i].y += (nodes[i - 1].y + nodes[i].jitterY - nodes[i].y) * irregularity;
     }
   }
 
-  function drawMaskPath(context) {
-    context.beginPath();
-    context.moveTo(nodes[0].x, nodes[0].y);
-
-    for (let i = 1; i < nodes.length - 2; i++) {
-      const xc = (nodes[i].x + nodes[i + 1].x) / 2;
-      const yc = (nodes[i].y + nodes[i + 1].y) / 2;
-
-      context.quadraticCurveTo(
-        nodes[i].x,
-        nodes[i].y,
-        xc,
-        yc
-      );
-    }
-
-    context.lineWidth = 180;
+  function drawOrganicMask(context) {
+    context.clearRect(0, 0, w, h);
+    context.strokeStyle = "#fff";
     context.lineCap = "round";
     context.lineJoin = "round";
-    context.strokeStyle = "#fff";
-    context.stroke();
+
+    for (let layer = 0; layer < 3; layer++) {
+      context.beginPath();
+
+      const startOffsetX = (Math.random() - 0.5) * (8 + layer * 6);
+      const startOffsetY = (Math.random() - 0.5) * (8 + layer * 6);
+
+      context.moveTo(
+        nodes[0].x + startOffsetX,
+        nodes[0].y + startOffsetY
+      );
+
+      for (let i = 1; i < nodes.length - 2; i++) {
+        const randomnessX = (Math.random() - 0.5) * (10 + layer * 8);
+        const randomnessY = (Math.random() - 0.5) * (10 + layer * 8);
+
+        const x1 = nodes[i].x + randomnessX;
+        const y1 = nodes[i].y + randomnessY;
+
+        const xc =
+          (nodes[i].x + nodes[i + 1].x) / 2 +
+          (Math.random() - 0.5) * (8 + layer * 6);
+
+        const yc =
+          (nodes[i].y + nodes[i + 1].y) / 2 +
+          (Math.random() - 0.5) * (8 + layer * 6);
+
+        context.quadraticCurveTo(x1, y1, xc, yc);
+      }
+
+      context.lineWidth = 180 + layer * 38;
+      context.globalAlpha = layer === 0 ? 1 : 0.82;
+      context.stroke();
+    }
+
+    context.globalAlpha = 1;
+
+    const headX = nodes[0].x;
+    const headY = nodes[0].y;
+
+    context.beginPath();
+    context.ellipse(
+      headX,
+      headY,
+      95,
+      72,
+      Math.atan2(
+        nodes[0].y - nodes[1].y,
+        nodes[0].x - nodes[1].x
+      ),
+      0,
+      Math.PI * 2
+    );
+    context.fillStyle = "#fff";
+    context.fill();
+
+    const tail = nodes[nodes.length - 1];
+    context.beginPath();
+    context.ellipse(
+      tail.x,
+      tail.y,
+      78,
+      58,
+      Math.atan2(
+        tail.y - nodes[nodes.length - 2].y,
+        tail.x - nodes[nodes.length - 2].x
+      ),
+      0,
+      Math.PI * 2
+    );
+    context.fill();
+  }
+
+  function drawRevealImage() {
+    const scale = 1.03;
+    const drawW = w * scale;
+    const drawH = h * scale;
+    const offsetX = (w - drawW) * 0.5;
+    const offsetY = (h - drawH) * 0.5;
+
+    ctx.drawImage(revealImg, offsetX, offsetY, drawW, drawH);
   }
 
   function draw() {
     updateMotion();
-
-    maskCtx.clearRect(0, 0, w, h);
-    drawMaskPath(maskCtx);
+    drawOrganicMask(maskCtx);
 
     ctx.clearRect(0, 0, w, h);
 
-    ctx.drawImage(revealImg, 0, 0, w, h);
+    drawRevealImage();
     ctx.globalCompositeOperation = "destination-in";
     ctx.drawImage(maskCanvas, 0, 0);
     ctx.globalCompositeOperation = "source-over";
