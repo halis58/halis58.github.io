@@ -566,24 +566,28 @@
     }
 
     .project-detail {
-  display: block;
-  grid-column: 1 / -1;
-  max-height: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
   opacity: 0;
-  overflow: visible;
-  transform: translateY(26px);
+  visibility: hidden;
   pointer-events: none;
+  transform: translateY(24px);
   transition:
-    max-height 0.7s cubic-bezier(.22,.61,.36,1),
     opacity 0.45s ease,
-    transform 0.7s cubic-bezier(.22,.61,.36,1);
+    transform 0.7s cubic-bezier(.22,.61,.36,1),
+    visibility 0.45s ease;
+  background: rgba(245,245,245,0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow-y: auto;
 }
 
 .project-detail.open {
-  max-height: 3200px;
   opacity: 1;
-  transform: translateY(0);
+  visibility: visible;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .project-detail-anchor {
@@ -591,16 +595,11 @@
 }
 
     .project-detail-inner {
-  width: min(1180px, calc(100% - 56px));
-  margin: 18px auto 0;
+  width: min(1320px, calc(100% - 64px));
+  margin: 0 auto;
+  min-height: 100vh;
   position: relative;
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  border-radius: 28px;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 34px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+  padding: 110px 0 80px;
 }
 
 .project-detail-head {
@@ -657,25 +656,27 @@
     }
 
    .project-detail-sticky {
-  position: sticky;
-  top: 90px;
+  position: fixed;
+  top: 50%;
+  right: 34px;
+  transform: translateY(-50%);
   display: flex;
   justify-content: flex-end;
-  z-index: 40;
-  margin-bottom: 24px;
+  z-index: 340;
 }
 
 .project-detail-close {
   border: 1px solid rgba(17, 17, 17, 0.08);
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 14px 18px;
+  background: rgba(255,255,255,0.76);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 16px 20px;
   border-radius: 999px;
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.08);
 }
 
     .project-detail-close:hover {
@@ -1084,6 +1085,94 @@
   .project-detail-gallery img.small {
     height: auto;
   }
+
+      .project-case-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(17,17,17,0.08);
+}
+
+.project-case-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-case-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--muted);
+}
+
+.project-case-value {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.project-concept-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.project-concept-strip span {
+  padding: 10px 14px;
+  border: 1px solid rgba(17,17,17,0.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.64);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--text);
+}
+
+.project-case-cta {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(17,17,17,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.project-case-cta-text {
+  font-size: 16px;
+  color: var(--text);
+}
+
+.project-case-cta-btn {
+  border: 1px solid rgba(17,17,17,0.10);
+  background: rgba(255,255,255,0.78);
+  padding: 14px 18px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  cursor: pointer;
+}
+
+.project-case-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 900px) {
+  .project-case-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-case-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 
   .footer-top {
     gap: 18px;
@@ -1509,6 +1598,48 @@ body.modal-open {
     display: none;
   }
 }
+
+    .inquiry-form {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.inquiry-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.inquiry-input,
+.inquiry-textarea {
+  width: 100%;
+  border: 1px solid rgba(17,17,17,0.08);
+  background: rgba(255,255,255,0.56);
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+}
+
+.inquiry-textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.inquiry-input::placeholder,
+.inquiry-textarea::placeholder {
+  color: rgba(17,17,17,0.42);
+  text-transform: lowercase;
+}
+
+@media (max-width: 760px) {
+  .inquiry-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
     
   </style>
 </head>
@@ -1523,7 +1654,7 @@ body.modal-open {
 
    <nav class="nav-links">
   <a href="#projects" data-i18n="nav_projects">projects</a>
-  <a href="#" id="openInquiry" data-i18n="nav_contact">contact</a>
+ <a href="#" id="openInquiry" data-i18n="nav_contact">start a project</a>
 
 <div class="lang-switch">
   <button class="lang-btn" data-lang="tr">
@@ -1550,7 +1681,7 @@ body.modal-open {
 <div class="mobile-menu-panel" id="mobileMenu">
   <div class="mobile-menu-inner">
     <a href="#projects" class="mobile-menu-link" data-i18n="nav_projects">projects</a>
-    <a href="#" class="mobile-menu-link" id="openInquiryMobile" data-i18n="nav_contact">contact</a>
+    <a href="#" class="mobile-menu-link" id="openInquiryMobile" data-i18n="nav_contact">start a project</a>
 
    <div class="mobile-lang-switch">
   <button class="mobile-lang-btn" data-lang="tr" type="button">
@@ -1603,6 +1734,11 @@ body.modal-open {
         data-title="Hillside Residence"
         data-type="villa"
         data-text="Soft natural tones, quiet material transitions and a restrained architectural language shape this residence. The project is designed as a calm sequence of interior and exterior spaces."
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-images='[
           "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1800&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
@@ -1619,6 +1755,11 @@ body.modal-open {
       <article class="project-card wide reveal"
         data-title="Stone Frame House"
         data-type="villa"
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-text="This project explores massing, shadow and transparency through a calm exterior language and carefully framed openings."
         data-images='[
           "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
@@ -1637,6 +1778,11 @@ body.modal-open {
         data-title="Soft Tone Living"
         data-type="interior"
         data-text="A quiet living environment shaped by daylight, pale textures and balanced proportions. The intention is warmth without visual noise."
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-images='[
           "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
@@ -1654,6 +1800,11 @@ body.modal-open {
         data-title="Gallery Kitchen"
         data-type="interior"
         data-text="A minimal kitchen composition with clear lines, warm material transitions and a gallery-like atmosphere."
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-images='[
           "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1800&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
@@ -1671,6 +1822,11 @@ body.modal-open {
         data-title="Quiet Lounge"
         data-type="interior"
         data-text="A soft and restrained interior sequence where material texture and tonal balance create a slower atmosphere."
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-images='[
           "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1800&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1800&auto=format&fit=crop",
@@ -1688,6 +1844,11 @@ body.modal-open {
         data-title="Courtyard House"
         data-type="villa"
         data-text="A residence organized through open courtyard relationships, filtered light and a measured architectural expression."
+        data-location="Kayseri / Turkey"
+data-scope="Residential Design"
+data-year="2026"
+data-status="Concept Study"
+data-concepts='["material — travertine","light — indirect","atmosphere — quiet luxury"]'
         data-images='[
           "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1800&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1800&auto=format&fit=crop",
@@ -1708,12 +1869,42 @@ body.modal-open {
           </div>
 
           <div class="project-detail-head">
-            <p class="project-detail-type" id="detailType"></p>
-            <h2 class="project-detail-title" id="detailTitle"></h2>
-            <p class="project-detail-text" id="detailText"></p>
-          </div>
+  <p class="project-detail-type" id="detailType"></p>
+  <h2 class="project-detail-title" id="detailTitle"></h2>
+  <p class="project-detail-text" id="detailText"></p>
 
-          <div class="project-detail-gallery" id="detailGallery"></div>
+  <div class="project-case-meta">
+    <div class="project-case-item">
+      <span class="project-case-label">location</span>
+      <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
+    </div>
+    <div class="project-case-item">
+      <span class="project-case-label">scope</span>
+      <span class="project-case-value" id="detailScope">Residential Design</span>
+    </div>
+    <div class="project-case-item">
+      <span class="project-case-label">year</span>
+      <span class="project-case-value" id="detailYear">2026</span>
+    </div>
+    <div class="project-case-item">
+      <span class="project-case-label">status</span>
+      <span class="project-case-value" id="detailStatus">Concept Study</span>
+    </div>
+  </div>
+
+  <div class="project-concept-strip" id="detailConceptStrip">
+    <span>material — travertine</span>
+    <span>light — indirect</span>
+    <span>atmosphere — quiet luxury</span>
+  </div>
+</div>
+
+<div class="project-detail-gallery" id="detailGallery"></div>
+
+<div class="project-case-cta">
+  <p class="project-case-cta-text">Interested in a similar commission?</p>
+  <button class="project-case-cta-btn" id="openInquiryFromCase" type="button">start a project</button>
+</div>
         </div>
       </section>
     </div>
@@ -1771,12 +1962,23 @@ body.modal-open {
   <span class="inquiry-brand-arch">ARCHITECTURES</span>
 </div>
       <p class="inquiry-kicker" data-i18n="inquiry_kicker">inquiry</p>
-<h2 class="inquiry-title" id="inquiryTitle" data-i18n="inquiry_title">let’s discuss your project.</h2>
+<h2 class="inquiry-title" id="inquiryTitle" data-i18n="inquiry_title">start a project.</h2>
 <p class="inquiry-text" data-i18n="inquiry_text">
-  private residences, interiors and selected bespoke commissions shaped with a calm and refined design language.
+  selected commissions worldwide. for residential architecture, interiors and bespoke design inquiries, please share your project location, timeline and scope.
 </p>
 
       <div class="inquiry-actions">
+        <form class="inquiry-form">
+  <div class="inquiry-form-grid">
+    <input class="inquiry-input" type="text" placeholder="name">
+    <input class="inquiry-input" type="email" placeholder="email">
+    <input class="inquiry-input" type="text" placeholder="project type">
+    <input class="inquiry-input" type="text" placeholder="location">
+    <input class="inquiry-input" type="text" placeholder="timeline">
+    <input class="inquiry-input" type="text" placeholder="budget range (optional)">
+  </div>
+  <textarea class="inquiry-textarea" placeholder="tell us about your project"></textarea>
+</form>
         <a class="inquiry-mail" href="mailto:info@kayaarchitectures.com">
           info@kayaarchitectures.com
         </a>
@@ -1863,7 +2065,13 @@ const detailType = document.getElementById("detailType");
 const detailTitle = document.getElementById("detailTitle");
 const detailText = document.getElementById("detailText");
 const detailGallery = document.getElementById("detailGallery");
-
+const detailLocation = document.getElementById("detailLocation");
+const detailScope = document.getElementById("detailScope");
+const detailYear = document.getElementById("detailYear");
+const detailStatus = document.getElementById("detailStatus");
+const detailConceptStrip = document.getElementById("detailConceptStrip");
+const openInquiryFromCase = document.getElementById("openInquiryFromCase");
+    
 let activeCard = null;
 
 function openProjectDetail(card) {
@@ -1871,11 +2079,27 @@ function openProjectDetail(card) {
   const type = card.dataset.type || "";
   const text = card.dataset.text || "";
   const images = JSON.parse(card.dataset.images || "[]");
+const concepts = JSON.parse(card.dataset.concepts || "[]");
 
-  detailType.textContent = type;
-  detailTitle.textContent = title;
-  detailText.textContent = text;
-  detailGallery.innerHTML = "";
+detailType.textContent = type;
+detailTitle.textContent = title;
+detailText.textContent = text;
+
+if (detailLocation) detailLocation.textContent = card.dataset.location || "Kayseri / Turkey";
+if (detailScope) detailScope.textContent = card.dataset.scope || "Residential Design";
+if (detailYear) detailYear.textContent = card.dataset.year || "2026";
+if (detailStatus) detailStatus.textContent = card.dataset.status || "Concept Study";
+
+if (detailConceptStrip) {
+  detailConceptStrip.innerHTML = "";
+  concepts.forEach((item) => {
+    const chip = document.createElement("span");
+    chip.textContent = item;
+    detailConceptStrip.appendChild(chip);
+  });
+}
+
+detailGallery.innerHTML = "";
 
   images.forEach((src, index) => {
     const img = document.createElement("img");
@@ -1898,7 +2122,7 @@ function openProjectDetail(card) {
   card.insertAdjacentElement("afterend", projectDetail);
 
   requestAnimationFrame(() => {
-    projectDetail.classList.add("open");
+    document.body.classList.add("modal-open");
   });
 
   setTimeout(() => {
@@ -1921,7 +2145,8 @@ function closeProjectDetail() {
     : window.scrollY;
 
   projectDetail.classList.remove("open");
-
+document.body.classList.remove("modal-open");
+  
   setTimeout(() => {
     window.scrollTo({
       top: cardTop,
@@ -2136,6 +2361,15 @@ async function initLanguage() {
 }
 
 initLanguage();
+
+    if (openInquiryFromCase) {
+  openInquiryFromCase.addEventListener("click", () => {
+    closeProjectDetail();
+    setTimeout(() => {
+      openInquiryModal();
+    }, 260);
+  });
+}
     
 </script>
 
