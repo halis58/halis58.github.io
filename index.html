@@ -2118,12 +2118,12 @@ detailGallery.innerHTML = "";
     return;
   }
 
-  activeCard = card;
-  card.insertAdjacentElement("afterend", projectDetail);
+ activeCard = card;
 
-  requestAnimationFrame(() => {
-    document.body.classList.add("modal-open");
-  });
+requestAnimationFrame(() => {
+  projectDetail.classList.add("open");
+  document.body.classList.add("modal-open");
+});
 
   setTimeout(() => {
     const firstImage = detailGallery.querySelector("img");
