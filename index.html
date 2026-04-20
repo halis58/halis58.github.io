@@ -1616,6 +1616,38 @@ body.modal-open {
     grid-template-columns: 1fr;
   }
 }
+
+    .inquiry-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.inquiry-submit {
+  border: 1px solid rgba(17,17,17,0.10);
+  background: rgba(255,255,255,0.82);
+  padding: 14px 20px;
+  border-radius: 999px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.inquiry-submit:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.96);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.inquiry-form-note {
+  font-size: 12px;
+  color: var(--muted);
+}
     
   </style>
 </head>
@@ -1941,16 +1973,21 @@ data-concepts='["material — travertine","light — indirect","atmosphere — q
 </p>
 
       <div class="inquiry-actions">
-        <form class="inquiry-form">
+        <form class="inquiry-form" id="inquiryForm">
   <div class="inquiry-form-grid">
-    <input class="inquiry-input" type="text" placeholder="name">
-    <input class="inquiry-input" type="email" placeholder="email">
-    <input class="inquiry-input" type="text" placeholder="project type">
-    <input class="inquiry-input" type="text" placeholder="location">
-    <input class="inquiry-input" type="text" placeholder="timeline">
-    <input class="inquiry-input" type="text" placeholder="budget range (optional)">
+    <input class="inquiry-input" type="text" name="name" placeholder="name" required>
+    <input class="inquiry-input" type="email" name="email" placeholder="email" required>
+    <input class="inquiry-input" type="text" name="projectType" placeholder="project type">
+    <input class="inquiry-input" type="text" name="location" placeholder="location">
+    <input class="inquiry-input" type="text" name="timeline" placeholder="timeline">
+    <input class="inquiry-input" type="text" name="budget" placeholder="budget range (optional)">
   </div>
-  <textarea class="inquiry-textarea" placeholder="tell us about your project"></textarea>
+  <textarea class="inquiry-textarea" name="message" placeholder="tell us about your project" required></textarea>
+
+  <div class="inquiry-form-actions">
+    <button class="inquiry-submit" type="submit">send inquiry</button>
+    <p class="inquiry-form-note" id="inquiryFormNote"></p>
+  </div>
 </form>
         <a class="inquiry-mail" href="mailto:info@kayaarchitectures.com">
           info@kayaarchitectures.com
@@ -2334,6 +2371,43 @@ async function initLanguage() {
 
 initLanguage();
 
+    const inquiryForm = document.getElementById("inquiryForm");
+const inquiryFormNote = document.getElementById("inquiryFormNote");
+
+if (inquiryForm) {
+  inquiryForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(inquiryForm);
+
+    const name = formData.get("name") || "";
+    const email = formData.get("email") || "";
+    const projectType = formData.get("projectType") || "";
+    const location = formData.get("location") || "";
+    const timeline = formData.get("timeline") || "";
+    const budget = formData.get("budget") || "";
+    const message = formData.get("message") || "";
+
+    const subject = encodeURIComponent(`New Project Inquiry - ${name}`);
+    const body = encodeURIComponent(
+`Name: ${name}
+Email: ${email}
+Project Type: ${projectType}
+Location: ${location}
+Timeline: ${timeline}
+Budget: ${budget}
+
+Message:
+${message}`
+    );
+
+    window.location.href = `mailto:info@kayaarchitectures.com?subject=${subject}&body=${body}`;
+
+    if (inquiryFormNote) {
+      inquiryFormNote.textContent = "your email app is opening...";
+    }
+  });
+}
     
 </script>
 
