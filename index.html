@@ -862,7 +862,7 @@ border-radius:18px;
 width:100%;
 display:block;
 
-border-radius:2;   /* köşeli */
+border-radius:2px;   /* köşeli */
 
 border:1px solid rgba(17,17,17,0.06);
 
@@ -2044,89 +2044,60 @@ data-concepts='["material — travertine","light — indirect","atmosphere — q
       </article>
 
       <section class="project-detail" id="projectDetail">
-        <div class="project-detail-inner">
-          <div class="project-detail-sticky">
-            <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
+  <div class="project-detail-inner">
+    <div class="project-detail-sticky">
+      <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
+    </div>
+
+    <div class="project-detail-head collapsed" id="projectDetailHead">
+      <p class="project-detail-type" id="detailType"></p>
+
+      <div class="project-detail-title-row">
+        <h2 class="project-detail-title" id="detailTitle"></h2>
+
+        <button
+          class="project-detail-toggle"
+          id="projectDetailToggle"
+          type="button"
+          aria-expanded="false"
+          aria-label="project details aç"
+        >
+          <span class="project-detail-toggle-line"></span>
+          <span class="project-detail-toggle-line"></span>
+        </button>
+      </div>
+
+      <div class="project-detail-extra" id="projectDetailExtra">
+        <p class="project-detail-text" id="detailText"></p>
+
+        <div class="project-case-meta">
+          <div class="project-case-item">
+            <span class="project-case-label">location</span>
+            <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
           </div>
-
-          <div class="project-detail-head collapsed" id="projectDetailHead">
-  <p class="project-detail-type" id="detailType"></p>
-
-  <div class="project-detail-title-row">
-    <h2 class="project-detail-title" id="detailTitle"></h2>
-
-    <button
-      class="project-detail-toggle"
-      id="projectDetailToggle"
-      type="button"
-      aria-expanded="false"
-      aria-label="project details aç"
-    >
-      <span class="project-detail-toggle-line"></span>
-      <span class="project-detail-toggle-line"></span>
-    </button>
-  </div>
-
-  <div class="project-detail-extra" id="projectDetailExtra">
-    <p class="project-detail-text" id="detailText"></p>
-
-    <div class="project-case-meta">
-      <div class="project-case-item">
-        <span class="project-case-label">location</span>
-        <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
-      </div>
-      <div class="project-case-item">
-        <span class="project-case-label">scope</span>
-        <span class="project-case-value" id="detailScope">Residential Design</span>
-      </div>
-      <div class="project-case-item">
-        <span class="project-case-label">year</span>
-        <span class="project-case-value" id="detailYear">2026</span>
-      </div>
-      <div class="project-case-item">
-        <span class="project-case-label">status</span>
-        <span class="project-case-value" id="detailStatus">Concept Study</span>
-      </div>
-    </div>
-
-    <div class="project-concept-strip" id="detailConceptStrip">
-      <span>material — travertine</span>
-      <span>light — indirect</span>
-      <span>atmosphere — quiet luxury</span>
-    </div>
-  </div>
-</div>
-    <div class="project-case-item">
-      <span class="project-case-label">location</span>
-      <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
-    </div>
-    <div class="project-case-item">
-      <span class="project-case-label">scope</span>
-      <span class="project-case-value" id="detailScope">Residential Design</span>
-    </div>
-    <div class="project-case-item">
-      <span class="project-case-label">year</span>
-      <span class="project-case-value" id="detailYear">2026</span>
-    </div>
-    <div class="project-case-item">
-      <span class="project-case-label">status</span>
-      <span class="project-case-value" id="detailStatus">Concept Study</span>
-    </div>
-  </div>
-
-  <div class="project-concept-strip" id="detailConceptStrip">
-    <span>material — travertine</span>
-    <span>light — indirect</span>
-    <span>atmosphere — quiet luxury</span>
-  </div>
-</div>
-
-<div class="project-detail-gallery" id="detailGallery"></div>
-
-
+          <div class="project-case-item">
+            <span class="project-case-label">scope</span>
+            <span class="project-case-value" id="detailScope">Residential Design</span>
+          </div>
+          <div class="project-case-item">
+            <span class="project-case-label">year</span>
+            <span class="project-case-value" id="detailYear">2026</span>
+          </div>
+          <div class="project-case-item">
+            <span class="project-case-label">status</span>
+            <span class="project-case-value" id="detailStatus">Concept Study</span>
+          </div>
         </div>
-      </section>
+
+        <div class="project-concept-strip" id="detailConceptStrip">
+          <span>material — travertine</span>
+          <span>light — indirect</span>
+          <span>atmosphere — quiet luxury</span>
+        </div>
+      </div>
     </div>
+
+    <div class="project-detail-gallery" id="detailGallery"></div>
   </div>
 </section>
 
