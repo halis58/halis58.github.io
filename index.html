@@ -643,6 +643,136 @@ box-shadow:none;    /* floating card yok */
   margin-bottom: 22px;
 }
 
+  .project-detail-title-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.project-detail-toggle{
+  flex:0 0 auto;
+  width:58px;
+  height:58px;
+  border:none;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:
+    transform .35s ease,
+    background .35s ease,
+    box-shadow .35s ease;
+}
+
+.project-detail-toggle:hover{
+  transform:translateY(-1px);
+  background:rgba(255,255,255,.22);
+}
+
+.project-detail-toggle-line{
+  position:absolute;
+  width:16px;
+  height:1.5px;
+  background:rgba(17,17,17,.9);
+  border-radius:999px;
+  transition:transform .35s ease, opacity .35s ease;
+}
+
+.project-detail-toggle-line:first-child{
+  transform:rotate(0deg);
+}
+
+.project-detail-toggle-line:last-child{
+  transform:rotate(90deg);
+}
+
+.project-detail-head.expanded .project-detail-toggle-line:last-child{
+  transform:rotate(0deg);
+  opacity:.75;
+}
+
+.project-detail-extra{
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transform:translateY(-8px);
+  transition:
+    grid-template-rows .6s cubic-bezier(.22,.61,.36,1),
+    opacity .4s ease,
+    transform .5s ease;
+}
+
+.project-detail-extra > *{
+  overflow:hidden;
+}
+
+.project-detail-head.expanded .project-detail-extra{
+  grid-template-rows:1fr;
+  opacity:1;
+  transform:translateY(0);
+}
+
+.project-detail-text,
+.project-case-meta,
+.project-concept-strip{
+  opacity:0;
+  transform:translateY(14px);
+  transition:
+    opacity .45s ease,
+    transform .55s cubic-bezier(.22,.61,.36,1);
+}
+
+.project-detail-head.expanded .project-detail-text{
+  opacity:1;
+  transform:translateY(0);
+  transition-delay:.08s;
+}
+
+.project-detail-head.expanded .project-case-meta{
+  opacity:1;
+  transform:translateY(0);
+  transition-delay:.14s;
+}
+
+.project-detail-head.expanded .project-concept-strip{
+  opacity:1;
+  transform:translateY(0);
+  transition-delay:.2s;
+}
+
+.project-detail-gallery{
+  opacity:0;
+  transform:translateY(26px);
+  transition:
+    opacity .55s ease,
+    transform .7s cubic-bezier(.22,.61,.36,1);
+}
+
+.project-detail.open.gallery-visible .project-detail-gallery{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media (max-width: 760px){
+  .project-detail-title-row{
+    gap:14px;
+  }
+
+  .project-detail-toggle{
+    width:48px;
+    height:48px;
+  }
+
+  .project-detail-toggle-line{
+    width:14px;
+  }
+}  
+
 .project-detail-text {
   font-family: "Inter", Arial, sans-serif;
   font-size: 17px;
@@ -1938,12 +2068,53 @@ data-concepts='["material — travertine","light — indirect","atmosphere — q
             <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
           </div>
 
-          <div class="project-detail-head">
+          <div class="project-detail-head collapsed" id="projectDetailHead">
   <p class="project-detail-type" id="detailType"></p>
-  <h2 class="project-detail-title" id="detailTitle"></h2>
-  <p class="project-detail-text" id="detailText"></p>
 
-  <div class="project-case-meta">
+  <div class="project-detail-title-row">
+    <h2 class="project-detail-title" id="detailTitle"></h2>
+
+    <button
+      class="project-detail-toggle"
+      id="projectDetailToggle"
+      type="button"
+      aria-expanded="false"
+      aria-label="project details aç"
+    >
+      <span class="project-detail-toggle-line"></span>
+      <span class="project-detail-toggle-line"></span>
+    </button>
+  </div>
+
+  <div class="project-detail-extra" id="projectDetailExtra">
+    <p class="project-detail-text" id="detailText"></p>
+
+    <div class="project-case-meta">
+      <div class="project-case-item">
+        <span class="project-case-label">location</span>
+        <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
+      </div>
+      <div class="project-case-item">
+        <span class="project-case-label">scope</span>
+        <span class="project-case-value" id="detailScope">Residential Design</span>
+      </div>
+      <div class="project-case-item">
+        <span class="project-case-label">year</span>
+        <span class="project-case-value" id="detailYear">2026</span>
+      </div>
+      <div class="project-case-item">
+        <span class="project-case-label">status</span>
+        <span class="project-case-value" id="detailStatus">Concept Study</span>
+      </div>
+    </div>
+
+    <div class="project-concept-strip" id="detailConceptStrip">
+      <span>material — travertine</span>
+      <span>light — indirect</span>
+      <span>atmosphere — quiet luxury</span>
+    </div>
+  </div>
+</div>
     <div class="project-case-item">
       <span class="project-case-label">location</span>
       <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
@@ -2193,6 +2364,17 @@ detailGallery.innerHTML = "";
 
 requestAnimationFrame(() => {
   projectDetail.classList.add("open");
+  projectDetail.classList.remove("gallery-visible");
+
+  if (projectDetailHead) {
+    projectDetailHead.classList.remove("expanded");
+    projectDetailHead.classList.add("collapsed");
+  }
+
+  if (projectDetailToggle) {
+    projectDetailToggle.setAttribute("aria-expanded", "false");
+  }
+
   document.body.classList.add("modal-open");
 });
 
@@ -2467,6 +2649,28 @@ ${message}`
 
     if (inquiryFormNote) {
       inquiryFormNote.textContent = "your email app is opening...";
+    }
+  });
+}
+
+    const projectDetailHead = document.getElementById("projectDetailHead");
+const projectDetailToggle = document.getElementById("projectDetailToggle");
+const projectDetailExtra = document.getElementById("projectDetailExtra");
+
+if (projectDetailToggle && projectDetailHead && projectDetail) {
+  projectDetailToggle.addEventListener("click", () => {
+    const isExpanded = projectDetailHead.classList.contains("expanded");
+
+    if (isExpanded) {
+      projectDetailHead.classList.remove("expanded");
+      projectDetailHead.classList.add("collapsed");
+      projectDetail.classList.remove("gallery-visible");
+      projectDetailToggle.setAttribute("aria-expanded", "false");
+    } else {
+      projectDetailHead.classList.remove("collapsed");
+      projectDetailHead.classList.add("expanded");
+      projectDetail.classList.add("gallery-visible");
+      projectDetailToggle.setAttribute("aria-expanded", "true");
     }
   });
 }
