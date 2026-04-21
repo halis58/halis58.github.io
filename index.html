@@ -913,25 +913,6 @@ object-fit:cover;
       box-shadow: 0 14px 36px rgba(0,0,0,0.12);
     }
 
-    .project-detail-head,
-.project-detail-gallery {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.45s ease,
-    transform 0.6s cubic-bezier(.22,.61,.36,1);
-}
-
-.project-detail.open .project-detail-head,
-.project-detail.open .project-detail-gallery {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.project-detail.open .project-detail-gallery {
-  transition-delay: 0.08s;
-}
-
     .footer {
       padding: 34px 0 42px;
       border-top: 1px solid var(--line);
@@ -2379,17 +2360,14 @@ requestAnimationFrame(() => {
 });
 
   setTimeout(() => {
-    const firstImage = detailGallery.querySelector("img");
-    const target = firstImage || projectDetail;
-    const top = target.getBoundingClientRect().top + window.scrollY - 90;
+  const top = projectDetail.getBoundingClientRect().top + window.scrollY;
 
-    window.scrollTo({
-      top,
-      behavior: "smooth"
-    });
-  }, 140);
-}
-
+  window.scrollTo({
+    top,
+    behavior: "smooth"
+  });
+}, 120);
+  
 function closeProjectDetail() {
   if (!projectDetail || !projectDetail.classList.contains("open")) return;
 
@@ -2407,6 +2385,17 @@ document.body.classList.remove("modal-open");
     });
   }, 80);
 }
+
+    if (projectDetailHead) {
+  projectDetailHead.classList.remove("expanded");
+  projectDetailHead.classList.add("collapsed");
+}
+
+if (projectDetailToggle) {
+  projectDetailToggle.setAttribute("aria-expanded", "false");
+}
+
+projectDetail.classList.remove("gallery-visible");
 
 projectCards.forEach((card) => {
   card.addEventListener("click", () => openProjectDetail(card));
