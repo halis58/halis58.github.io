@@ -612,9 +612,10 @@ margin-bottom:42px;
 
 padding:34px 36px 30px;
 
-background: transparent;
-backdrop-filter:none;
--webkit-backdrop-filter:none;
+background: rgba(240,236,228,.28);
+
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
 
 border:none;        /* çerçeve yok */
 border-radius:0;    /* frame hissi yok */
@@ -642,136 +643,6 @@ box-shadow:none;    /* floating card yok */
  max-width: 980px;
   margin-bottom: 22px;
 }
-
-  .project-detail-title-row{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:24px;
-}
-
-.project-detail-toggle{
-  flex:0 0 auto;
-  width:58px;
-  height:58px;
-  border:none;
-  background:rgba(255,255,255,.14);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  border-radius:999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  transition:
-    transform .35s ease,
-    background .35s ease,
-    box-shadow .35s ease;
-}
-
-.project-detail-toggle:hover{
-  transform:translateY(-1px);
-  background:rgba(255,255,255,.22);
-}
-
-.project-detail-toggle-line{
-  position:absolute;
-  width:16px;
-  height:1.5px;
-  background:rgba(17,17,17,.9);
-  border-radius:999px;
-  transition:transform .35s ease, opacity .35s ease;
-}
-
-.project-detail-toggle-line:first-child{
-  transform:rotate(0deg);
-}
-
-.project-detail-toggle-line:last-child{
-  transform:rotate(90deg);
-}
-
-.project-detail-head.expanded .project-detail-toggle-line:last-child{
-  transform:rotate(0deg);
-  opacity:.75;
-}
-
-.project-detail-extra{
-  display:grid;
-  grid-template-rows:0fr;
-  opacity:0;
-  transform:translateY(-8px);
-  transition:
-    grid-template-rows .6s cubic-bezier(.22,.61,.36,1),
-    opacity .4s ease,
-    transform .5s ease;
-}
-
-.project-detail-extra > *{
-  overflow:hidden;
-}
-
-.project-detail-head.expanded .project-detail-extra{
-  grid-template-rows:1fr;
-  opacity:1;
-  transform:translateY(0);
-}
-
-.project-detail-text,
-.project-case-meta,
-.project-concept-strip{
-  opacity:0;
-  transform:translateY(14px);
-  transition:
-    opacity .45s ease,
-    transform .55s cubic-bezier(.22,.61,.36,1);
-}
-
-.project-detail-head.expanded .project-detail-text{
-  opacity:1;
-  transform:translateY(0);
-  transition-delay:.08s;
-}
-
-.project-detail-head.expanded .project-case-meta{
-  opacity:1;
-  transform:translateY(0);
-  transition-delay:.14s;
-}
-
-.project-detail-head.expanded .project-concept-strip{
-  opacity:1;
-  transform:translateY(0);
-  transition-delay:.2s;
-}
-
-.project-detail-gallery{
-  opacity:0;
-  transform:translateY(26px);
-  transition:
-    opacity .55s ease,
-    transform .7s cubic-bezier(.22,.61,.36,1);
-}
-
-.project-detail.open.gallery-visible .project-detail-gallery{
-  opacity:1;
-  transform:translateY(0);
-}
-
-@media (max-width: 760px){
-  .project-detail-title-row{
-    gap:14px;
-  }
-
-  .project-detail-toggle{
-    width:48px;
-    height:48px;
-  }
-
-  .project-detail-toggle-line{
-    width:14px;
-  }
-}  
 
 .project-detail-text {
   font-family: "Inter", Arial, sans-serif;
@@ -862,7 +733,7 @@ border-radius:18px;
 width:100%;
 display:block;
 
-border-radius:2px;   /* köşeli */
+border-radius:2;   /* köşeli */
 
 border:1px solid rgba(17,17,17,0.06);
 
@@ -912,6 +783,25 @@ object-fit:cover;
       background: rgba(255, 255, 255, 0.88);
       box-shadow: 0 14px 36px rgba(0,0,0,0.12);
     }
+
+    .project-detail-head,
+.project-detail-gallery {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s cubic-bezier(.22,.61,.36,1);
+}
+
+.project-detail.open .project-detail-head,
+.project-detail.open .project-detail-gallery {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-detail.open .project-detail-gallery {
+  transition-delay: 0.08s;
+}
 
     .footer {
       padding: 34px 0 42px;
@@ -2044,60 +1934,48 @@ data-concepts='["material — travertine","light — indirect","atmosphere — q
       </article>
 
       <section class="project-detail" id="projectDetail">
-  <div class="project-detail-inner">
-    <div class="project-detail-sticky">
-      <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
+        <div class="project-detail-inner">
+          <div class="project-detail-sticky">
+            <button class="project-detail-close" id="projectDetailClose" data-i18n="detail_close">close</button>
+          </div>
+
+          <div class="project-detail-head">
+  <p class="project-detail-type" id="detailType"></p>
+  <h2 class="project-detail-title" id="detailTitle"></h2>
+  <p class="project-detail-text" id="detailText"></p>
+
+  <div class="project-case-meta">
+    <div class="project-case-item">
+      <span class="project-case-label">location</span>
+      <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
     </div>
-
-    <div class="project-detail-head collapsed" id="projectDetailHead">
-      <p class="project-detail-type" id="detailType"></p>
-
-      <div class="project-detail-title-row">
-        <h2 class="project-detail-title" id="detailTitle"></h2>
-
-        <button
-          class="project-detail-toggle"
-          id="projectDetailToggle"
-          type="button"
-          aria-expanded="false"
-          aria-label="project details aç"
-        >
-          <span class="project-detail-toggle-line"></span>
-          <span class="project-detail-toggle-line"></span>
-        </button>
-      </div>
-
-      <div class="project-detail-extra" id="projectDetailExtra">
-        <p class="project-detail-text" id="detailText"></p>
-
-        <div class="project-case-meta">
-          <div class="project-case-item">
-            <span class="project-case-label">location</span>
-            <span class="project-case-value" id="detailLocation">Kayseri / Turkey</span>
-          </div>
-          <div class="project-case-item">
-            <span class="project-case-label">scope</span>
-            <span class="project-case-value" id="detailScope">Residential Design</span>
-          </div>
-          <div class="project-case-item">
-            <span class="project-case-label">year</span>
-            <span class="project-case-value" id="detailYear">2026</span>
-          </div>
-          <div class="project-case-item">
-            <span class="project-case-label">status</span>
-            <span class="project-case-value" id="detailStatus">Concept Study</span>
-          </div>
-        </div>
-
-        <div class="project-concept-strip" id="detailConceptStrip">
-          <span>material — travertine</span>
-          <span>light — indirect</span>
-          <span>atmosphere — quiet luxury</span>
-        </div>
-      </div>
+    <div class="project-case-item">
+      <span class="project-case-label">scope</span>
+      <span class="project-case-value" id="detailScope">Residential Design</span>
     </div>
+    <div class="project-case-item">
+      <span class="project-case-label">year</span>
+      <span class="project-case-value" id="detailYear">2026</span>
+    </div>
+    <div class="project-case-item">
+      <span class="project-case-label">status</span>
+      <span class="project-case-value" id="detailStatus">Concept Study</span>
+    </div>
+  </div>
 
-    <div class="project-detail-gallery" id="detailGallery"></div>
+  <div class="project-concept-strip" id="detailConceptStrip">
+    <span>material — travertine</span>
+    <span>light — indirect</span>
+    <span>atmosphere — quiet luxury</span>
+  </div>
+</div>
+
+<div class="project-detail-gallery" id="detailGallery"></div>
+
+
+        </div>
+      </section>
+    </div>
   </div>
 </section>
 
@@ -2254,8 +2132,7 @@ if (heroImageReveal) {
   }, 2300);
 });
 
- <script id="kdu9jv">
-const projectCards = document.querySelectorAll(".project-card");
+  const projectCards = document.querySelectorAll(".project-card");
 const projectDetail = document.getElementById("projectDetail");
 const detailType = document.getElementById("detailType");
 const detailTitle = document.getElementById("detailTitle");
@@ -2266,83 +2143,70 @@ const detailScope = document.getElementById("detailScope");
 const detailYear = document.getElementById("detailYear");
 const detailStatus = document.getElementById("detailStatus");
 const detailConceptStrip = document.getElementById("detailConceptStrip");
-
-const projectDetailHead = document.getElementById("projectDetailHead");
-const projectDetailToggle = document.getElementById("projectDetailToggle");
-
+    
 let activeCard = null;
 
 function openProjectDetail(card) {
-  if (!projectDetail) return;
-
   const title = card.dataset.title || "";
   const type = card.dataset.type || "";
   const text = card.dataset.text || "";
   const images = JSON.parse(card.dataset.images || "[]");
-  const concepts = JSON.parse(card.dataset.concepts || "[]");
+const concepts = JSON.parse(card.dataset.concepts || "[]");
 
-  if (detailType) detailType.textContent = type;
-  if (detailTitle) detailTitle.textContent = title;
-  if (detailText) detailText.textContent = text;
-  if (detailLocation) detailLocation.textContent = card.dataset.location || "Kayseri / Turkey";
-  if (detailScope) detailScope.textContent = card.dataset.scope || "Residential Design";
-  if (detailYear) detailYear.textContent = card.dataset.year || "2026";
-  if (detailStatus) detailStatus.textContent = card.dataset.status || "Concept Study";
+detailType.textContent = type;
+detailTitle.textContent = title;
+detailText.textContent = text;
 
-  if (detailConceptStrip) {
-    detailConceptStrip.innerHTML = "";
-    concepts.forEach((item) => {
-      const chip = document.createElement("span");
-      chip.textContent = item;
-      detailConceptStrip.appendChild(chip);
-    });
-  }
+if (detailLocation) detailLocation.textContent = card.dataset.location || "Kayseri / Turkey";
+if (detailScope) detailScope.textContent = card.dataset.scope || "Residential Design";
+if (detailYear) detailYear.textContent = card.dataset.year || "2026";
+if (detailStatus) detailStatus.textContent = card.dataset.status || "Concept Study";
 
-  if (detailGallery) {
-    detailGallery.innerHTML = "";
-    images.forEach((src, index) => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = title;
+if (detailConceptStrip) {
+  detailConceptStrip.innerHTML = "";
+  concepts.forEach((item) => {
+    const chip = document.createElement("span");
+    chip.textContent = item;
+    detailConceptStrip.appendChild(chip);
+  });
+}
 
-      if (index === 0) img.className = "large";
-      else if (index === 1) img.className = "medium";
-      else img.className = "small";
+detailGallery.innerHTML = "";
 
-      detailGallery.appendChild(img);
-    });
-  }
+  images.forEach((src, index) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = title;
+
+    if (index === 0) img.className = "large";
+    else if (index === 1) img.className = "medium";
+    else img.className = "small";
+
+    detailGallery.appendChild(img);
+  });
 
   if (activeCard === card && projectDetail.classList.contains("open")) {
     closeProjectDetail();
     return;
   }
 
-  activeCard = card;
+ activeCard = card;
 
-  if (projectDetailHead) {
-    projectDetailHead.classList.remove("expanded");
-    projectDetailHead.classList.add("collapsed");
-  }
-
-  if (projectDetailToggle) {
-    projectDetailToggle.setAttribute("aria-expanded", "false");
-  }
-
-  projectDetail.classList.remove("gallery-visible");
-
-  requestAnimationFrame(() => {
-    projectDetail.classList.add("open");
-    document.body.classList.add("modal-open");
-  });
+requestAnimationFrame(() => {
+  projectDetail.classList.add("open");
+  document.body.classList.add("modal-open");
+});
 
   setTimeout(() => {
-    const top = projectDetail.getBoundingClientRect().top + window.scrollY;
+    const firstImage = detailGallery.querySelector("img");
+    const target = firstImage || projectDetail;
+    const top = target.getBoundingClientRect().top + window.scrollY - 90;
+
     window.scrollTo({
       top,
       behavior: "smooth"
     });
-  }, 120);
+  }, 140);
 }
 
 function closeProjectDetail() {
@@ -2353,18 +2217,8 @@ function closeProjectDetail() {
     : window.scrollY;
 
   projectDetail.classList.remove("open");
-  projectDetail.classList.remove("gallery-visible");
-  document.body.classList.remove("modal-open");
-
-  if (projectDetailHead) {
-    projectDetailHead.classList.remove("expanded");
-    projectDetailHead.classList.add("collapsed");
-  }
-
-  if (projectDetailToggle) {
-    projectDetailToggle.setAttribute("aria-expanded", "false");
-  }
-
+document.body.classList.remove("modal-open");
+  
   setTimeout(() => {
     window.scrollTo({
       top: cardTop,
@@ -2384,25 +2238,240 @@ document.addEventListener("click", (e) => {
   }
 });
 
-if (projectDetailToggle && projectDetailHead && projectDetail) {
-  projectDetailToggle.addEventListener("click", (e) => {
-    e.stopPropagation();
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
 
-    const isExpanded = projectDetailHead.classList.contains("expanded");
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.toggle("open");
+      mobileMenuToggle.classList.toggle("active", isOpen);
+      mobileMenuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
 
-    if (isExpanded) {
-      projectDetailHead.classList.remove("expanded");
-      projectDetailHead.classList.add("collapsed");
-      projectDetail.classList.remove("gallery-visible");
-      projectDetailToggle.setAttribute("aria-expanded", "false");
-    } else {
-      projectDetailHead.classList.remove("collapsed");
-      projectDetailHead.classList.add("expanded");
-      projectDetail.classList.add("gallery-visible");
-      projectDetailToggle.setAttribute("aria-expanded", "true");
+    document.querySelectorAll(".mobile-menu-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("open");
+        mobileMenuToggle.classList.remove("active");
+        mobileMenuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        mobileMenu.classList.remove("open");
+        mobileMenuToggle.classList.remove("active");
+        mobileMenuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+const inquiryBackdrop = document.getElementById("inquiryBackdrop");
+const inquiryModal = document.getElementById("inquiryModal");
+const openInquiry = document.getElementById("openInquiry");
+const openInquiryMobile = document.getElementById("openInquiryMobile");
+const closeInquiry = document.getElementById("closeInquiry");
+
+function openInquiryModal(e) {
+  if (e) e.preventDefault();
+  if (!inquiryBackdrop) return;
+
+  inquiryBackdrop.classList.add("open");
+  document.body.classList.add("modal-open");
+
+  if (mobileMenu) {
+    mobileMenu.classList.remove("open");
+    if (mobileMenuToggle) {
+      mobileMenuToggle.classList.remove("active");
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+}
+
+function closeInquiryModal() {
+  if (!inquiryBackdrop) return;
+  inquiryBackdrop.classList.remove("open");
+  document.body.classList.remove("modal-open");
+}
+
+if (openInquiry) {
+  openInquiry.addEventListener("click", openInquiryModal);
+}
+
+if (openInquiryMobile) {
+  openInquiryMobile.addEventListener("click", openInquiryModal);
+}
+
+if (closeInquiry) {
+  closeInquiry.addEventListener("click", closeInquiryModal);
+}
+
+if (inquiryBackdrop) {
+  inquiryBackdrop.addEventListener("click", (e) => {
+    if (e.target === inquiryBackdrop) {
+      closeInquiryModal();
     }
   });
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeInquiryModal();
+  }
+});
+
+
+const translations = {
+  tr: {
+    nav_projects: "projeler",
+    nav_contact: "iletişim",
+
+    hero_title: "Villa ve İç mekan mimarisi",
+    hero_subtitle: "görsel netlik / sakin lüks / zamansız mekanlar",
+
+    feature_title: "ışık, gölge ve malzeme dengesiyle şekillenen sade kompozisyonlar.",
+feature_text: "seçili konut ve iç mekan projeleri, editoryal ve görsel odaklı bir atmosferle sunulmaktadır.",
+
+    intro_title: "daha az gürültü, daha fazla atmosfer ile tasarlanmış mekanlar.",
+    intro_text: "sakin, premium ve görsel odaklı bir sunum diliyle seçilmiş villa ve iç mekan projeleri.",
+
+    projects_title: "seçili projeler",
+    projects_note: "Villa / İç mekan / Seçili Koleksiyon",
+
+    inquiry_kicker: "İletişim",
+    inquiry_title: "Projenizi konuşalım.",
+    inquiry_text: "Özel konutlar, İç mekanlar ve seçili özel sipariş projeler; sakin ve rafine bir tasarım diliyle şekillendirilir.",
+    inquiry_close: "kapat",
+
+    footer_studio: "Stüdyo",
+    footer_contact: "İletişim",
+    footer_city: "Kayseri / Türkiye",
+    footer_available: "Seçili projeler için müsait",
+    footer_copy: "© 2026 kaya architectures",
+    footer_tagline: "Sakin ve Zamansız mekanlar için tasarlandı",
+
+    detail_close: "kapat"
+  },
+
+  en: {
+    nav_projects: "projects",
+    nav_contact: "contact",
+
+    hero_title: "Villa & Interior architecture",
+    hero_subtitle: "visual clarity / quiet luxury / timeless spaces",
+
+    feature_title: "quiet compositions shaped by light, shadow and material balance.",
+feature_text: "selected residential and interior work presented through an editorial and image-led atmosphere.",
+
+    intro_title: "spaces designed with less noise, more atmosphere.",
+    intro_text: "Selected villa and interior works with a calm, premium and image-led presentation.",
+
+    projects_title: "selected projects",
+    projects_note: "Villa / Interior / Curated Selection",
+
+    inquiry_kicker: "Inquiry",
+    inquiry_title: "Let’s discuss your project.",
+    inquiry_text: "Private residences, Interiors and selected bespoke commissions shaped with a calm and refined design language.",
+    inquiry_close: "close",
+
+    footer_studio: "Studio",
+    footer_contact: "Contact",
+    footer_city: "Kayseri / Turkey",
+    footer_available: "Available for selected commissions",
+    footer_copy: "© 2026 kaya architectures",
+    footer_tagline: "Designed for calm, timeless spaces",
+
+    detail_close: "close"
+  }
+};
+
+function applyLanguage(lang) {
+  if (!translations[lang]) return;
+
+  document.documentElement.lang = lang;
+  localStorage.setItem("siteLanguage", lang);
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll(".lang-btn, .mobile-lang-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.lang === lang);
+  });
+}
+
+async function detectInitialLanguage() {
+  const saved = localStorage.getItem("siteLanguage");
+  if (saved && translations[saved]) return saved;
+
+  try {
+    const response = await fetch("https://ipapi.co/json/");
+    const data = await response.json();
+
+    if (data && data.country_code === "TR") {
+      return "tr";
+    }
+
+    return "en";
+  } catch (error) {
+    const browserLang = (navigator.language || "").toLowerCase();
+    return browserLang.startsWith("tr") ? "tr" : "en";
+  }
+}
+
+async function initLanguage() {
+  const initialLang = await detectInitialLanguage();
+  applyLanguage(initialLang);
+
+  document.querySelectorAll(".lang-btn, .mobile-lang-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyLanguage(btn.dataset.lang);
+    });
+  });
+}
+
+initLanguage();
+
+    const inquiryForm = document.getElementById("inquiryForm");
+const inquiryFormNote = document.getElementById("inquiryFormNote");
+
+if (inquiryForm) {
+  inquiryForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(inquiryForm);
+
+    const name = formData.get("name") || "";
+    const email = formData.get("email") || "";
+    const projectType = formData.get("projectType") || "";
+    const location = formData.get("location") || "";
+    const timeline = formData.get("timeline") || "";
+    const budget = formData.get("budget") || "";
+    const message = formData.get("message") || "";
+
+    const subject = encodeURIComponent(`New Project Inquiry - ${name}`);
+    const body = encodeURIComponent(
+`Name: ${name}
+Email: ${email}
+Project Type: ${projectType}
+Location: ${location}
+Timeline: ${timeline}
+Budget: ${budget}
+
+Message:
+${message}`
+    );
+
+    window.location.href = `mailto:info@kayaarchitectures.com?subject=${subject}&body=${body}`;
+
+    if (inquiryFormNote) {
+      inquiryFormNote.textContent = "your email app is opening...";
+    }
+  });
+}
+    
 </script>
 
 </body>
